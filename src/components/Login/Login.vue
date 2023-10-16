@@ -87,7 +87,7 @@ export default {
         console.log("Alerta");
       }else{
         try{
-        const response = await axios.post("http://localhost:8000/alumnos/login/", {
+        const response = await axios.post("http://fibackend.ujed.mx/alumnos/login/", {
           email: this.email, 
           password: this.password, 
         });
