@@ -93,6 +93,8 @@ export default {
 
       if(token){
         axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
+        axios.defaults.headers.common['Access-Control-Allow-Headers'] = 'Origin, X-Requested-With, Content-Type, Accept';
+        axios.defaults.headers.common['Access-Control-Allow-Methods'] = 'GET, POST, PUT, DELETE, OPTIONS';
 
         try{
           const response = await axios.request('http://fibackend.ujed.mx/alumnos/get_coordinator');
