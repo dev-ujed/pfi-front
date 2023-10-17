@@ -9,7 +9,8 @@
               <img
                 src="../../assets/logo-ujed.png"
                 alt="img-ujed"
-                style="max-width: 230px; min-width: 230px; padding: 20px;"
+                class="img-ujed"
+                
               />
               <p class="text-google">Ingresa con tu correo electronico y contraseña</p>
               
@@ -20,6 +21,7 @@
                 placeholder="Placeholder"
                 v-model="email"
                 background-color="white"
+                class="flex"
               ></v-text-field>
 
                 <v-text-field
@@ -29,10 +31,11 @@
                 v-model="password"
                 background-color="white"
                 type="password"
+                class="flex"
                 ></v-text-field>
                 <v-btn
                   block
-                  class="text-none"
+                  class="text-none flex"
                   color="#FFFFFF"
                   size="x-large"
                   variant="flat"
@@ -189,7 +192,7 @@ export default {
 }
 
 .title{
-  font-size: 15px;
+  
   font-weight: 600;
   margin-top: 10px;
   margin-bottom: 10px;
@@ -250,5 +253,31 @@ export default {
   margin-top: 10%; 
 }
 
+
+.img-ujed{
+  max-width: 230px; 
+  min-width: 230px; 
+  padding: 20px;
+}
+
+@media (min-width: 200px) and (max-width: 600px) {
+
+  .img-ujed{
+    max-width: 100px;
+    min-width: 100px;
+    padding: 10px;
+  }
+
+  .container-login {
+    display: flex;
+    justify-content: center;
+    align-self: center;
+    border: 2px solid #1111;
+    background-color: #EEEEEE;
+    min-width: 50%;
+    max-width: 50%;
+    margin-top: 10%; 
+  }
+}
 
 </style>
