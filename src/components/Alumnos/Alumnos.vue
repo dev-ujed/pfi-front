@@ -20,6 +20,14 @@
                   single-line
                   hide-details
                 ></v-text-field>
+                <v-select
+                  v-model="selectedCiclo"
+                  :items="ciclos"
+                  label="Seleccionar Ciclo"
+                  @change = "getCiclo"
+                  style="padding-top: 22px;"
+                >
+                </v-select>
             </v-toolbar>
           </template>
           <template v-slot:item.detalles="{ item }">
@@ -48,6 +56,7 @@ export default {
     data() {
       return {
         alumnos: [],
+        selectedCiclo: null,
         search: '',
         headers: [
           { text: 'Matricula', align: 'center', sortable: true, value: 'cve_alumno'},
@@ -58,6 +67,12 @@ export default {
           { text: 'Semestre', align: 'center', value: 'semestre' },
           { text: 'Ver detalles', align: 'center', value: 'detalles'}
         ],
+
+        ciclos: [
+          '2023 AGO/DIC 2/2 (790)',  
+          '2023 SEP/DIC 3/3 (794)', 
+        ]
+
       };
     },
     components:{
@@ -82,6 +97,25 @@ export default {
         this.$router.push("/fi-alumnos/"+id); 
       },
 
+      getCiclo() {
+        const cicloValue = this.getCicloValue(this.selectedCiclo);
+        if (cicloValue) {
+          axios.get('http://127.0.0.1:8000/alumnos/get_coordinator?cve_ciclo=' + cicloValue)
+            .then(response => {
+              console.log(response.data);
+              console.log(cicloValue);
+              this.alumnos = response.data;
+            })
+            .catch(error => {
+              console.log(error);
+            });
+        }
+      },
+
+      getCicloValue(selection) {
+        const matches = selection.match(/\((\d+)\)$/);
+        return matches ? matches[1] : null;
+      }
 
       
     },
@@ -93,9 +127,9 @@ export default {
 
       if(token){
         axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
-
+        
         try{
-          const response = await axios.request('http://fibackend.ujed.mx/alumnos/get_coordinator');
+          const response = await axios.request('http://127.0.0.1:8000/alumnos/get_coordinator');
           this.alumnos = response.data; 
           console.log(this.alumnos);
         }catch(error){
