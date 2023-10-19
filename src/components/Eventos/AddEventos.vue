@@ -483,7 +483,7 @@ export default {
       axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
 
       try{
-        const response = await axios.get('http://fibackend.ujed.mx/alumnos/user'); 
+        const response = await axios.get('https://fibackend.ujed.mx/alumnos/user'); 
 
         this.userEmail = response.data.email; 
         this.eventos.responsable = response.data.email; 
