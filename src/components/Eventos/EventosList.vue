@@ -163,14 +163,14 @@
                 Lista
                 <v-icon>mdi-file-pdf-box</v-icon>
               </v-btn>
-              <v-btn
+              <!-- <v-btn
                 depressed
                 color="blue-grey darken-1"
                 class="white--text"
                 @click="edit(selected[0].id)"
               >
                 Editar
-              </v-btn>
+              </v-btn> -->
               <!-- <v-btn
                 depressed
                 color="error"
