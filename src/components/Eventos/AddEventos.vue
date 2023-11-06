@@ -79,11 +79,24 @@
 
                 <v-col cols="12" md="4" sm="12" lg="4" xl="4">
                   <v-text-field
-                    id="fechaEvento"
-                    v-model="eventos.fechaEvento"
-                    name="fechaEvento"
+                    id="fechaInicio"
+                    v-model="eventos.fechaInicio"
+                    name="fechaInicio"
                     :rules="[(v) => !!v || 'Campo requerido']"
-                    label="Fecha del evento"
+                    label="Fecha de inicio del evento"
+                    required
+                    outlined
+                    type="date"
+                  ></v-text-field>
+                </v-col>
+
+                <v-col cols="12" md="4" sm="12" lg="4" xl="4">
+                  <v-text-field
+                    id="fechaFin"
+                    v-model="eventos.fechaFin"
+                    name="fechaFin"
+                    :rules="[(v) => !!v || 'Campo requerido']"
+                    label="Fecha de fin del evento"
                     required
                     outlined
                     type="date"
@@ -100,6 +113,7 @@
                     label="Hora de inicio del evento"
                     outlined
                     type="time"
+                    @input="calcularCreditos"
                   ></v-text-field>
                 </v-col>
 
@@ -113,6 +127,7 @@
                     label="Hora del final del evento"
                     outlined
                     type="time"
+                    @input="calcularCreditos"
                   ></v-text-field>
                 </v-col>
 
@@ -163,18 +178,20 @@
 
                 <v-col cols="12" md="6" sm="12" lg="6" xl="6">
                   <v-text-field
-                    id="creditos"
+                    id="creditosOtorgados"
                     required
-                    v-model="eventos.creditos"
+                    v-model="eventos.creditosOtorgados"
                     name="creditos"
                     type="number"
                     maxlength="4"
                     min="0"
                     max="10"
-                    placeholder="maximo 10 creditos"
+                    placeholder="maximo 10 créditos"
                     oninput="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);"
                     :rules="[(v) => !!v || 'Campo requerido']"
                     label="Creditos otorgados en el evento"
+                    filled
+                    readonly
                     outlined
                   ></v-text-field>
                 </v-col>
@@ -305,13 +322,14 @@ export default {
         unidadResponsable: "",
         descripcionEvento: "",
         eventoDedicadoA: "",
-        fechaEvento: "",
+        fechaInicio: "",
+        fechaFin:"",
         inicioEvento: "",
         finEvento: "",
         sede: "",
         cupo: "",
         descripcion: "",
-        creditos: "",
+        creditosOtorgados: "",
         categorias: "",
         categorias_1: "",
         categorias_2: "",
@@ -321,7 +339,7 @@ export default {
       UserData: "", 
 
       unidades: [
-        "CEDU",
+        "CEDDU",
         "IMAC",
         "ICED",
         "FACULTAD DE DERECHO Y CIENCIAS POLÍTICAS",
@@ -357,7 +375,7 @@ export default {
         "COORDINACIÓN DE VINCULACIÓN EMPRES",
       ],
       sede: [
-        "CEDU",
+        "CEDDU",
         "IMAC",
         "ICED",
         "FACULTAD DE DERECHO Y CIENCIAS POLÍTICAS",
@@ -483,7 +501,7 @@ export default {
       axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
 
       try{
-        const response = await axios.get('https://fibackend.ujed.mx/alumnos/user'); 
+        const response = await axios.get('http://127.0.0.1:8000/alumnos/user'); 
 
         this.userEmail = response.data.email; 
         this.eventos.responsable = response.data.email; 
@@ -563,13 +581,15 @@ export default {
         descripcionEvento: this.eventos.descripcionEvento,
         eventoDedicadoA: this.eventos.eventoDedicadoA,
         responsable:this.eventos.responsable,
-        fechaEvento: this.eventos.fechaEvento,
+        // fechaEvento: this.eventos.fechaEvento,
+        fechaFin: this.eventos.fechaFin, 
+        fechaInicio: this.eventos.fechaInicio,
         inicioEvento: this.eventos.inicioEvento,
         finEvento: this.eventos.finEvento,
         sede: this.eventos.sede,
         cupo: this.eventos.cupo,
         descripcion: this.eventos.descripcion,
-        creditos: this.eventos.creditos,
+        creditos: this.eventos.creditosOtorgados,
         categorias: this.eventos.categorias.id,
       };
       if (this.eventos.categorias_1 != ''){
@@ -602,8 +622,8 @@ export default {
       var campos = {
         name: dataEvento.tituloEvento,
         color: this.colors[this.rnd(0, this.colors.length - 1)],
-        start: dataEvento.fechaEvento + " " + dataEvento.inicioEvento,
-        end: dataEvento.fechaEvento + " " + dataEvento.finEvento,
+        start: dataEvento.fechaInicioEvento + " " + dataEvento.inicioEvento,
+        end: dataEvento.fechaFinEvento + " " + dataEvento.finEvento,
         details: dataEvento.descripcionEvento,
         evento: dataEvento.id,
       };
@@ -621,6 +641,25 @@ export default {
     rnd(a, b) {
       return Math.floor((b - a + 1) * Math.random()) + a;
     },
+
+    calcularCreditos(){
+      if (this.eventos.inicioEvento && this.eventos.finEvento){
+        const horaInicio = new Date(`2023-01-01T${this.eventos.inicioEvento}`);
+        const horaFin = new Date(`2023-01-01T${this.eventos.finEvento}`);
+
+        const diferenciaSegundos = horaFin - horaInicio; 
+
+        const diferenciaHoras = diferenciaSegundos / (1000 * 60 * 60); 
+
+        const creditosOtorgados = diferenciaHoras / 20; 
+
+        const creditosRedondeados = parseFloat(creditosOtorgados.toFixed(2));
+
+        console.log(creditosRedondeados);
+
+        this.eventos.creditosOtorgados = creditosRedondeados; 
+      }
+    }
   },
 };
 </script>

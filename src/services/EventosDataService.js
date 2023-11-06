@@ -1,6 +1,6 @@
 import http from "../http-common";
 import axios from "axios";
-const API = "https://fibackend.ujed.mx";
+const API = "http://fibackend.ujed.mx";
 
 class EventosDataService {
   getAll() {

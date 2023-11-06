@@ -124,7 +124,10 @@ export default {
         console.log(evento)
         this.$router.push("/fi-registro/"+evento.id);
       }
-    }
+    },
+    created() {
+      console.log('sadasda')
+    },
 }
 </script>
 

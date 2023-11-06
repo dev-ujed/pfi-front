@@ -100,7 +100,7 @@ export default {
       getCiclo() {
         const cicloValue = this.getCicloValue(this.selectedCiclo);
         if (cicloValue) {
-          axios.get('https://fibackend.ujed.mx/alumnos/get_coordinator?cve_ciclo=' + cicloValue)
+          axios.get('http://127.0.0.1:8000/alumnos/get_coordinator?cve_ciclo=' + cicloValue)
             .then(response => {
               console.log(response.data);
               console.log(cicloValue);
@@ -120,7 +120,7 @@ export default {
       
     },
     async mounted() {
-      // this.retrieveAlumnos();
+     //this.retrieveAlumnos();
 
 
       const token = sessionStorage.getItem("jwtToken"); 
@@ -131,7 +131,7 @@ export default {
         axios.defaults.headers.common['Access-Control-Allow-Methods'] = 'GET, POST, PUT, DELETE, OPTIONS';
 
         try{
-          const response = await axios.request('https://fibackend.ujed.mx/alumnos/get_coordinator');
+          const response = await axios.request('http://127.0.0.1:8000/alumnos/get_coordinator');
           this.alumnos = response.data; 
           console.log(this.alumnos);
         }catch(error){

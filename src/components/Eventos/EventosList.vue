@@ -107,7 +107,7 @@
                   <label><strong>Fecha del evento:</strong></label>
                 </v-col>
                 <v-col>
-                  <label> {{ selected[0].fechaEvento }}</label>
+                  <label> {{ selected[0].fechaInicio }}</label>
                 </v-col>
               </v-row>
               <v-row>
@@ -160,25 +160,25 @@
                 color="red"
                 @click="exportarAlumnos(selected[0].id)"
               >
-                Lista
+                PDF
                 <v-icon>mdi-file-pdf-box</v-icon>
               </v-btn>
-              <!-- <v-btn
+               <v-btn
                 depressed
                 color="blue-grey darken-1"
                 class="white--text"
                 @click="edit(selected[0].id)"
               >
                 Editar
-              </v-btn> -->
-              <!-- <v-btn
+              </v-btn> 
+              <v-btn
                 depressed
                 color="error"
                 class="white--text"
-                @click="deleteEvent(selected[0])"
+                @click="deleteEvent(selected[0].id)"
               >
                 Eliminar
-              </v-btn> -->
+              </v-btn> 
             </v-card-actions>
           </v-card>
 
@@ -227,7 +227,7 @@ export default {
           unidadResponsable: "",
           descripcionEvento: "",
           eventoDedicadoA: "",
-          fechaEvento: "",
+          fechaInicio: "",
           inicioEvento: "",
           finEvento: "",
           sede: "",
@@ -244,14 +244,14 @@ export default {
       headers: [
         { text: "Titulo de evento", value: "tituloEvento" },
         { text: "Unidad responsable", value: "unidadResponsable" },
-        { text: "Fecha de evento", sortable: true, value: "fechaEvento" },
+        { text: "Fecha de evento", sortable: true, value: "fechaInicio" },
         { text: "Cupo", value: "cupo" },
         { text: "Creditos", value: "creditos" },
         { text: "Responsable", value: "responsable"}
       ],
     };
   },
-  components:{ drawer }, 
+  components:{ drawer}, 
   methods: {
     retrieveEventos() {
       EventosDataService.getAll()
@@ -293,7 +293,17 @@ export default {
           console.log(e);
         });
     },
-
+    deleteEvent(id){
+      EventosDataService.delete(id)
+      .then(response => {
+        console.log(response.status);
+        this.retrieveEventos();
+        this.selected=[];
+      })
+      .catch(e => {
+        console.log(e);
+      });
+    },
     createData(response) {
       this.alumnos = [];
       for (let evento of response) {
@@ -342,7 +352,7 @@ export default {
         columns: [
           { header: "Evento", dataKey: "tituloEvento" },
           { header: "Cupo", dataKey: "cupo" },
-          { header: "Fecha de evento", dataKey: "fechaEvento" },
+          { header: "Fecha de evento", dataKey: "fechaInicio" },
           { header: "Sede", dataKey: "sede" },
           { header: "Unidad Responsable", dataKey: "unidadResponsable" },
           { header: "Responsable ", dataKey: "responsable"}

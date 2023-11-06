@@ -74,7 +74,7 @@ export default {
    
 
     callback: (response) => {
-      console.log("Sesion iniciada");
+      console.log("Sesión iniciada");
       console.log(response);
     },
   }),
@@ -82,9 +82,9 @@ export default {
   methods: {
     async logout(){
       try{
-        await axios.post('https://fibackend.ujed.mx/alumnos/logout/');
+        await axios.post('http://127.0.0.1:8000/alumnos/logout/');
         window.location.href="/"
-        console.log("Sesion Cerrada Correctamente"); 
+        console.log("Sesión Cerrada Correctamente"); 
       }catch(error){
         console.error("Error al cerrar sesión", error ); 
       }

@@ -1,5 +1,6 @@
 <template lang="html">
   <div v-if="currentEvento" class="edit-form">
+    <drawer/>
     <v-container>
       <v-card>
         <v-card-title>
@@ -53,6 +54,21 @@
                   
                 </v-col>
 
+                <v-col cols="12" md="6" sm="12" lg="6" xl="6">
+                  <v-text-field
+                    :rules="[(v) => !!v || 'Campo requerido']"
+                    :counter="100"
+                    label="Responsable"
+                    id="responsable"
+                    v-model="currentEvento.responsable"
+                    name="responsable"
+                    required
+                    outlined
+                    filled
+                    readonly
+                  ></v-text-field>
+                </v-col>
+
                 <v-col
                   cols="12"
                   md="6"
@@ -93,19 +109,26 @@
                   ></v-text-field>
                 </v-col>
 
-                <v-col
-                  cols="12"
-                  md="4"
-                  sm="12"
-                  lg="4"
-                  xl="4"
-                >
+                <v-col cols="12" md="4" sm="12" lg="4" xl="4">
                   <v-text-field
                     id="fechaEvento"
-                    v-model="currentEvento.fechaEvento"
+                    v-model="currentEvento.fechaInicio"
                     name="fechaEvento"
-                    :rules="[v => !!v || 'Campo requerido']"
-                    label="Fecha del evento"
+                    :rules="[(v) => !!v || 'Campo requerido']"
+                    label="Fecha de inicio del evento"
+                    required
+                    outlined
+                    type="date"
+                  ></v-text-field>
+                </v-col>
+
+                <v-col cols="12" md="4" sm="12" lg="4" xl="4">
+                  <v-text-field
+                    id="fechaEvento"
+                    v-model="currentEvento.fechaFin"
+                    name="fechaEvento"
+                    :rules="[(v) => !!v || 'Campo requerido']"
+                    label="Fecha de fin del evento"
                     required
                     outlined
                     type="date"
@@ -128,6 +151,7 @@
                     label="Hora de inicio del evento"
                     outlined
                     type="time"
+                    @change="calcularCreditos"
                   ></v-text-field>
                 </v-col>
                 
@@ -147,6 +171,7 @@
                     label="Hora del final del evento"
                     outlined
                     type="time"
+                    @change="calcularCreditos"
                   ></v-text-field>
                 </v-col>
                 
@@ -219,7 +244,7 @@
                   xl="6"
                 >
                   <v-text-field
-                    id="creditos"
+                    id="creditosOtorgados"
                     required
                     v-model="currentEvento.creditos"
                     name="creditos"
@@ -230,6 +255,8 @@
                     :rules="[v => !!v || 'Campo requerido']"
                     label="Creditos otorgados en el evento"
                     outlined
+                    readonly
+                    filled 
                   ></v-text-field>
                 </v-col>
 
@@ -352,6 +379,8 @@
 <script>
 import EventosDataService from "../../services/EventosDataService";
 import swal from "sweetalert";
+import drawer from "../Drawer/Drawer.vue"; 
+import axios from "axios";
 export default {
   name: "evento",
   data() {
@@ -364,7 +393,7 @@ export default {
       categoria2: [],
       categoriaArte: [],
       unidades: [
-        "CEDU",
+        "CEDDU",
         "IMAC",
         "ICED",
         "FACULTAD DE DERECHO Y CIENCIAS POLÍTICAS",
@@ -400,7 +429,7 @@ export default {
         "COORDINACIÓN DE VINCULACIÓN EMPRES",
       ],
       sede: [
-        "CEDU",
+        "CEDDU",
         "IMAC",
         "ICED",
         "FACULTAD DE DERECHO Y CIENCIAS POLÍTICAS",
@@ -496,11 +525,16 @@ export default {
         "Colegio De Ciencias Y Humanidades",
         "Colegio de Ginecología",
       ],
+       responsable:"", 
+       fechaInicio: "",
+      fechaFin:"",
+      creditosOtorgados:"",
     };
   },
+  components:{ drawer}, 
   methods: {
     getEvento(id) {
-      EventosDataService.get(id)
+      EventosDataService.getevento(id)
         .then((response) => {
           this.currentEvento = response.data;
           this.getCategorias1(this.currentEvento.categorias.id);
@@ -508,6 +542,7 @@ export default {
           if(this.currentEvento.subCategoriaArte){
             this.getCategoriasArte(this.currentEvento.subCategoria2.id);
           }
+          this.calcularCreditos();
           
         })
         .catch((e) => {
@@ -574,7 +609,8 @@ export default {
         unidadResponsable: this.currentEvento.unidadResponsable,
         descripcionEvento: this.currentEvento.descripcionEvento,
         eventoDedicadoA: this.currentEvento.eventoDedicadoA,
-        fechaEvento: this.currentEvento.fechaEvento,
+        fechaInicio: this.currentEvento.fechaInicio,
+        fechaFin: this.currentEvento.fechaFin,
         inicioEvento: this.currentEvento.inicioEvento,
         finEvento: this.currentEvento.finEvento,
         sede: this.currentEvento.sede,
@@ -582,7 +618,10 @@ export default {
         descripcion: this.currentEvento.descripcion,
         creditos: this.currentEvento.creditos,
         categorias: this.currentEvento.categorias.id,
+        responsable: this.currentEvento.responsable
       };
+
+      console.log(this.currentEvento); 
       
       if (this.currentEvento.subCategoria1 != ""){
         data.subCategoria1 = this.currentEvento.subCategoria1.id;
@@ -622,6 +661,27 @@ export default {
         console.log("Evento no Validado " + false);
       }
     },
+    calcularCreditos(){
+      console.log("CalcularCredit");
+      if (this.currentEvento.inicioEvento && this.currentEvento.finEvento){
+        const horaInicio = new Date(`2023-01-01T${this.currentEvento.inicioEvento}`);
+        const horaFin = new Date(`2023-01-01T${this.currentEvento.finEvento}`);
+
+        const diferenciaSegundos = horaFin - horaInicio; 
+
+        const diferenciaHoras = diferenciaSegundos / (1000 * 60 * 60); 
+
+        const creditosOtorgados = diferenciaHoras / 20;
+
+        const creditosRedondeados = parseFloat(creditosOtorgados.toFixed(2));
+
+        console.log(creditosRedondeados);
+
+        this.currentEvento.creditos = creditosRedondeados; 
+
+
+      }
+    },
 
     deleteEvento() {
       EventosDataService.delete(this.currentEvento.id)
@@ -636,11 +696,29 @@ export default {
         });
     },
   },
-  mounted() {
+  async mounted() {
     this.message = "";
     this.getEvento(this.$route.params.id);
-    this.getClasificacion();
+    this.getClasificacion() ; 
     console.log(this.$route.params.id);
+
+    const token = sessionStorage.getItem('jwtToken'); 
+
+    if (token){
+      axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
+
+      try{
+        const response = await axios.get('http://fibackend.ujed.mx/alumnos/user'); 
+
+        this.userEmail = response.data.email; 
+        this.currentEvento.responsable = response.data.email; 
+        
+      }catch(error){
+        console.error('Error ', error); 
+      }
+    }else{
+      console.error('No token')
+    }
   },
 };
 </script>

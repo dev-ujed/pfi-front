@@ -41,11 +41,11 @@
                 md="4"
                 >
                     <v-card-text>
-                        <label><strong>Carrera: </strong></label>
+                        <label><strong>Carrera: {{ dataAlumno.desc_carrera }}</strong></label>
                         <v-spacer></v-spacer>
                         <label></label>
                         <v-spacer></v-spacer>
-                        <label><strong>Semestre: </strong></label>
+                        <label><strong>Semestre: {{ dataAlumno.semestre }}</strong></label>
                         <v-spacer></v-spacer>
                         <label></label>
                         <v-spacer></v-spacer>
@@ -236,11 +236,12 @@ export default {
     getAlumno() {
         AlumnosDataService.getOaloumno(this.$route.params.id)
             .then(response => {
-                console.log(response.data)
                 this.dataAlumno = response.data;
+                
                 this.alumnoDataFiles.push(response.data);
                 this.fileName = response.data.cve_alumno  ;
                 this.alumnoExcel = "Alumno: "+ response.data.nombre + "  " + response.data.paterno + " " + response.data.materno + "  " + "Matricula: " + response.data.cve_alumno + "  "  + "Carrera: " + response.data.cve_escuela + "  " + "Semestre: " + "1";
+                
             })
             .catch(e =>{
                 console.log(e);
