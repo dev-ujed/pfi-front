@@ -82,7 +82,7 @@ export default {
   methods: {
     async logout(){
       try{
-        await axios.post('http://127.0.0.1:8000/alumnos/logout/');
+        await axios.post('https://fibackend.ujed.mx/alumnos/logout/');
         window.location.href="/"
         console.log("Sesión Cerrada Correctamente"); 
       }catch(error){

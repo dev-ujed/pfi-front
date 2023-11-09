@@ -100,7 +100,7 @@ export default {
       getCiclo() {
         const cicloValue = this.getCicloValue(this.selectedCiclo);
         if (cicloValue) {
-          axios.get('http://127.0.0.1:8000/alumnos/get_coordinator?cve_ciclo=' + cicloValue)
+          axios.get('https://fibackend.ujed.mx/alumnos/get_coordinator?cve_ciclo=' + cicloValue)
             .then(response => {
               console.log(response.data);
               console.log(cicloValue);
