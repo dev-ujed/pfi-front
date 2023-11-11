@@ -6,7 +6,7 @@
         <v-card class="elevation-8">
             <v-card-title>Datos del Alumno</v-card-title>
             <v-row>
-                <v-col
+                <!-- <v-col
                 align-self: center
                 xs="12"
                 sm="12"
@@ -18,7 +18,7 @@
                     :src="dataAlumno.img"
                     object-fit="cover"
                     ></v-img>
-                </v-col>
+                </v-col> -->
                 <v-col 
                 align-self: center
                 xs="6"
@@ -51,7 +51,7 @@
                         <v-spacer></v-spacer>
                         <label><strong>Correo electronico: </strong></label>
                         <v-spacer></v-spacer>
-                        <label>{{ dataAlumno.cve_alumno }}@alumnos.ujed.mx</label>
+                        <label>{{ dataAlumno.nombre }}.{{dataAlumno.paterno}}@alumnos.ujed.mx</label>
                     </v-card-text>
                 </v-col>
             </v-row>
@@ -78,7 +78,7 @@
                             {{item.descripcionEvento}}
                             </v-list-item-subtitle>
                             <v-list-item-subtitle>
-                            Fecha: {{item.fechaEvento}}
+                            Fecha: {{item.fechaInicio}}
                             </v-list-item-subtitle>
                         </v-list-item-content>
                     </v-list-item>
@@ -86,7 +86,7 @@
                 <v-col>
                     <v-list-item three-line>
                         <v-list-item-content>
-                            <v-list-item-subtitle>Responsable: {{item.unidadResponsable}}</v-list-item-subtitle>
+                            <v-list-item-subtitle>Responsable: {{item.responsable}}</v-list-item-subtitle>
                             <v-list-item-subtitle>
                             Sede: {{item.sede}}
                             </v-list-item-subtitle>
@@ -149,12 +149,12 @@
                 </v-icon>
             </v-btn>
         </template>
-        <v-btn
+        <!-- <v-btn
             fab
             dark
             color="green"
         >
-            <download-excel
+           <download-excel
                 class=""
                 :data="eventsDataFiles"
                 :fields="json_fields"
@@ -164,8 +164,8 @@
                 :footer ="`Creditos validados: ${this.totalCreditos}`"
             >
                 <v-icon>mdi-file-excel</v-icon>
-            </download-excel>
-        </v-btn>
+            </download-excel> 
+        </v-btn> -->
         <v-btn
             fab
             dark
@@ -189,7 +189,7 @@ import drawer from "../Drawer/Drawer.vue";
 /* import html2canvas from "html2canvas";*/
 import jsPDF from "jspdf"; 
 import 'jspdf-autotable';
-import downloadExcel from "vue-json-excel";
+
 
 export default {
   name: "HistorialEventos",
@@ -214,7 +214,7 @@ export default {
         "Evento": "tituloEvento",
         "Unidad Responsable": "unidadResponsable",
         "Despcripción": "descripcionEvento",
-        "Fecha del evento": "fechaEvento",
+        "Fecha del evento": "fechaInicio",
         "Sede": "sede",
         "Creditos de evento": "creditos",
         "Asistencia" :"asistencia"
@@ -229,7 +229,7 @@ export default {
       
   },
   components: {
-      downloadExcel, 
+      
       drawer
   },
   methods: {
@@ -237,6 +237,7 @@ export default {
         AlumnosDataService.getOaloumno(this.$route.params.id)
             .then(response => {
                 this.dataAlumno = response.data;
+                console.log(this.dataAlumno);
                 
                 this.alumnoDataFiles.push(response.data);
                 this.fileName = response.data.cve_alumno  ;
@@ -252,7 +253,8 @@ export default {
         FormacionInDataService.getEventsAlumno(this.$route.params.id)
         .then(response => {
             this.eventsAlumno = response.data;
-            console.log(this.eventsAlumno);
+            const eventos_Alumno = this.eventsAlumno; 
+            console.log("eventos: ", eventos_Alumno);
             this.validarCreditos(response.data);
         })
         .catch(e => {
@@ -260,16 +262,15 @@ export default {
         })
     },
 
-    validarCreditos(response){
-        this.eventsDataFiles = [];
-        for (let evento of response) {
-            var creditos = parseFloat(this.totalCreditos);
-            var creditos2 = parseFloat(evento.creditos);
-            if(evento.asistencia == 1){
-                var res = creditos + creditos2;
-                this.totalCreditos =  res;
+    validarCreditos(response) {
+        var eventos_Alumno = this.eventsAlumno; 
+        console.log("eeeeeee",eventos_Alumno);
+
+        for (eventos_Alumno of response) {
+            if (eventos_Alumno.asistencia === 1) {
+            this.totalCreditos += parseFloat(eventos_Alumno.creditos);
             }
-            this.createData(evento);
+            this.createData(eventos_Alumno);
         }
     },
     
@@ -321,11 +322,11 @@ export default {
             headStyles: { fillColor: [199, 0, 57] },
             body: this.alumnoDataFiles,
             columns: [
-                { header: 'Nombre', dataKey: 'nombres' },
-                { header: 'Apellido', dataKey: 'apellidos' },
-                { header: 'Matricula', dataKey: 'matricula' },
-                { header: 'Carrera', dataKey: 'carrera' },
-                { header: 'Semestre', dataKey: 'semestre' }
+                { header: 'Nombre', dataKey: 'nombre' },
+                { header: 'Apellido', dataKey: 'paterno' },
+                { header: 'Apellido', dataKey: 'materno' },
+                { header: 'Matricula', dataKey: 'cve_alumno' },
+               
             ],
             margin: { left: 0.5, top: 1.3 }
         });

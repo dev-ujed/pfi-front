@@ -131,7 +131,7 @@ export default {
         axios.defaults.headers.common['Access-Control-Allow-Methods'] = 'GET, POST, PUT, DELETE, OPTIONS';
 
         try{
-          const response = await axios.request('http://127.0.0.1:8000/alumnos/get_coordinator');
+          const response = await axios.request('https://fibackend.ujed.mx/alumnos/get_coordinator');
           this.alumnos = response.data; 
           console.log(this.alumnos);
         }catch(error){

@@ -163,6 +163,15 @@
                 PDF
                 <v-icon>mdi-file-pdf-box</v-icon>
               </v-btn>
+              <v-btn
+                depressed
+                dark
+                color="green"
+                @click="generateExcel(selected[0].id)"
+              >
+                EXCEL
+                <v-icon>mdi-file-excel-box</v-icon>
+              </v-btn>
                <v-btn
                 depressed
                 color="blue-grey darken-1"
@@ -210,6 +219,7 @@ import FormacionInDataService from "../../services/FormacionInDataService";
 import jsPDF from "jspdf";
 import "jspdf-autotable";
 import drawer from "../Drawer/Drawer.vue"; 
+import axios from "axios";
 
 export default {
   name: "eventos-list",
@@ -293,12 +303,25 @@ export default {
           console.log(e);
         });
     },
+
+    generateExcel(id) {
+      axios.get(`https://fibackend.ujed.mx/formacionIn/generar_excel/${id}`)
+      .then(response =>{
+        window.open(`https://fibackend.ujed.mx/formacionIn/generar_excel/${id}`);
+        console.log(response.data);
+        
+      })
+      .catch(error =>{
+        console.error('error', error); 
+      })
+    }, 
     deleteEvent(id){
       EventosDataService.delete(id)
       .then(response => {
         console.log(response.status);
         this.retrieveEventos();
         this.selected=[];
+        window.location.reload();
       })
       .catch(e => {
         console.log(e);
