@@ -27,7 +27,7 @@
                     <v-card-text>
                         <label><strong>Alumno: </strong></label>
                         <v-spacer></v-spacer>
-                        <label>{{ dataAlumno.nombre }}  {{dataAlumno.paterno}} {{dataAlumno.materno}}</label>
+                        <label>{{ dataAlumno.alumno.nombre }}  {{dataAlumno.alumno.paterno}} {{dataAlumno.alumno.materno}}</label>
                         <v-spacer></v-spacer>
                         <label><strong>Matricula: </strong></label>
                         <v-spacer></v-spacer>
@@ -51,7 +51,7 @@
                         <v-spacer></v-spacer>
                         <label><strong>Correo electronico: </strong></label>
                         <v-spacer></v-spacer>
-                        <label>{{ dataAlumno.nombre }}.{{dataAlumno.paterno}}@alumnos.ujed.mx</label>
+                        <label>{{ dataAlumno.alumno.nombre }}.{{dataAlumno.alumno.paterno}}@alumnos.ujed.mx</label>
                     </v-card-text>
                 </v-col>
             </v-row>
@@ -322,9 +322,9 @@ export default {
             headStyles: { fillColor: [199, 0, 57] },
             body: this.alumnoDataFiles,
             columns: [
-                { header: 'Nombre', dataKey: 'nombre' },
+                { header: 'Nombre', dataKey: 'dataAlumno.alumno.nombre' },
                 { header: 'Apellido', dataKey: 'paterno' },
-                { header: 'Apellido', dataKey: 'materno' },
+                { header: 'Materno', dataKey: 'materno' },
                 { header: 'Matricula', dataKey: 'cve_alumno' },
                
             ],
