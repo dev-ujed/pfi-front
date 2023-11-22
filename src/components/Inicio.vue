@@ -37,6 +37,16 @@
             contain
           ></v-img>
         </v-card>
+        <br>
+        <v-card style="display: flex; justify-content: center;">
+            <div>
+              <h1><b>Manual de usuario</b></h1>
+              <br>
+              <video src="../assets/FormaciónIntegral.mp4" controls width="1200px"></video>
+            </div>
+        </v-card>
+
+       
 
        
        
