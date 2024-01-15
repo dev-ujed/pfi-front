@@ -8,7 +8,7 @@
           depressed
           elevation="2"
           block
-          color = "#a4010b"
+          color = "#202428"
           class="white--text"
         >Registro</v-btn>
       </v-col>
@@ -172,8 +172,7 @@ export default {
           alumno: null,
         },
         ciclos: [
-          '2023 AGO/DIC 2/2 (790)',  
-          '2023 SEP/DIC 3/3 (794)', 
+          '2024-ENE/JUL-1/2 (795)',   
         ]
       };
     },

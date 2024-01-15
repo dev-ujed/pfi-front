@@ -10,6 +10,7 @@
           item-key="id"
           class="elevation-1"
         >
+        <v-spacer></v-spacer>
           <template v-slot:top>
             <v-toolbar-title class="px-3 py-2">Estudiantes</v-toolbar-title>
             <v-toolbar flat>
@@ -20,6 +21,7 @@
                   single-line
                   hide-details
                 ></v-text-field>
+                <v-spacer></v-spacer>
                 <v-select
                   v-model="selectedCiclo"
                   :items="ciclos"
@@ -69,8 +71,7 @@ export default {
         ],
 
         ciclos: [
-          '2023 AGO/DIC 2/2 (790)',  
-          '2023 SEP/DIC 3/3 (794)', 
+          '2024-ENE/JUL 1/2 (795)',  
         ]
 
       };

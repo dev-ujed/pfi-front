@@ -20,7 +20,7 @@
           <v-card-title>Funciones</v-card-title>
           <v-card-text>
             <ul>
-              <li>Este Programa de Formación Integral del estudiante, permitirá que los egresados de la UJED cuenten con las competencias, principios y valores, para ser mujeres y hombres íntegros, con valores y actitudes para la conformación de una sociedad unida y armónica, con ideales de justicia y sean mexicanos con gran responsabilidad civil y patriotismo.</li>
+              <li>Permite que los egresados de la UJED cuenten con las competencias, principios y valores, para ser mujeres y hombres íntegros, con valores y actitudes para la conformación de una sociedad unida y armónica, con ideales de justicia y sean mexicanos con gran responsabilidad civil y patriotismo.</li>
               <br>
               <li>Complementar la formación de nuestros estudiantes en atención, no sólo a sus necesidades como futuros profesionistas, sino también como personas cuyo desarrollo integral implica la consideración de dimensiones conceptuales, procedimentales y actitudinales que propicien la alineación profesional, humanista, ética y tecnológica (en lo instructivo): formar profesionales competitivos, seres humanos abiertos al equilibrio y armonía del lugar donde viven, del planeta que habitamos.</li>
             </ul>

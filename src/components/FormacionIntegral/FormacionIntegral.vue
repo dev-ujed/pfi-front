@@ -4,7 +4,7 @@
     <v-container>
       <v-row>
         <v-bottom-navigation
-          color="error"
+          color="#50ab87"
           grow
         >
           <v-btn @click="retrieveEventos()">

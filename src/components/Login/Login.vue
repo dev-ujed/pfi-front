@@ -5,7 +5,7 @@
         <div class="container-fluid container-login">
          
             <div class="row d-flex justify-content-center align-items-center">
-              <h1 class="title">Bienvenido a Formación Integral</h1>
+              <h1 class="title">Bienvenido a PDFP</h1>
               <img
                 src="../../assets/logo-ujed.png"
                 alt="img-ujed"

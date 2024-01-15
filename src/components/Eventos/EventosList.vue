@@ -4,7 +4,7 @@
     <v-container>
       <v-row>
         <v-bottom-navigation
-          color="error"
+          color="#50ab87"
           grow
         >
           <v-btn @click="retrieveEventos()">
@@ -180,14 +180,14 @@
               >
                 Editar
               </v-btn> 
-              <v-btn
+              <!-- <v-btn
                 depressed
                 color="error"
                 class="white--text"
                 @click="deleteEvent(selected[0].id)"
               >
                 Eliminar
-              </v-btn> 
+              </v-btn>  -->
             </v-card-actions>
           </v-card>
 
