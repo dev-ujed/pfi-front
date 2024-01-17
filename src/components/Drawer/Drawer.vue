@@ -8,7 +8,6 @@
             width="40px"
             :height="'70px'"
           />
-        
         </v-list-item-content>
       </v-list-item>
 
@@ -29,19 +28,18 @@
       <v-toolbar-title style="width: 400px" class="ml-0 pl-4">
         <v-app-bar-nav-icon @click.stop="drawer = !drawer"></v-app-bar-nav-icon>
         <span class="hidden-sm-and-down" id="pageName">PDFP</span>
-        
       </v-toolbar-title>
       <div class="flex-grow-1"></div>
-      
-     
-      <v-btn rounded style="margin-right:20px" @click="logout" color="#50ab87">Cerrar sesión</v-btn>
-      
+
+      <v-btn rounded style="margin-right: 20px" @click="logout" color="#50ab87"
+        >Cerrar sesión</v-btn
+      >
     </v-app-bar>
   </div>
 </template>
 
 <script>
-import axios from 'axios';
+import axios from "axios";
 
 export default {
   name: "drawer",
@@ -69,9 +67,7 @@ export default {
         icon: "mdi-calendar",
         route: "/calendario",
       },
-     
     ],
-   
 
     callback: (response) => {
       console.log(response);
@@ -79,14 +75,16 @@ export default {
   }),
 
   methods: {
-    async logout(){
-      try{
-        await axios.post('https://fibackend.ujed.mx/alumnos/logout/');
-        window.location.href="/"
-      }catch(error){
-        console.error("Error al cerrar sesión", error ); 
+    async logout() {
+      try {
+        await axios.post(
+          "https://fibackend.ujed.mx/alumnos/logout/" /*"http://127.0.0.1:8000/alumnos/logout/"*/
+        );
+        window.location.href = "/";
+      } catch (error) {
+        console.error("Error al cerrar sesión", error);
       }
-    }
+    },
   },
 };
 </script>

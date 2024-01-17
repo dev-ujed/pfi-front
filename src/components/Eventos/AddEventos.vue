@@ -1,6 +1,6 @@
 <template>
   <div class="submit-form">
-    <drawer/>
+    <drawer />
     <v-card>
       <v-card-title> Registro de evento </v-card-title>
       <div v-if="!submitted">
@@ -56,7 +56,7 @@
                     id="descripcionEvento"
                     name="descripcionEvento"
                     label="Descripción del evento"
-                    :counter="200"
+                    :counter="1000"
                     rows="2"
                     required
                     outlined
@@ -65,16 +65,17 @@
                 </v-col>
 
                 <v-col cols="12" md="6" sm="12" lg="6" xl="6">
-                  <v-text-field
+                  <v-combobox
                     id="eventoDedicadoA"
                     required
                     v-model="eventos.eventoDedicadoA"
                     name="eventoDedicadoA"
                     :rules="[(v) => !!v || 'Campo requerido']"
                     :counter="100"
-                    label="Evento dedicado a"
+                    label="Tipo de evento"
+                    :items="tipoEventos"
                     outlined
-                  ></v-text-field>
+                  ></v-combobox>
                 </v-col>
 
                 <v-col cols="12" md="4" sm="12" lg="4" xl="4">
@@ -113,7 +114,6 @@
                     label="Hora de inicio del evento"
                     outlined
                     type="time"
-                    @input="calcularCreditos"
                   ></v-text-field>
                 </v-col>
 
@@ -127,7 +127,6 @@
                     label="Hora del final del evento"
                     outlined
                     type="time"
-                    @input="calcularCreditos"
                   ></v-text-field>
                 </v-col>
 
@@ -186,13 +185,50 @@
                     maxlength="4"
                     min="0"
                     max="10"
-                    placeholder="maximo 10 créditos"
+                    placeholder="maximo 1 créditos"
                     oninput="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);"
                     :rules="[(v) => !!v || 'Campo requerido']"
                     label="Creditos otorgados en el evento"
                     filled
                     readonly
                     outlined
+                  ></v-text-field>
+                </v-col>
+
+                <v-col cols="12" md="6" sm="12" lg="6" xl="6">
+                  <v-text-field
+                    id="contacto"
+                    required
+                    v-model="eventos.contacto"
+                    name="contacto"
+                    type="text"
+                    maxlength="100"
+                    min="0"
+                    max="100"
+                    placeholder="Numero o correo de contacto"
+                    oninput="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);"
+                    :rules="[(v) => !!v || 'Campo requerido']"
+                    label="Numero o correo de contacto"
+                    outlined
+                  ></v-text-field>
+                </v-col>
+
+                <v-col cols="12" md="6" sm="12" lg="6" xl="6">
+                  <v-text-field
+                    id="horas_totales"
+                    required
+                    v-model="eventos.horas_totales"
+                    name="horas_totales"
+                    type="number"
+                    maxlength="2"
+                    min="2"
+                    max="2"
+                    placeholder="maximo 20 horas"
+                    oninput="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);"
+                    :rules="[(v) => !!v || 'Campo requerido']"
+                    label="horas totales del evento"
+                    outlined
+                    @input="calcularCreditos"
                   ></v-text-field>
                 </v-col>
 
@@ -210,7 +246,14 @@
                   ></v-combobox>
                 </v-col>
 
-                <v-col v-if="eventos.categorias != ''" cols="12" md="6" sm="12" lg="6" xl="6">
+                <v-col
+                  v-if="eventos.categorias != ''"
+                  cols="12"
+                  md="6"
+                  sm="12"
+                  lg="6"
+                  xl="6"
+                >
                   <v-combobox
                     v-model="eventos.categorias_1"
                     :rules="[(v) => !!v || 'Campo requerido']"
@@ -223,13 +266,28 @@
                     required
                     @change="getCategorias2($event.id)"
                   ></v-combobox>
-                  
                 </v-col>
 
-                <p v-if="eventos.categorias_1 != '' && eventos.categorias_1.id >= 23"> Objetivo: {{eventos.categorias_1.objetivo}}</p>
+                <p
+                  v-if="
+                    eventos.categorias_1 != '' && eventos.categorias_1.id >= 23
+                  "
+                >
+                  Objetivo: {{ eventos.categorias_1.objetivo }}
+                </p>
 
-                <template  v-if="eventos.categorias_1 != ''">
-                  <v-col v-if="eventos.categorias.id == 18 || eventos.categorias_1.id >= 23" cols="12" md="6" sm="12" lg="6" xl="6">
+                <template v-if="eventos.categorias_1 != ''">
+                  <v-col
+                    v-if="
+                      eventos.categorias.id == 18 ||
+                      eventos.categorias_1.id >= 23
+                    "
+                    cols="12"
+                    md="6"
+                    sm="12"
+                    lg="6"
+                    xl="6"
+                  >
                     <!-- <v-combobox
                       v-model="eventos.categorias_2"
                       :rules="[(v) => !!v || 'Campo requerido']"
@@ -244,7 +302,17 @@
                     ></v-combobox> -->
                   </v-col>
 
-                  <v-col v-else-if="eventos.categorias_1 != '' && eventos.categorias_1.id != '18'" cols="12" md="6" sm="12" lg="6" xl="6">
+                  <v-col
+                    v-else-if="
+                      eventos.categorias_1 != '' &&
+                      eventos.categorias_1.id != '18'
+                    "
+                    cols="12"
+                    md="6"
+                    sm="12"
+                    lg="6"
+                    xl="6"
+                  >
                     <v-combobox
                       v-model="eventos.categorias_2"
                       :rules="[(v) => !!v || 'Campo requerido']"
@@ -259,8 +327,19 @@
                     ></v-combobox>
                   </v-col>
                 </template>
-                
-                <v-col v-if="eventos.categorias_2 != '' && eventos.categorias.id == 1 && eventos.categorias_2.id < 64 " cols="12" md="6" sm="12" lg="6" xl="6">
+
+                <v-col
+                  v-if="
+                    eventos.categorias_2 != '' &&
+                    eventos.categorias.id == 1 &&
+                    eventos.categorias_2.id < 64
+                  "
+                  cols="12"
+                  md="6"
+                  sm="12"
+                  lg="6"
+                  xl="6"
+                >
                   <v-combobox
                     v-model="eventos.categorias_arte"
                     :rules="[(v) => !!v || 'Campo requerido']"
@@ -308,22 +387,22 @@
 <script>
 import swal from "sweetalert";
 import EventosDataService from "../../services/EventosDataService";
-import drawer from "../Drawer/Drawer.vue"; 
-import axios from "axios"; 
+import drawer from "../Drawer/Drawer.vue";
+import axios from "axios";
 
 export default {
   name: "add-evento",
 
   data() {
     return {
-      userEmail: '',
+      userEmail: "",
       eventos: {
         tituloEvento: "",
         unidadResponsable: "",
         descripcionEvento: "",
         eventoDedicadoA: "",
         fechaInicio: "",
-        fechaFin:"",
+        fechaFin: "",
         inicioEvento: "",
         finEvento: "",
         sede: "",
@@ -334,16 +413,18 @@ export default {
         categorias_1: "",
         categorias_2: "",
         categorias_arte: "",
-        responsable:"", 
+        responsable: "",
+        contacto: "",
+        horas_totales: "",
       },
-      UserData: "", 
-
+      UserData: "",
+      tipoEventos: ["Abierto", "Cerrado"],
       unidades: [
-      "CEDDU",
+        "CEDDU",
         "IMAC",
         "ICED",
-        "EDITORIAL", 
-        "RECTORIA", 
+        "EDITORIAL",
+        "RECTORIA",
         "FACULTAD DE DERECHO Y CIENCIAS POLÍTICAS",
         "FACULTAD DE CIENCIAS EXACTAS",
         "ESCUELA DE LENGUAS",
@@ -387,10 +468,10 @@ export default {
         "Bellas Artes UJED Lerdo",
         "CIENCIAS SOCIALES",
         "INVESTIGACION CIENTIFICA",
-        "INVESTIGACION HISTORICAS", 
+        "INVESTIGACION HISTORICAS",
         "INVESTIGACION JURIDICAS",
-        "SILVICULTURA E INDUSTRIA DE LA MADERA", 
-        
+        "SILVICULTURA E INDUSTRIA DE LA MADERA",
+
         "Biblioteca Central Universitaria",
         "Bicentenario",
         "BIOPARQUE, DURANGO",
@@ -450,22 +531,22 @@ export default {
         "Colegio De Ciencias Y Humanidades",
         "Colegio de Ginecología",
         "Escuela de ciencias y tecnologia",
-        "Escuela preparatoria Diurna", 
-        "Escuela preparatoria Nocturna", 
-        "MOVILIDAD", 
-        "EXTENSION UNIVERSITARIA", 
-        "VINCULACION INSTITUCIONAL", 
-        "CENTRO DE NEGOCIOS", 
-        "DIFUSION CULTURAL", 
-        "CENTRO DE DESARROLLO DEL DEPORTE UNIVERSITARIO", 
-        "FORMACION INTEGRAL INSTITUCIONAL"
+        "Escuela preparatoria Diurna",
+        "Escuela preparatoria Nocturna",
+        "MOVILIDAD",
+        "EXTENSION UNIVERSITARIA",
+        "VINCULACION INSTITUCIONAL",
+        "CENTRO DE NEGOCIOS",
+        "DIFUSION CULTURAL",
+        "CENTRO DE DESARROLLO DEL DEPORTE UNIVERSITARIO",
+        "FORMACION INTEGRAL INSTITUCIONAL",
       ],
       sede: [
         "CEDDU",
         "IMAC",
         "ICED",
-        "EDITORIAL", 
-        "RECTORIA", 
+        "EDITORIAL",
+        "RECTORIA",
         "FACULTAD DE DERECHO Y CIENCIAS POLÍTICAS",
         "FACULTAD DE CIENCIAS EXACTAS",
         "ESCUELA DE LENGUAS",
@@ -509,10 +590,10 @@ export default {
         "Bellas Artes UJED Lerdo",
         "CIENCIAS SOCIALES",
         "INVESTIGACION CIENTIFICA",
-        "INVESTIGACION HISTORICAS", 
+        "INVESTIGACION HISTORICAS",
         "INVESTIGACION JURIDICAS",
-        "SILVICULTURA E INDUSTRIA DE LA MADERA", 
-        
+        "SILVICULTURA E INDUSTRIA DE LA MADERA",
+
         "Biblioteca Central Universitaria",
         "Bicentenario",
         "BIOPARQUE, DURANGO",
@@ -572,16 +653,15 @@ export default {
         "Colegio De Ciencias Y Humanidades",
         "Colegio de Ginecología",
         "Escuela de ciencias y tecnologia",
-        "Escuela preparatoria Diurna", 
-        "Escuela preparatoria Nocturna", 
-        "MOVILIDAD", 
-        "EXTENSION UNIVERSITARIA", 
-        "VINCULACION INSTITUCIONAL", 
-        "CENTRO DE NEGOCIOS", 
-        "DIFUSION CULTURAL", 
-        "CENTRO DE DESARROLLO DEL DEPORTE UNIVERSITARIO", 
-        "FORMACION INTEGRAL INSTITUCIONAL"
-
+        "Escuela preparatoria Diurna",
+        "Escuela preparatoria Nocturna",
+        "MOVILIDAD",
+        "EXTENSION UNIVERSITARIA",
+        "VINCULACION INSTITUCIONAL",
+        "CENTRO DE NEGOCIOS",
+        "DIFUSION CULTURAL",
+        "CENTRO DE DESARROLLO DEL DEPORTE UNIVERSITARIO",
+        "FORMACION INTEGRAL INSTITUCIONAL",
       ],
       clasificacion: [],
       categoria1: [],
@@ -603,28 +683,30 @@ export default {
   created() {
     this.getClasificacion();
   },
-  components:{
-    drawer
+  components: {
+    drawer,
   },
   async mounted() {
-    const token = sessionStorage.getItem('jwtToken'); 
+    const token = sessionStorage.getItem("jwtToken");
 
-    if (token){
-      axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
+    if (token) {
+      axios.defaults.headers.common["Authorization"] = `Bearer ${token}`;
 
-      try{
-        const response = await axios.get('https://fibackend.ujed.mx/alumnos/user'); 
+      try {
+        const response = await axios.get(
+          'https://fibackend.ujed.mx/alumnos/user' /*"http://127.0.0.1:8000/alumnos/user"*/
+        );
 
-        this.userEmail = response.data.email; 
-        this.eventos.responsable = response.data.email; 
-      }catch(error){
-        console.error('Error ', error); 
+        this.userEmail = response.data.email;
+        this.eventos.responsable = response.data.email;
+      } catch (error) {
+        console.error("Error ", error);
       }
-    }else{
-      console.error('No token')
+    } else {
+      console.error("No token");
     }
   },
- 
+
   methods: {
     getClasificacion() {
       EventosDataService.getClasificacion()
@@ -639,9 +721,9 @@ export default {
     getCategorias1(clasf_id) {
       EventosDataService.getCategorias1(clasf_id)
         .then((response) => {
-          this.eventos.categorias_1 = '';
-          this.eventos.categorias_2 = '';
-          this.eventos.categorias_arte = '';
+          this.eventos.categorias_1 = "";
+          this.eventos.categorias_2 = "";
+          this.eventos.categorias_arte = "";
           this.categoria1 = response.data;
         })
         .catch((e) => {
@@ -679,12 +761,12 @@ export default {
         this.createEvento();
       } else {
         console.log("Evento no Validado " + false);
-        console.log(false); 
+        console.log(false);
       }
     },
 
     newEvento() {
-      location.reload();      
+      location.reload();
     },
     createEvento() {
       var data = {
@@ -692,9 +774,9 @@ export default {
         unidadResponsable: this.eventos.unidadResponsable,
         descripcionEvento: this.eventos.descripcionEvento,
         eventoDedicadoA: this.eventos.eventoDedicadoA,
-        responsable:this.eventos.responsable,
+        responsable: this.eventos.responsable,
         // fechaEvento: this.eventos.fechaEvento,
-        fechaFin: this.eventos.fechaFin, 
+        fechaFin: this.eventos.fechaFin,
         fechaInicio: this.eventos.fechaInicio,
         inicioEvento: this.eventos.inicioEvento,
         finEvento: this.eventos.finEvento,
@@ -703,14 +785,16 @@ export default {
         descripcion: this.eventos.descripcion,
         creditos: this.eventos.creditosOtorgados,
         categorias: this.eventos.categorias.id,
+        horas_totales: this.eventos.horas_totales,
+        contacto: this.eventos.contacto,
       };
-      if (this.eventos.categorias_1 != ''){
+      if (this.eventos.categorias_1 != "") {
         data.subCategoria1 = this.eventos.categorias_1.id;
       }
-      if (this.eventos.categorias_2 != ''){
+      if (this.eventos.categorias_2 != "") {
         data.subCategoria2 = this.eventos.categorias_2.id;
       }
-      if (this.eventos.categorias_arte != ''){
+      if (this.eventos.categorias_arte != "") {
         data.subCategoriaArte = this.eventos.categorias_arte.id;
       }
 
@@ -754,27 +838,16 @@ export default {
       return Math.floor((b - a + 1) * Math.random()) + a;
     },
 
-    calcularCreditos(){
-      if (this.eventos.inicioEvento && this.eventos.finEvento){
-        const horaInicio = new Date(`2023-01-01T${this.eventos.inicioEvento}`);
-        const horaFin = new Date(`2023-01-01T${this.eventos.finEvento}`);
+    calcularCreditos() {
+      const horasTotales = parseFloat(this.eventos.horas_totales) || 0;
+      const creditos = horasTotales / 20;
 
-        const diferenciaSegundos = horaFin - horaInicio; 
+      this.eventos.creditosOtorgados = creditos;
 
-        const diferenciaHoras = diferenciaSegundos / (1000 * 60 * 60); 
-
-        const creditosOtorgados = diferenciaHoras / 20; 
-
-        const creditosRedondeados = parseFloat(creditosOtorgados.toFixed(2));
-
-        console.log(creditosRedondeados);
-
-        this.eventos.creditosOtorgados = creditosRedondeados; 
-      }
-    }
+      console.log(creditos);
+    },
   },
 };
 </script>
 
-<style>
-</style>
+<style></style>

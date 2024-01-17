@@ -1,28 +1,16 @@
 <template lang="html">
   <div v-if="currentEvento" class="edit-form">
-    <drawer/>
+    <drawer />
     <v-container>
       <v-card>
-        <v-card-title>
-          Actualizar Evento
-        </v-card-title>
+        <v-card-title> Actualizar Evento </v-card-title>
         <v-container>
-          <v-form 
-            ref="form"
-            v-model="valid"
-            lazy-validation>
+          <v-form ref="form" v-model="valid" lazy-validation>
             <v-container>
               <v-row>
-                <v-col
-                  cols="12"
-                  md="6"
-                  sm="12"
-                  lg="6"
-                  xl="6"
-                  
-                >
+                <v-col cols="12" md="6" sm="12" lg="6" xl="6">
                   <v-text-field
-                    :rules="[v => !!v || 'Campo requerido']"
+                    :rules="[(v) => !!v || 'Campo requerido']"
                     :counter="100"
                     label="Titulo de Evento"
                     id="tituloEvento"
@@ -33,25 +21,18 @@
                   ></v-text-field>
                 </v-col>
 
-                <v-col
-                  cols="12"
-                  md="6"
-                  sm="12"
-                  lg="6"
-                  xl="6"
-                >
+                <v-col cols="12" md="6" sm="12" lg="6" xl="6">
                   <v-combobox
-                    :rules="[v => !!v || 'Campo requerido']"
+                    :rules="[(v) => !!v || 'Campo requerido']"
                     v-model="currentEvento.unidadResponsable"
                     :items="unidades"
-                    id="unidadResponsable" 
+                    id="unidadResponsable"
                     name="unidadResponsable"
                     label="Unidad responsable"
                     outlined
                     :counter="100"
                     required
                   ></v-combobox>
-                  
                 </v-col>
 
                 <v-col cols="12" md="6" sm="12" lg="6" xl="6">
@@ -69,44 +50,32 @@
                   ></v-text-field>
                 </v-col>
 
-                <v-col
-                  cols="12"
-                  md="6"
-                  sm="12"
-                  lg="6"
-                  xl="6"
-                >
+                <v-col cols="12" md="6" sm="12" lg="6" xl="6">
                   <v-textarea
-                    v-model="currentEvento.descripcionEvento" 
-                    id="descripcionEvento" 
+                    v-model="currentEvento.descripcionEvento"
+                    id="descripcionEvento"
                     name="descripcionEvento"
                     label="Descripción del evento"
-                    :counter="200"
+                    :counter="1000"
                     rows="2"
                     required
                     outlined
-                    :rules="[v => !!v || 'Campo requerido']"
+                    :rules="[(v) => !!v || 'Campo requerido']"
                   ></v-textarea>
                 </v-col>
 
-                <v-col
-                  cols="12"
-                  md="6"
-                  sm="12"
-                  lg="6"
-                  xl="6"
-                >
-                  <v-text-field
+                <v-col cols="12" md="6" sm="12" lg="6" xl="6">
+                  <v-combobox
                     id="eventoDedicadoA"
                     required
                     v-model="currentEvento.eventoDedicadoA"
                     name="eventoDedicadoA"
-                    :rules="[v => !!v || 'Campo requerido']"
+                    :rules="[(v) => !!v || 'Campo requerido']"
                     :counter="100"
-                    label="Evento dedicado a"
+                    label="Tipo de evento"
+                    :items="tipoEventos"
                     outlined
-                    
-                  ></v-text-field>
+                  ></v-combobox>
                 </v-col>
 
                 <v-col cols="12" md="4" sm="12" lg="4" xl="4">
@@ -134,153 +103,157 @@
                     type="date"
                   ></v-text-field>
                 </v-col>
-                
-                <v-col
-                  cols="12"
-                  md="4"
-                  sm="6"
-                  lg="4"
-                  xl="4"
-                >
+
+                <v-col cols="12" md="4" sm="6" lg="4" xl="4">
                   <v-text-field
                     id="inicioEvento"
                     required
                     v-model="currentEvento.inicioEvento"
                     name="inicioEvento"
-                    :rules="[v => !!v || 'Campo requerido']"
+                    :rules="[(v) => !!v || 'Campo requerido']"
                     label="Hora de inicio del evento"
                     outlined
                     type="time"
-                    @change="calcularCreditos"
                   ></v-text-field>
                 </v-col>
-                
-                <v-col
-                  cols="12"
-                  md="4"
-                  sm="6"
-                  lg="4"
-                  xl="4"
-                >
+
+                <v-col cols="12" md="4" sm="6" lg="4" xl="4">
                   <v-text-field
                     id="finEvento"
                     required
                     v-model="currentEvento.finEvento"
                     name="finEvento"
-                    :rules="[v => !!v || 'Campo requerido']"
+                    :rules="[(v) => !!v || 'Campo requerido']"
                     label="Hora del final del evento"
                     outlined
                     type="time"
-                    @change="calcularCreditos"
                   ></v-text-field>
                 </v-col>
-                
-                <v-col
-                  cols="12"
-                  md="4"
-                  sm="6"
-                  lg="4"
-                  xl="4"
-                >
+
+                <v-col cols="12" md="4" sm="6" lg="4" xl="4">
                   <v-combobox
-                    v-model="currentEvento.sede"  
-                    id="sede" 
-                    required 
+                    v-model="currentEvento.sede"
+                    id="sede"
+                    required
                     name="sede"
-                    :rules="[v => !!v || 'Campo requerido']"
+                    :rules="[(v) => !!v || 'Campo requerido']"
                     :counter="100"
                     label="Sede del evento"
                     outlined
                     :items="sede"
                   ></v-combobox>
                 </v-col>
-                
-                <v-col
-                  cols="12"
-                  md="4"
-                  sm="6"
-                  lg="4"
-                  xl="4"
-                >
+
+                <v-col cols="12" md="4" sm="6" lg="4" xl="4">
                   <v-text-field
                     id="cupo"
                     required
                     v-model="currentEvento.cupo"
                     name="cupo"
-                    type="number"  maxlength="4"
-                    min="1" max="1000"
+                    type="number"
+                    maxlength="4"
+                    min="1"
+                    max="1000"
                     placeholder="maximo mil personas"
                     oninput="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);"
-                    :rules="[v => !!v || 'Campo requerido']"
+                    :rules="[(v) => !!v || 'Campo requerido']"
                     label="Cupo del evento"
                     outlined
                   ></v-text-field>
                 </v-col>
-                
-                <v-col
-                  cols="12"
-                  md="4"
-                  sm="12"
-                  lg="4"
-                  xl="4"
-                >
+
+                <v-col cols="12" md="4" sm="12" lg="4" xl="4">
                   <v-text-field
                     id="descripcion"
                     required
                     v-model="currentEvento.descripcion"
                     name="descripcion"
-                    :rules="[v => !!v || 'Campo requerido']"
+                    :rules="[(v) => !!v || 'Campo requerido']"
                     :counter="150"
                     label="Descripción del lugar"
                     outlined
                   ></v-text-field>
                 </v-col>
-                
-                <v-col
-                  cols="12"
-                  md="6"
-                  sm="12"
-                  lg="6"
-                  xl="6"
-                >
+
+                <v-col cols="12" md="6" sm="12" lg="6" xl="6">
                   <v-text-field
                     id="creditosOtorgados"
                     required
                     v-model="currentEvento.creditos"
                     name="creditos"
-                    type="number"  maxlength="4"
-                    min="0" max="10"
-                    placeholder="maximo 10 creditos"
+                    type="number"
+                    maxlength="4"
+                    min="0"
+                    max="10"
+                    placeholder="maximo 1 creditos"
                     oninput="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);"
-                    :rules="[v => !!v || 'Campo requerido']"
+                    :rules="[(v) => !!v || 'Campo requerido']"
                     label="Creditos otorgados en el evento"
                     outlined
                     readonly
-                    filled 
+                    filled
                   ></v-text-field>
                 </v-col>
 
+                <v-col cols="12" md="6" sm="12" lg="6" xl="6">
+                  <v-text-field
+                    id="contacto"
+                    required
+                    v-model="currentEvento.contacto"
+                    name="contacto"
+                    type="text"
+                    maxlength="100"
+                    min="0"
+                    max="100"
+                    placeholder="Numero o correo de contacto"
+                    oninput="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);"
+                    :rules="[(v) => !!v || 'Campo requerido']"
+                    label="Numero o correo de contacto"
+                    outlined
+                  ></v-text-field>
+                </v-col>
+
+                <v-col cols="12" md="6" sm="12" lg="6" xl="6">
+                  <v-text-field
+                    id="horas_totales"
+                    required
+                    v-model="currentEvento.horas_totales"
+                    name="horas_totales"
+                    type="number"
+                    maxlength="2"
+                    min="2"
+                    max="2"
+                    placeholder="maximo 20 horas"
+                    oninput="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);"
+                    :rules="[(v) => !!v || 'Campo requerido']"
+                    label="horas totales del evento"
+                    outlined
+                    @input="calcularCreditos"
+                  ></v-text-field>
+                </v-col>
+
+                <v-col cols="12" md="6" sm="12" lg="6" xl="6">
+                  <v-combobox
+                    v-model="currentEvento.categorias"
+                    id="categorias"
+                    name="categorias"
+                    :items="clasificacion"
+                    label="Categoria del evento"
+                    required
+                    outlined
+                    :rules="[(v) => !!v || 'Campo requerido']"
+                    @change="getCategorias1($event.id, true)"
+                  ></v-combobox>
+                </v-col>
+
                 <v-col
+                  v-if="currentEvento.categorias != ''"
                   cols="12"
                   md="6"
                   sm="12"
                   lg="6"
                   xl="6"
                 >
-                  <v-combobox
-                    v-model="currentEvento.categorias"  
-                    id="categorias" 
-                    name="categorias"
-                    :items="clasificacion"
-                    label="Categoria del evento"
-                    required
-                    outlined
-                    :rules="[v => !!v || 'Campo requerido']"
-                    @change="getCategorias1($event.id, true)"
-                  ></v-combobox>
-                </v-col>
-
-                <v-col v-if="currentEvento.categorias != ''" cols="12" md="6" sm="12" lg="6" xl="6">
                   <v-combobox
                     v-model="currentEvento.subCategoria1"
                     :rules="[(v) => !!v || 'Campo requerido']"
@@ -295,10 +268,27 @@
                   ></v-combobox>
                 </v-col>
 
-                <p v-if="currentEvento.subCategoria1 != '' && currentEvento.subCategoria1.id >= 23"> Objetivo: {{currentEvento.subCategoria1.objetivo}}</p>
+                <p
+                  v-if="
+                    currentEvento.subCategoria1 != '' &&
+                    currentEvento.subCategoria1.id >= 23
+                  "
+                >
+                  Objetivo: {{ currentEvento.subCategoria1.objetivo }}
+                </p>
 
-                <template  v-if="currentEvento.subCategoria1 != ''">
-                  <v-col v-if="currentEvento.categorias.id == 18 || currentEvento.subCategoria1.id >= 23" cols="12" md="6" sm="12" lg="6" xl="6">
+                <template v-if="currentEvento.subCategoria1 != ''">
+                  <v-col
+                    v-if="
+                      currentEvento.categorias.id == 18 ||
+                      currentEvento.subCategoria1.id >= 23
+                    "
+                    cols="12"
+                    md="6"
+                    sm="12"
+                    lg="6"
+                    xl="6"
+                  >
                     <!-- <v-combobox
                       v-model="eventos.categorias_2"
                       :rules="[(v) => !!v || 'Campo requerido']"
@@ -313,7 +303,17 @@
                     ></v-combobox> -->
                   </v-col>
 
-                  <v-col v-else-if="currentEvento.subCategoria1 != '' && currentEvento.subCategoria1.id != '18'" cols="12" md="6" sm="12" lg="6" xl="6">
+                  <v-col
+                    v-else-if="
+                      currentEvento.subCategoria1 != '' &&
+                      currentEvento.subCategoria1.id != '18'
+                    "
+                    cols="12"
+                    md="6"
+                    sm="12"
+                    lg="6"
+                    xl="6"
+                  >
                     <v-combobox
                       v-model="currentEvento.subCategoria2"
                       :rules="[(v) => !!v || 'Campo requerido']"
@@ -328,8 +328,19 @@
                     ></v-combobox>
                   </v-col>
                 </template>
-                
-                <v-col v-if="currentEvento.subCategoria2 != '' && currentEvento.categorias.id == 1 && currentEvento.subCategoria2.id < 64 " cols="12" md="6" sm="12" lg="6" xl="6">
+
+                <v-col
+                  v-if="
+                    currentEvento.subCategoria2 != '' &&
+                    currentEvento.categorias.id == 1 &&
+                    currentEvento.subCategoria2.id < 64
+                  "
+                  cols="12"
+                  md="6"
+                  sm="12"
+                  lg="6"
+                  xl="6"
+                >
                   <v-combobox
                     v-model="currentEvento.subCategoriaArte"
                     :rules="[(v) => !!v || 'Campo requerido']"
@@ -345,7 +356,7 @@
                 </v-col>
               </v-row>
             </v-container>
-          
+
             <v-row style="padding: 20px 0px 20px 0px">
               <div class="d-grid gap-2 d-md-flex justify-content-md-end">
                 <!-- <button class="btn btn-outline-danger mr-2" 
@@ -354,22 +365,22 @@
                   Eliminar
                 </button> -->
 
-                <button type="submit" class="btn btn-outline-success" 
+                <button
+                  type="submit"
+                  class="btn btn-outline-success"
                   @click.prevent="updateEvento"
                 >
                   Actualizar evento
                 </button>
-                  <p>{{ message }}</p>
+                <p>{{ message }}</p>
               </div>
             </v-row>
           </v-form>
-          
-          
         </v-container>
       </v-card>
     </v-container>
-    <br>
-  </div>  
+    <br />
+  </div>
   <div v-else>
     <br />
     <p>Por favor selecciona un evento...</p>
@@ -379,7 +390,7 @@
 <script>
 import EventosDataService from "../../services/EventosDataService";
 import swal from "sweetalert";
-import drawer from "../Drawer/Drawer.vue"; 
+import drawer from "../Drawer/Drawer.vue";
 import axios from "axios";
 export default {
   name: "evento",
@@ -392,12 +403,13 @@ export default {
       categoria1: [],
       categoria2: [],
       categoriaArte: [],
+      tipoEventos: ["Abierto", "Cerrado"],
       unidades: [
-      "CEDDU",
+        "CEDDU",
         "IMAC",
         "ICED",
-        "EDITORIAL", 
-        "RECTORIA", 
+        "EDITORIAL",
+        "RECTORIA",
         "FACULTAD DE DERECHO Y CIENCIAS POLÍTICAS",
         "FACULTAD DE CIENCIAS EXACTAS",
         "ESCUELA DE LENGUAS",
@@ -441,9 +453,9 @@ export default {
         "Bellas Artes UJED Lerdo",
         "CIENCIAS SOCIALES",
         "INVESTIGACION CIENTIFICA",
-        "INVESTIGACION HISTORICAS", 
+        "INVESTIGACION HISTORICAS",
         "INVESTIGACION JURIDICAS",
-        "SILVICULTURA E INDUSTRIA DE LA MADERA", 
+        "SILVICULTURA E INDUSTRIA DE LA MADERA",
         "Biblioteca Central Universitaria",
         "Bicentenario",
         "BIOPARQUE, DURANGO",
@@ -503,22 +515,22 @@ export default {
         "Colegio De Ciencias Y Humanidades",
         "Colegio de Ginecología",
         "Escuela de ciencias y tecnologia",
-        "Escuela preparatoria Diurna", 
-        "Escuela preparatoria Nocturna", 
-        "MOVILIDAD", 
-        "EXTENSION UNIVERSITARIA", 
-        "VINCULACION INSTITUCIONAL", 
-        "CENTRO DE NEGOCIOS", 
-        "DIFUSION CULTURAL", 
-        "CENTRO DE DESARROLLO DEL DEPORTE UNIVERSITARIO", 
-        "FORMACION INTEGRAL INSTITUCIONAL"
+        "Escuela preparatoria Diurna",
+        "Escuela preparatoria Nocturna",
+        "MOVILIDAD",
+        "EXTENSION UNIVERSITARIA",
+        "VINCULACION INSTITUCIONAL",
+        "CENTRO DE NEGOCIOS",
+        "DIFUSION CULTURAL",
+        "CENTRO DE DESARROLLO DEL DEPORTE UNIVERSITARIO",
+        "FORMACION INTEGRAL INSTITUCIONAL",
       ],
       sede: [
-      "CEDDU",
+        "CEDDU",
         "IMAC",
         "ICED",
-        "EDITORIAL", 
-        "RECTORIA", 
+        "EDITORIAL",
+        "RECTORIA",
         "FACULTAD DE DERECHO Y CIENCIAS POLÍTICAS",
         "FACULTAD DE CIENCIAS EXACTAS",
         "ESCUELA DE LENGUAS",
@@ -562,10 +574,10 @@ export default {
         "Bellas Artes UJED Lerdo",
         "CIENCIAS SOCIALES",
         "INVESTIGACION CIENTIFICA",
-        "INVESTIGACION HISTORICAS", 
+        "INVESTIGACION HISTORICAS",
         "INVESTIGACION JURIDICAS",
-        "SILVICULTURA E INDUSTRIA DE LA MADERA", 
-        
+        "SILVICULTURA E INDUSTRIA DE LA MADERA",
+
         "Biblioteca Central Universitaria",
         "Bicentenario",
         "BIOPARQUE, DURANGO",
@@ -625,23 +637,23 @@ export default {
         "Colegio De Ciencias Y Humanidades",
         "Colegio de Ginecología",
         "Escuela de ciencias y tecnologia",
-        "Escuela preparatoria Diurna", 
-        "Escuela preparatoria Nocturna", 
-        "MOVILIDAD", 
-        "EXTENSION UNIVERSITARIA", 
-        "VINCULACION INSTITUCIONAL", 
-        "CENTRO DE NEGOCIOS", 
-        "DIFUSION CULTURAL", 
-        "CENTRO DE DESARROLLO DEL DEPORTE UNIVERSITARIO", 
-        "FORMACION INTEGRAL INSTITUCIONAL"
+        "Escuela preparatoria Diurna",
+        "Escuela preparatoria Nocturna",
+        "MOVILIDAD",
+        "EXTENSION UNIVERSITARIA",
+        "VINCULACION INSTITUCIONAL",
+        "CENTRO DE NEGOCIOS",
+        "DIFUSION CULTURAL",
+        "CENTRO DE DESARROLLO DEL DEPORTE UNIVERSITARIO",
+        "FORMACION INTEGRAL INSTITUCIONAL",
       ],
-       responsable:"", 
-       fechaInicio: "",
-      fechaFin:"",
-      creditosOtorgados:"",
+      responsable: "",
+      fechaInicio: "",
+      fechaFin: "",
+      creditosOtorgados: "",
     };
   },
-  components:{ drawer}, 
+  components: { drawer },
   methods: {
     getEvento(id) {
       EventosDataService.getevento(id)
@@ -649,11 +661,10 @@ export default {
           this.currentEvento = response.data;
           this.getCategorias1(this.currentEvento.categorias.id);
           this.getCategorias2(this.currentEvento.subCategoria1.id);
-          if(this.currentEvento.subCategoriaArte){
+          if (this.currentEvento.subCategoriaArte) {
             this.getCategoriasArte(this.currentEvento.subCategoria2.id);
           }
           this.calcularCreditos();
-          
         })
         .catch((e) => {
           console.log(e);
@@ -672,10 +683,10 @@ export default {
         });
     },
     getCategorias1(clasf_id, limpiar) {
-      if (limpiar == true){
-        this.currentEvento.subCategoria1 = ''; 
-        this.currentEvento.subCategoria2 = ''; 
-        this.currentEvento.subCategoriaArte = ''; 
+      if (limpiar == true) {
+        this.currentEvento.subCategoria1 = "";
+        this.currentEvento.subCategoria2 = "";
+        this.currentEvento.subCategoriaArte = "";
       }
       EventosDataService.getCategorias1(clasf_id)
         .then((response) => {
@@ -686,9 +697,9 @@ export default {
         });
     },
     getCategorias2(cat_1, limpiar) {
-      if (limpiar == true){
-        this.currentEvento.subCategoria2 = ''; 
-        this.currentEvento.subCategoriaArte = ''; 
+      if (limpiar == true) {
+        this.currentEvento.subCategoria2 = "";
+        this.currentEvento.subCategoriaArte = "";
       }
       EventosDataService.getCategorias2(cat_1)
         .then((response) => {
@@ -699,8 +710,8 @@ export default {
         });
     },
     getCategoriasArte(cat, limpiar) {
-      if (limpiar == true){
-        this.currentEvento.subCategoriaArte = ''; 
+      if (limpiar == true) {
+        this.currentEvento.subCategoriaArte = "";
       }
       EventosDataService.getCategoriasArte(cat)
         .then((response) => {
@@ -728,37 +739,33 @@ export default {
         descripcion: this.currentEvento.descripcion,
         creditos: this.currentEvento.creditos,
         categorias: this.currentEvento.categorias.id,
-        responsable: this.currentEvento.responsable
+        responsable: this.currentEvento.responsable,
+        horas_totales: this.currentEvento.horas_totales,
+        contacto: this.currentEvento.contacto,
       };
 
-      console.log(this.currentEvento); 
-      
-      if (this.currentEvento.subCategoria1 != ""){
+      if (this.currentEvento.subCategoria1 != "") {
         data.subCategoria1 = this.currentEvento.subCategoria1.id;
+      } else {
+        data.subCategoria1 = "";
       }
-      else {
-        data.subCategoria1 = '';
-      }
-      if (this.currentEvento.subCategoria2 != ""){
+      if (this.currentEvento.subCategoria2 != "") {
         data.subCategoria2 = this.currentEvento.subCategoria2.id;
+      } else {
+        data.subCategoria2 = "";
       }
-      else {
-        data.subCategoria2 = '';
-      }
-      if (this.currentEvento.subCategoriaArte != ""){
+      if (this.currentEvento.subCategoriaArte != "") {
         data.subCategoriaArte = this.currentEvento.subCategoriaArte.id;
+      } else {
+        data.subCategoriaArte = "";
       }
-      else {
-        data.subCategoriaArte = '';
-      }
-
 
       if (this.valid == true) {
         EventosDataService.update(this.currentEvento.id, data)
           .then((response) => {
             console.log(response.data);
             swal("El evento se actualizo correctamente!", "", "success");
-            window.location.reload();
+            window.location.href = "/eventos";
           })
           .catch((e) => {
             console.log(e);
@@ -772,68 +779,52 @@ export default {
         console.log("Evento no Validado " + false);
       }
     },
-    calcularCreditos(){
-      console.log("CalcularCredit");
-      if (this.currentEvento.inicioEvento && this.currentEvento.finEvento){
-        const horaInicio = new Date(`2023-01-01T${this.currentEvento.inicioEvento}`);
-        const horaFin = new Date(`2023-01-01T${this.currentEvento.finEvento}`);
+    calcularCreditos() {
+      const horasTotales = parseFloat(this.currentEvento.horas_totales) || 0;
+      const creditos = horasTotales / 20;
 
-        const diferenciaSegundos = horaFin - horaInicio; 
-
-        const diferenciaHoras = diferenciaSegundos / (1000 * 60 * 60); 
-
-        const creditosOtorgados = diferenciaHoras / 20;
-
-        const creditosRedondeados = parseFloat(creditosOtorgados.toFixed(2));
-
-        console.log(creditosRedondeados);
-
-        this.currentEvento.creditos = creditosRedondeados; 
-
-
-      }
+      this.currentEvento.creditos = creditos;
     },
 
-    deleteEvento() {
-      EventosDataService.delete(this.currentEvento.id)
-        .then((response) => {
-          console.log(response.data);
-          swal("El evento se elimino correctamente!", "", "success");
-          this.$router.push({ name: "eventos" });
-        })
-        .catch((e) => {
-          console.log(e);
-          swal("Ocurrio un error al eliminar el evento", "", "error");
-        });
-    },
+    // deleteEvento() {
+    //   EventosDataService.delete(this.currentEvento.id)
+    //     .then((response) => {
+    //       console.log(response.data);
+    //       swal("El evento se elimino correctamente!", "", "success");
+    //       this.$router.push({ name: "eventos" });
+    //     })
+    //     .catch((e) => {
+    //       console.log(e);
+    //       swal("Ocurrio un error al eliminar el evento", "", "error");
+    //     });
+    // },
   },
   async mounted() {
     this.message = "";
     this.getEvento(this.$route.params.id);
-    this.getClasificacion() ; 
+    this.getClasificacion();
     console.log(this.$route.params.id);
 
-    const token = sessionStorage.getItem('jwtToken'); 
+    const token = sessionStorage.getItem("jwtToken");
 
-    if (token){
-      axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
+    if (token) {
+      axios.defaults.headers.common["Authorization"] = `Bearer ${token}`;
 
-      try{
-        const response = await axios.get('https://fibackend.ujed.mx/alumnos/user'); 
+      try {
+        const response = await axios.get(
+          "https://fibackend.ujed.mx/alumnos/user" /*"http://127.0.0.1:8000/alumnos/user"*/
+        );
 
-        this.userEmail = response.data.email; 
-        this.currentEvento.responsable = response.data.email; 
-        
-      }catch(error){
-        console.error('Error ', error); 
+        this.userEmail = response.data.email;
+        this.currentEvento.responsable = response.data.email;
+      } catch (error) {
+        console.error("Error ", error);
       }
-    }else{
-      console.error('No token')
+    } else {
+      console.error("No token");
     }
   },
 };
 </script>
 
-<style>
-
-</style>
+<style></style>
