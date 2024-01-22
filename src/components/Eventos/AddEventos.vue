@@ -2,7 +2,7 @@
   <div class="submit-form">
     <drawer />
     <v-card>
-      <v-card-title> Registro de evento </v-card-title>
+      <v-card-title> REGISTRO DE EVENTO </v-card-title>
       <div v-if="!submitted">
         <v-container style="padding: 0px 40px 40px 40px">
           <v-form ref="form" v-model="valid" lazy-validation>
@@ -12,7 +12,7 @@
                   <v-text-field
                     :rules="[(v) => !!v || 'Campo requerido']"
                     :counter="100"
-                    label="Titulo de Evento"
+                    label="TITUTLO DE EVENTO"
                     id="tituloEvento"
                     v-model="eventos.tituloEvento"
                     name="tituloEvento"
@@ -28,7 +28,7 @@
                     :items="unidades"
                     id="unidadResponsable"
                     name="unidadResponsable"
-                    label="Unidad responsable"
+                    label="UNIDAD RESPONSABLE"
                     outlined
                     :counter="100"
                     required
@@ -39,7 +39,7 @@
                   <v-text-field
                     :rules="[(v) => !!v || 'Campo requerido']"
                     :counter="100"
-                    label="Responsable"
+                    label="RESPONSABLE"
                     id="responsable"
                     v-model="eventos.responsable"
                     name="responsable"
@@ -55,7 +55,7 @@
                     v-model="eventos.descripcionEvento"
                     id="descripcionEvento"
                     name="descripcionEvento"
-                    label="Descripción del evento"
+                    label="DESCRIPCION DEL EVENTO"
                     :counter="1000"
                     rows="2"
                     required
@@ -72,7 +72,7 @@
                     name="eventoDedicadoA"
                     :rules="[(v) => !!v || 'Campo requerido']"
                     :counter="100"
-                    label="Tipo de evento"
+                    label="TIPO DE EVENTO"
                     :items="tipoEventos"
                     outlined
                   ></v-combobox>
@@ -84,20 +84,7 @@
                     v-model="eventos.fechaInicio"
                     name="fechaInicio"
                     :rules="[(v) => !!v || 'Campo requerido']"
-                    label="Fecha de inicio del evento"
-                    required
-                    outlined
-                    type="date"
-                  ></v-text-field>
-                </v-col>
-
-                <v-col cols="12" md="4" sm="12" lg="4" xl="4">
-                  <v-text-field
-                    id="fechaFin"
-                    v-model="eventos.fechaFin"
-                    name="fechaFin"
-                    :rules="[(v) => !!v || 'Campo requerido']"
-                    label="Fecha de fin del evento"
+                    label="FECHA DE INICIO DEL EVENTO"
                     required
                     outlined
                     type="date"
@@ -111,9 +98,22 @@
                     v-model="eventos.inicioEvento"
                     name="inicioEvento"
                     :rules="[(v) => !!v || 'Campo requerido']"
-                    label="Hora de inicio del evento"
+                    label="HORA DE INICIO DEL EVENTO"
                     outlined
                     type="time"
+                  ></v-text-field>
+                </v-col>
+
+                <v-col cols="12" md="4" sm="12" lg="4" xl="4">
+                  <v-text-field
+                    id="fechaFin"
+                    v-model="eventos.fechaFin"
+                    name="fechaFin"
+                    :rules="[(v) => !!v || 'Campo requerido']"
+                    label="FECHA FIN DEL EVENTO"
+                    required
+                    outlined
+                    type="date"
                   ></v-text-field>
                 </v-col>
 
@@ -124,7 +124,7 @@
                     v-model="eventos.finEvento"
                     name="finEvento"
                     :rules="[(v) => !!v || 'Campo requerido']"
-                    label="Hora del final del evento"
+                    label="HORA FIN DEL EVENTO"
                     outlined
                     type="time"
                   ></v-text-field>
@@ -138,7 +138,7 @@
                     name="sede"
                     :rules="[(v) => !!v || 'Campo requerido']"
                     :counter="100"
-                    label="Sede del evento"
+                    label="SEDE DEL EVENTO"
                     outlined
                     :items="sede"
                   ></v-combobox>
@@ -154,10 +154,10 @@
                     maxlength="4"
                     min="1"
                     max="1000"
-                    placeholder="maximo mil personas"
+                    placeholder="MAXIMO 1000 PERSONAS"
                     oninput="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);"
                     :rules="[(v) => !!v || 'Campo requerido']"
-                    label="Cupo del evento"
+                    label="CUPO DEL EVENTO"
                     outlined
                   ></v-text-field>
                 </v-col>
@@ -170,7 +170,7 @@
                     name="descripcion"
                     :rules="[(v) => !!v || 'Campo requerido']"
                     :counter="150"
-                    label="Descripción del lugar"
+                    label="DESCRIPCION DEL LUGAR"
                     outlined
                   ></v-text-field>
                 </v-col>
@@ -185,10 +185,10 @@
                     maxlength="4"
                     min="0"
                     max="10"
-                    placeholder="maximo 1 créditos"
+                    placeholder="MAXIMO 1 CREDITO"
                     oninput="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);"
                     :rules="[(v) => !!v || 'Campo requerido']"
-                    label="Creditos otorgados en el evento"
+                    label="CREDITOS"
                     filled
                     readonly
                     outlined
@@ -205,10 +205,10 @@
                     maxlength="100"
                     min="0"
                     max="100"
-                    placeholder="Numero o correo de contacto"
+                    placeholder="NUMERO O CORREO DE CONTACTO"
                     oninput="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);"
                     :rules="[(v) => !!v || 'Campo requerido']"
-                    label="Numero o correo de contacto"
+                    label="NUMERO O CORREO DE CONTACTO"
                     outlined
                   ></v-text-field>
                 </v-col>
@@ -223,10 +223,10 @@
                     maxlength="2"
                     min="2"
                     max="2"
-                    placeholder="maximo 20 horas"
+                    placeholder="MAXIMO 20 HORAS"
                     oninput="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);"
                     :rules="[(v) => !!v || 'Campo requerido']"
-                    label="horas totales del evento"
+                    label="HORAS TOTALES DEL EVENTO"
                     outlined
                     @input="calcularCreditos"
                   ></v-text-field>
@@ -238,7 +238,7 @@
                     id="categorias"
                     name="categorias"
                     :items="clasificacion"
-                    label="Categoria del evento"
+                    label="CATEGORIA DEL EVENTO"
                     required
                     outlined
                     @change="getCategorias1($event.id)"
@@ -260,7 +260,7 @@
                     :items="categoria1"
                     id="categorias_1"
                     name="categorias_1"
-                    label="Categoria"
+                    label="CATEGORIA"
                     outlined
                     :counter="100"
                     required
@@ -363,7 +363,7 @@
                   Eliminar
                 </button> -->
                 <button @click.prevent="saveEvento" class="btn btn-success">
-                  Crear evento
+                  CREAR EVENTO
                 </button>
               </div>
             </v-row>
@@ -694,7 +694,7 @@ export default {
 
       try {
         const response = await axios.get(
-          'https://fibackend.ujed.mx/alumnos/user' /*"http://127.0.0.1:8000/alumnos/user"*/
+          "https://fibackend.ujed.mx/alumnos/user" /*"http://127.0.0.1:8000/alumnos/user"*/
         );
 
         this.userEmail = response.data.email;
