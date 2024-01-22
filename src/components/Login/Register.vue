@@ -80,7 +80,7 @@ export default {
       
 
       axios
-        .post('http://fibackend.ujed.mx/alumnos/register/', this.formData)
+        .post('http://localhost:8000/alumnos/register/', this.formData)
         .then(response => {
           console.log(response)
           window.location.href = '/inicio'

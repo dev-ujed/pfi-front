@@ -261,7 +261,7 @@ export default {
       if(token){
         axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
         try{
-          const response = await axios.request('http://fibackend.ujed.mx/alumnos/get_coordinator'); 
+          const response = await axios.request('http://localhost:8000/alumnos/get_coordinator'); 
           this.alumnos = response.data; 
         }catch(error){
           console.log('Error', error); 
