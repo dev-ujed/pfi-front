@@ -83,7 +83,7 @@
                     id="fechaInicio"
                     v-model="eventos.fechaInicio"
                     name="fechaInicio"
-                    :rules="[(v) => !!v || 'Campo requerido']"
+                    :rules="[(v) => !!v || 'Campo requerido', validarFechas]"
                     label="Fecha de inicio"
                     required
                     outlined
@@ -109,7 +109,7 @@
                     id="fechaFin"
                     v-model="eventos.fechaFin"
                     name="fechaFin"
-                    :rules="[(v) => !!v || 'Campo requerido']"
+                    :rules="[(v) => !!v || 'Campo requerido', validarFechas]"
                     label="Fecha fin del evento"
                     required
                     outlined
@@ -643,6 +643,18 @@ export default {
         .catch((e) => {
           console.log(e);
         });
+    },
+
+    validarFechas() {
+      if (this.eventos.fechaFin && this.eventos.fechaInicio) {
+        const fechaFin = new Date(this.eventos.fechaFin);
+        const fechaInicio = new Date(this.eventos.fechaInicio);
+
+        if (fechaFin < fechaInicio) {
+          return "La fecha de final no puede ser menor que la fecha de inicio";
+        }
+      }
+      return true;
     },
 
     getCategorias1(clasf_id) {
