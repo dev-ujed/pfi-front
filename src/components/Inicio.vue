@@ -17,11 +17,11 @@
         <v-card-text>
           <ul>
             <li>
-              Permitir que los egresados de la UJED cuenten con las
-              competencias, principios y valores, para ser mujeres y hombres
-              íntegros, con valores y actitudes para la conformación de una
-              sociedad unida y armónica, con ideales de justicia y sean
-              mexicanos con gran responsabilidad civil y patriotismo.
+              Permitir que los egresados de la UJED cuenten con las competencias
+              y principios, para ser mujeres y hombres íntegros, con valores y
+              actitudes para la conformación de una sociedad unida y armónica,
+              con ideales de justicia y sean mexicanos con gran responsabilidad
+              civil y patriotismo.
             </li>
             <br />
             <li>

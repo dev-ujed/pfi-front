@@ -13,12 +13,12 @@
               class="img-ujed"
             />
             <p class="text-google">
-              Ingresa con tu correo electronico y contraseña
+              Ingresa con tu correo electrónico y contraseña
             </p>
 
             <form class="form-signin" @submit.prevent="handleSubmit">
               <v-text-field
-                label="Correo Electronico"
+                label="Correo electrónico"
                 variant="regular"
                 v-model="email"
                 background-color="white"

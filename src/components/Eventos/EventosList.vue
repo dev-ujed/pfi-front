@@ -114,7 +114,7 @@
                 </v-col>
                 <v-col>
                   <label
-                    ><strong>Hora del final del evento: </strong>
+                    ><strong>Hora final del evento: </strong>
                     {{ selected[0].finEvento }}
                   </label>
                 </v-col>

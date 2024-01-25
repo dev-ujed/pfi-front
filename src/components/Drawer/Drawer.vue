@@ -1,12 +1,12 @@
 <template>
   <div>
     <v-navigation-drawer v-model="drawer" app id="sideBar" color="#202428" dark>
-      <v-list-item style="background-color: #202428" class="px-4">
+      <v-list-item style="background-color: #282420" class="px-4">
         <v-list-item-content>
           <img
             src="../../assets/uje-removebg-preview.png"
             width="40px"
-            :height="'70px'"
+            :height="'48px'"
           />
         </v-list-item-content>
       </v-list-item>

@@ -124,7 +124,7 @@
                     v-model="currentEvento.finEvento"
                     name="finEvento"
                     :rules="[(v) => !!v || 'Campo requerido']"
-                    label="Hora del final del evento"
+                    label="Hora final del evento"
                     outlined
                     type="time"
                   ></v-text-field>
