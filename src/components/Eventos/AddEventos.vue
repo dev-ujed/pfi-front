@@ -12,7 +12,7 @@
                   <v-text-field
                     :rules="[(v) => !!v || 'Campo requerido']"
                     :counter="100"
-                    label="Titulo de Evento"
+                    label="Título"
                     id="tituloEvento"
                     v-model="eventos.tituloEvento"
                     name="tituloEvento"
@@ -28,7 +28,7 @@
                     :items="unidades"
                     id="unidadResponsable"
                     name="unidadResponsable"
-                    label="Unidad responsable"
+                    label="Unidad Responsable"
                     outlined
                     :counter="100"
                     required
@@ -83,21 +83,8 @@
                     id="fechaInicio"
                     v-model="eventos.fechaInicio"
                     name="fechaInicio"
-                    :rules="[(v) => !!v || 'Campo requerido']"
-                    label="Fecha de inicio del evento"
-                    required
-                    outlined
-                    type="date"
-                  ></v-text-field>
-                </v-col>
-
-                <v-col cols="12" md="4" sm="12" lg="4" xl="4">
-                  <v-text-field
-                    id="fechaFin"
-                    v-model="eventos.fechaFin"
-                    name="fechaFin"
-                    :rules="[(v) => !!v || 'Campo requerido']"
-                    label="Fecha de fin del evento"
+                    :rules="[(v) => !!v || 'Campo requerido', validarFechas]"
+                    label="Fecha de inicio"
                     required
                     outlined
                     type="date"
@@ -111,9 +98,22 @@
                     v-model="eventos.inicioEvento"
                     name="inicioEvento"
                     :rules="[(v) => !!v || 'Campo requerido']"
-                    label="Hora de inicio del evento"
+                    label="Hora de inicio"
                     outlined
                     type="time"
+                  ></v-text-field>
+                </v-col>
+
+                <v-col cols="12" md="4" sm="12" lg="4" xl="4">
+                  <v-text-field
+                    id="fechaFin"
+                    v-model="eventos.fechaFin"
+                    name="fechaFin"
+                    :rules="[(v) => !!v || 'Campo requerido', validarFechas]"
+                    label="Fecha fin del evento"
+                    required
+                    outlined
+                    type="date"
                   ></v-text-field>
                 </v-col>
 
@@ -124,7 +124,7 @@
                     v-model="eventos.finEvento"
                     name="finEvento"
                     :rules="[(v) => !!v || 'Campo requerido']"
-                    label="Hora del final del evento"
+                    label="Hora final del evento"
                     outlined
                     type="time"
                   ></v-text-field>
@@ -154,10 +154,10 @@
                     maxlength="4"
                     min="1"
                     max="1000"
-                    placeholder="maximo mil personas"
+                    placeholder="Máximo de personas 1000"
                     oninput="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);"
                     :rules="[(v) => !!v || 'Campo requerido']"
-                    label="Cupo del evento"
+                    label="Cupo de evento"
                     outlined
                   ></v-text-field>
                 </v-col>
@@ -177,6 +177,25 @@
 
                 <v-col cols="12" md="6" sm="12" lg="6" xl="6">
                   <v-text-field
+                    id="horas_totales"
+                    required
+                    v-model="eventos.horas_totales"
+                    name="horas_totales"
+                    type="number"
+                    maxlength="2"
+                    min="2"
+                    max="2"
+                    placeholder="MAXIMO 20 HORAS"
+                    oninput="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);"
+                    :rules="[(v) => !!v || 'Campo requerido']"
+                    label="Horas totales del evento"
+                    outlined
+                    @input="calcularCreditos"
+                  ></v-text-field>
+                </v-col>
+
+                <v-col cols="12" md="6" sm="12" lg="6" xl="6">
+                  <v-text-field
                     id="creditosOtorgados"
                     required
                     v-model="eventos.creditosOtorgados"
@@ -185,10 +204,10 @@
                     maxlength="4"
                     min="0"
                     max="10"
-                    placeholder="maximo 1 créditos"
+                    placeholder="Maximo 1 credito"
                     oninput="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);"
                     :rules="[(v) => !!v || 'Campo requerido']"
-                    label="Creditos otorgados en el evento"
+                    label="Créditos"
                     filled
                     readonly
                     outlined
@@ -205,30 +224,11 @@
                     maxlength="100"
                     min="0"
                     max="100"
-                    placeholder="Numero o correo de contacto"
+                    placeholder="Nùmero o correo de contacto"
                     oninput="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);"
                     :rules="[(v) => !!v || 'Campo requerido']"
-                    label="Numero o correo de contacto"
+                    label="Nùmero o correo de contacto"
                     outlined
-                  ></v-text-field>
-                </v-col>
-
-                <v-col cols="12" md="6" sm="12" lg="6" xl="6">
-                  <v-text-field
-                    id="horas_totales"
-                    required
-                    v-model="eventos.horas_totales"
-                    name="horas_totales"
-                    type="number"
-                    maxlength="2"
-                    min="2"
-                    max="2"
-                    placeholder="maximo 20 horas"
-                    oninput="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);"
-                    :rules="[(v) => !!v || 'Campo requerido']"
-                    label="horas totales del evento"
-                    outlined
-                    @input="calcularCreditos"
                   ></v-text-field>
                 </v-col>
 
@@ -238,7 +238,7 @@
                     id="categorias"
                     name="categorias"
                     :items="clasificacion"
-                    label="Categoria del evento"
+                    label="Categorìa del evento"
                     required
                     outlined
                     @change="getCategorias1($event.id)"
@@ -260,7 +260,7 @@
                     :items="categoria1"
                     id="categorias_1"
                     name="categorias_1"
-                    label="Categoria"
+                    label="CATEGORIA"
                     outlined
                     :counter="100"
                     required
@@ -363,7 +363,7 @@
                   Eliminar
                 </button> -->
                 <button @click.prevent="saveEvento" class="btn btn-success">
-                  Crear evento
+                  CREAR EVENTO
                 </button>
               </div>
             </v-row>
@@ -420,248 +420,102 @@ export default {
       UserData: "",
       tipoEventos: ["Abierto", "Cerrado"],
       unidades: [
-        "CEDDU",
-        "IMAC",
-        "ICED",
-        "EDITORIAL",
-        "RECTORIA",
-        "FACULTAD DE DERECHO Y CIENCIAS POLÍTICAS",
-        "FACULTAD DE CIENCIAS EXACTAS",
-        "ESCUELA DE LENGUAS",
-        "FACULTAD DE ODONTOLOGÍA",
-        "FACULTAD DE CIENCIAS QUÍMICAS DGO.",
-        "FACULTAD DE CIENCIAS, CULTURA FÍSICA",
-        "ESCUELA SUPERIOR DE MÚSICA",
-        "ESCUELA DE PINTURA, ESCULTURA Y ARTE",
-        "FACULTAD DE PSICOLOGÍA Y TERAPIA COM",
-        "FACULTAD DE CIENCIAS FORESTALES",
-        "FACULTAD DE ENFERMERÍA Y OBSTETRICIA",
-        "FACULTAD DE MEDICINA VETERINARIA Y ZOOT",
-        "FACULTAD DE CIENCIAS DE LA SALUD",
-        "FACULTAD DE CIENCIAS BIOLÓGICAS",
-        "FACULTAD DE INGENIERÍA, CIENCIAS Y ARQUI",
-        "FACULTAD DE AGRICULTURA Y ZOOTECNIA",
-        "FACULTAD DE TRABAJO SOCIAL (*)",
-        "FACULTAD DE MEDICINA Y NUTRICIÓN",
-        "MUSEO REGIONAL",
-        "FACULTAD DE CIENCIAS QUIMICAS DE GOMEZ PALACIO (*)",
-        "FACULTAD DE CIENCIAS QUIMICAS DE GOMEZ PALACIO (*)",
-        "Facultad de Ciencias de la Cultura Fisica y Deporte",
-        "FACULTAD DE AGRICULTURA Y ZOOTECNIA GOMEZ PALACIO",
-        "FACULTAD DE CIENCIAS BIOLÓGICAS GOMEZ PALACIO",
-        "ESCUELA DE LENGUAS GOMEZ PALACIO",
-        "FACULTAD DE CIENCIAS DE LA SALUD GOMEZ PALACIO",
-        "FACULTAD DE CIENCIAS QUÍMICAS",
-        "DIRECCIÓN DE DIFUSIÓN CULTURAL",
-        "FACULTAD DE TRABAJO SOCIAL",
-        "FACULTAD DE ECONOMÍA, CONTADURÍA Y ADM",
-        "RADIO UNIVERSIDAD",
-        "DIRECCIÓN DE EXTENSIÓN UNIVERSITARIA",
+        "Facultad de Ingeniería, Ciencias y Arquitectura (Gómez Palacio).",
+        "Facultad de Ciencias de la Salud (Gómez Palacio).",
+        "Facultad de Agricultura y Zootecnia (Gómez Palacio.",
+        "Facultad de Ciencias Químicas (Gómez Palacio).",
+        "Facultad de Ciencias Biológicas (Gómez Palacio).",
+        "Escuela de Lenguas (Gómez Palacio).",
+        "Facultad de Medicina y Nutrición (Durango).",
+        "Facultad de Derecho y Ciencias Políticas (Durango).",
+        "Facultad de Economía, Contaduría y Administración (Durango).",
+        "Facultad de Medicina Veterinaria y Zootecnia (Durango).",
+        "Facultad de Enfermería y Obstetricia (Durango).",
+        "Facultad de Trabajo Social (Durango).",
+        "Facultad de Psicología y Terapia de Comunicación Humana (Durango).",
+        "Facultad de Ciencias Cultura Física y Deporte (Durango).",
+        "Facultad de Odontología (Durango).",
+        "Escuela superior de Música (Durango).",
+        "Facultad de Ciencias Forestales y Ambientales (Durango).",
+        "Facultad de Ciencias Químicas (Durango).",
+        "Facultad de Ciencias Exactas (Durango).",
+        "Escuela Preparatoria Diurna (Durango).",
+        "Facultad de Lenguas (Durango).",
+        "Instituto de Bellas Artes",
+        "Instituto de Ciencias Sociales",
+        "Instituto de Investigación Científica",
+        "Instituto de Investigaciones Históricas",
+        "Instituto de Investigaciones Jurídicas",
+        "Instituto de Silvicultura e Industria de la Madera",
+        "Dirección de Servicios Escolares",
+        "Dirección de Internacionalización",
+        "Dirección de Vinculación y Extensión Institucional",
+        "Dirección de Difusión Cultural",
+        "Dirección de Comunicación Social",
+        "Editorial UJED",
+        "Librería UJED",
+        "Subsecretaría General Académica",
+        "Servicios Escolares",
+        "Extensión Universitaria",
+        "Dirección General de Bibliotecas",
+        "Dirección de Desarrollo y Gestión de Recursos Humanos",
+        "Coordinación de Capacitación Institucional",
+        "Dirección de Vinculación Institucional",
+        "Centro de Negocios",
+        "Servicios ofrecidos por cada unidad",
+        "Difusión Cultural",
+        "Centro de Desarrollo del Deporte Universitario",
+        "Comunicación Social",
         "TV UJED",
-        "DIRECCIÓN DE PLAN Y DESARROLLO ACAD",
-        "COORDINACION INSTITUCIONAL FI",
-        "UNIVERSIDAD JUÁREZ DEL ESTADO DE DURANGO",
-        "COORDINACIÓN DE VINCULACIÓN EMPRES",
-        "FACULTAD DE INGENIERÍA, CIENCIAS Y ARQUI GOMEZ PALACIO",
-        " ",
-        "Bellas Artes UJED",
-        "Bellas Artes UJED Lerdo",
-        "CIENCIAS SOCIALES",
-        "INVESTIGACION CIENTIFICA",
-        "INVESTIGACION HISTORICAS",
-        "INVESTIGACION JURIDICAS",
-        "SILVICULTURA E INDUSTRIA DE LA MADERA",
-
-        "Biblioteca Central Universitaria",
-        "Bicentenario",
-        "BIOPARQUE, DURANGO",
-        "Bioparque estrella, Mty., NL.",
-        "Bolsón de Mapimí",
-        "Bosque Venustiano Carranza. Torreón, Coah.",
-        "Calle 5 de Febrero Esquina con Bruno Martínez, Zona Centro",
-        "Campus Gómez Palacio",
-        "Cancha de Santa Lucía",
-        "Cancha de usos múltiples, FCF",
-        "Cancha Frente a Facultad de Ciencias Químicas",
-        'Cancha "Robelto Silva", Carretera a Mazatlán km 1.5',
-        "Cancún, Quintana Roo",
-        "Carretera Durango Mazatlan y Calle Opalo",
-        "Casa Cuervo, Guadalajara, Jalisco",
-        "Casa de Cultura CITIBANAMEX",
-        "Casa de la Cultura de Cd. Lerdo,Durango",
-        "Casa de la Cultura de Ciudad Lerdo Durango.  Av. Francisco I. Madero 52 Nte. Col. Centro CP 35150, Lerdo, Durango ",
-        "Casa de la cultura de Gómez Palacio, Campestre GP",
-        "Casa de la Cultura Durango, Calle Negrete 900 poniente",
-        "Casa de las Banquetas Altas,Gómez Palacio Dgo.",
-        "Casa Municipal del Arte y la Cultura, Hacienda de los Laureles112, Fracc. Hacienda de Tapias ",
-        "Casa Nava avenida, Madero esquina con Ocampo., Ciudad Lerdo, Dgo.",
-        "Casino Murano, Hotel las Rosas, Gómez Palacio, Dgo.",
-        "Catedral Basílica Menor, Ave. 20 de Noviembre y Constitución",
-        "CBTA 3",
-        "CBTIS 110",
-        "CBTIS 89",
-        "CCH",
-        "Cd. de Mexico",
-        "Cdu (Promocion Deportiva)",
-        "CENTRAL UJED",
-        "Centro Cultural BANAMEX , 5 de Febrero Esq. con Francisco I. Madero",
-        "Centro Cultural y de Convenciones Bicentenario",
-        "Centro de Convenciones Bicentenario",
-        "Centro de Convenciones, Gómez Palacio ",
-        "Centro de Convenciones, Posada del Río. Gómez Palacio, Dgo.",
-        "Centro de Integración Laboral, Fracc. Huizache",
-        "CENTRO DE INV. Y DE ESTUDIOS AVANZADOS CINVESTAV ",
-        "centro de la ciudad de durango ",
-        "Centro Escolar Revolución, Sección A Gómez Farías entre Luna y Urrea, Barrio de Tierra Blanca",
-        "Centro Especializado de Reintegración y Tratamiento para menores infractores (CERMI)",
-        "Centro Monterrey, Nuevo León",
-        "Centro Recreativo Tapias ",
-        "Centro Regional de Educación para la Conservación (CRECO)",
-        "Cerro de Los Remedios, Durango,Dgo.",
-        "CIAC (Aquiles Serdán y Bruno Martínez)",
-        "CIIDIR IPN,Calle Sigma 119 Fracc. 20 de Noviembre II",
-        "Cine CITICINEMAS, Real del Mezquital 101 ",
-        "Cinemex",
-        "Cineteca Municipal Silvestre Revueltas. Juárez 217 Nte., Zona Centro",
-        "CIUDAD DE MEXICO",
-        "Ciudad del anciano",
-        "CIUDAD UNIVERSITARIA, CDMX",
-        "Club de Leones de Durango ",
-        "COLEGIO DE BACHILLERES DEL ESTADO DE DURANGO",
-        "Colegio De Ciencias Y Humanidades",
-        "Colegio de Ginecología",
-        "Escuela de ciencias y tecnologia",
-        "Escuela preparatoria Diurna",
-        "Escuela preparatoria Nocturna",
-        "MOVILIDAD",
-        "EXTENSION UNIVERSITARIA",
-        "VINCULACION INSTITUCIONAL",
-        "CENTRO DE NEGOCIOS",
-        "DIFUSION CULTURAL",
-        "CENTRO DE DESARROLLO DEL DEPORTE UNIVERSITARIO",
-        "FORMACION INTEGRAL INSTITUCIONAL",
       ],
       sede: [
-        "CEDDU",
-        "IMAC",
-        "ICED",
-        "EDITORIAL",
-        "RECTORIA",
-        "FACULTAD DE DERECHO Y CIENCIAS POLÍTICAS",
-        "FACULTAD DE CIENCIAS EXACTAS",
-        "ESCUELA DE LENGUAS",
-        "FACULTAD DE ODONTOLOGÍA",
-        "FACULTAD DE CIENCIAS QUÍMICAS DGO.",
-        "FACULTAD DE CIENCIAS, CULTURA FÍSICA",
-        "ESCUELA SUPERIOR DE MÚSICA",
-        "ESCUELA DE PINTURA, ESCULTURA Y ARTE",
-        "FACULTAD DE PSICOLOGÍA Y TERAPIA COM",
-        "FACULTAD DE CIENCIAS FORESTALES",
-        "FACULTAD DE ENFERMERÍA Y OBSTETRICIA",
-        "FACULTAD DE MEDICINA VETERINARIA Y ZOOT",
-        "FACULTAD DE CIENCIAS DE LA SALUD",
-        "FACULTAD DE CIENCIAS BIOLÓGICAS",
-        "FACULTAD DE INGENIERÍA, CIENCIAS Y ARQUI",
-        "FACULTAD DE AGRICULTURA Y ZOOTECNIA",
-        "FACULTAD DE TRABAJO SOCIAL (*)",
-        "FACULTAD DE MEDICINA Y NUTRICIÓN",
-        "MUSEO REGIONAL",
-        "FACULTAD DE CIENCIAS QUIMICAS DE GOMEZ PALACIO (*)",
-        "FACULTAD DE CIENCIAS QUIMICAS DE GOMEZ PALACIO (*)",
-        "Facultad de Ciencias de la Cultura Fisica y Deporte",
-        "FACULTAD DE AGRICULTURA Y ZOOTECNIA GOMEZ PALACIO",
-        "FACULTAD DE CIENCIAS BIOLÓGICAS GOMEZ PALACIO",
-        "ESCUELA DE LENGUAS GOMEZ PALACIO",
-        "FACULTAD DE CIENCIAS DE LA SALUD GOMEZ PALACIO",
-        "FACULTAD DE CIENCIAS QUÍMICAS",
-        "DIRECCIÓN DE DIFUSIÓN CULTURAL",
-        "FACULTAD DE TRABAJO SOCIAL",
-        "FACULTAD DE ECONOMÍA, CONTADURÍA Y ADM",
-        "RADIO UNIVERSIDAD",
-        "DIRECCIÓN DE EXTENSIÓN UNIVERSITARIA",
+        "Facultad de Ingeniería, Ciencias y Arquitectura (Gómez Palacio).",
+        "Facultad de Ciencias de la Salud (Gómez Palacio).",
+        "Facultad de Agricultura y Zootecnia (Gómez Palacio.",
+        "Facultad de Ciencias Químicas (Gómez Palacio).",
+        "Facultad de Ciencias Biológicas (Gómez Palacio).",
+        "Escuela de Lenguas (Gómez Palacio).",
+        "Facultad de Medicina y Nutrición (Durango).",
+        "Facultad de Derecho y Ciencias Políticas (Durango).",
+        "Facultad de Economía, Contaduría y Administración (Durango).",
+        "Facultad de Medicina Veterinaria y Zootecnia (Durango).",
+        "Facultad de Enfermería y Obstetricia (Durango).",
+        "Facultad de Trabajo Social (Durango).",
+        "Facultad de Psicología y Terapia de Comunicación Humana (Durango).",
+        "Facultad de Ciencias Cultura Física y Deporte (Durango).",
+        "Facultad de Odontología (Durango).",
+        "Escuela superior de Música (Durango).",
+        "Facultad de Ciencias Forestales y Ambientales (Durango).",
+        "Facultad de Ciencias Químicas (Durango).",
+        "Facultad de Ciencias Exactas (Durango).",
+        "Escuela Preparatoria Diurna (Durango).",
+        "Facultad de Lenguas (Durango).",
+        "Instituto de Bellas Artes",
+        "Instituto de Ciencias Sociales",
+        "Instituto de Investigación Científica",
+        "Instituto de Investigaciones Históricas",
+        "Instituto de Investigaciones Jurídicas",
+        "Instituto de Silvicultura e Industria de la Madera",
+        "Dirección de Servicios Escolares",
+        "Dirección de Internacionalización",
+        "Dirección de Vinculación y Extensión Institucional",
+        "Dirección de Difusión Cultural",
+        "Dirección de Comunicación Social",
+        "Editorial UJED",
+        "Librería UJED",
+        "Subsecretaría General Académica",
+        "Servicios Escolares",
+        "Extensión Universitaria",
+        "Dirección General de Bibliotecas",
+        "Dirección de Desarrollo y Gestión de Recursos Humanos",
+        "Coordinación de Capacitación Institucional",
+        "Dirección de Vinculación Institucional",
+        "Centro de Negocios",
+        "Servicios ofrecidos por cada unidad",
+        "Difusión Cultural",
+        "Centro de Desarrollo del Deporte Universitario",
+        "Comunicación Social",
         "TV UJED",
-        "DIRECCIÓN DE PLAN Y DESARROLLO ACAD",
-        "COORDINACION INSTITUCIONAL FI",
-        "UNIVERSIDAD JUÁREZ DEL ESTADO DE DURANGO",
-        "COORDINACIÓN DE VINCULACIÓN EMPRES",
-        "FACULTAD DE INGENIERÍA, CIENCIAS Y ARQUI GOMEZ PALACIO",
-        " ",
-        "Bellas Artes UJED",
-        "Bellas Artes UJED Lerdo",
-        "CIENCIAS SOCIALES",
-        "INVESTIGACION CIENTIFICA",
-        "INVESTIGACION HISTORICAS",
-        "INVESTIGACION JURIDICAS",
-        "SILVICULTURA E INDUSTRIA DE LA MADERA",
-
-        "Biblioteca Central Universitaria",
-        "Bicentenario",
-        "BIOPARQUE, DURANGO",
-        "Bioparque estrella, Mty., NL.",
-        "Bolsón de Mapimí",
-        "Bosque Venustiano Carranza. Torreón, Coah.",
-        "Calle 5 de Febrero Esquina con Bruno Martínez, Zona Centro",
-        "Campus Gómez Palacio",
-        "Cancha de Santa Lucía",
-        "Cancha de usos múltiples, FCF",
-        "Cancha Frente a Facultad de Ciencias Químicas",
-        'Cancha "Robelto Silva", Carretera a Mazatlán km 1.5',
-        "Cancún, Quintana Roo",
-        "Carretera Durango Mazatlan y Calle Opalo",
-        "Casa Cuervo, Guadalajara, Jalisco",
-        "Casa de Cultura CITIBANAMEX",
-        "Casa de la Cultura de Cd. Lerdo,Durango",
-        "Casa de la Cultura de Ciudad Lerdo Durango.  Av. Francisco I. Madero 52 Nte. Col. Centro CP 35150, Lerdo, Durango ",
-        "Casa de la cultura de Gómez Palacio, Campestre GP",
-        "Casa de la Cultura Durango, Calle Negrete 900 poniente",
-        "Casa de las Banquetas Altas,Gómez Palacio Dgo.",
-        "Casa Municipal del Arte y la Cultura, Hacienda de los Laureles112, Fracc. Hacienda de Tapias ",
-        "Casa Nava avenida, Madero esquina con Ocampo., Ciudad Lerdo, Dgo.",
-        "Casino Murano, Hotel las Rosas, Gómez Palacio, Dgo.",
-        "Catedral Basílica Menor, Ave. 20 de Noviembre y Constitución",
-        "CBTA 3",
-        "CBTIS 110",
-        "CBTIS 89",
-        "CCH",
-        "Cd. de Mexico",
-        "Cdu (Promocion Deportiva)",
-        "CENTRAL UJED",
-        "Centro Cultural BANAMEX , 5 de Febrero Esq. con Francisco I. Madero",
-        "Centro Cultural y de Convenciones Bicentenario",
-        "Centro de Convenciones Bicentenario",
-        "Centro de Convenciones, Gómez Palacio ",
-        "Centro de Convenciones, Posada del Río. Gómez Palacio, Dgo.",
-        "Centro de Integración Laboral, Fracc. Huizache",
-        "CENTRO DE INV. Y DE ESTUDIOS AVANZADOS CINVESTAV ",
-        "centro de la ciudad de durango ",
-        "Centro Escolar Revolución, Sección A Gómez Farías entre Luna y Urrea, Barrio de Tierra Blanca",
-        "Centro Especializado de Reintegración y Tratamiento para menores infractores (CERMI)",
-        "Centro Monterrey, Nuevo León",
-        "Centro Recreativo Tapias ",
-        "Centro Regional de Educación para la Conservación (CRECO)",
-        "Cerro de Los Remedios, Durango,Dgo.",
-        "CIAC (Aquiles Serdán y Bruno Martínez)",
-        "CIIDIR IPN,Calle Sigma 119 Fracc. 20 de Noviembre II",
-        "Cine CITICINEMAS, Real del Mezquital 101 ",
-        "Cinemex",
-        "Cineteca Municipal Silvestre Revueltas. Juárez 217 Nte., Zona Centro",
-        "CIUDAD DE MEXICO",
-        "Ciudad del anciano",
-        "CIUDAD UNIVERSITARIA, CDMX",
-        "Club de Leones de Durango ",
-        "COLEGIO DE BACHILLERES DEL ESTADO DE DURANGO",
-        "Colegio De Ciencias Y Humanidades",
-        "Colegio de Ginecología",
-        "Escuela de ciencias y tecnologia",
-        "Escuela preparatoria Diurna",
-        "Escuela preparatoria Nocturna",
-        "MOVILIDAD",
-        "EXTENSION UNIVERSITARIA",
-        "VINCULACION INSTITUCIONAL",
-        "CENTRO DE NEGOCIOS",
-        "DIFUSION CULTURAL",
-        "CENTRO DE DESARROLLO DEL DEPORTE UNIVERSITARIO",
-        "FORMACION INTEGRAL INSTITUCIONAL",
       ],
       clasificacion: [],
       categoria1: [],
@@ -694,7 +548,7 @@ export default {
 
       try {
         const response = await axios.get(
-          'https://fibackend.ujed.mx/alumnos/user' /*"http://127.0.0.1:8000/alumnos/user"*/
+          "https://fibackend.ujed.mx/alumnos/user" /*"http://127.0.0.1:8000/alumnos/user"*/
         );
 
         this.userEmail = response.data.email;
@@ -716,6 +570,18 @@ export default {
         .catch((e) => {
           console.log(e);
         });
+    },
+
+    validarFechas() {
+      if (this.eventos.fechaFin && this.eventos.fechaInicio) {
+        const fechaFin = new Date(this.eventos.fechaFin);
+        const fechaInicio = new Date(this.eventos.fechaInicio);
+
+        if (fechaFin < fechaInicio) {
+          return "La fecha de final no puede ser menor que la fecha de inicio";
+        }
+      }
+      return true;
     },
 
     getCategorias1(clasf_id) {

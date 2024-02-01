@@ -1,12 +1,12 @@
 <template>
   <div>
     <v-navigation-drawer v-model="drawer" app id="sideBar" color="#202428" dark>
-      <v-list-item style="background-color: #202428" class="px-4">
+      <v-list-item style="background-color: #282420" class="px-4">
         <v-list-item-content>
           <img
             src="../../assets/uje-removebg-preview.png"
             width="40px"
-            :height="'70px'"
+            :height="'48px'"
           />
         </v-list-item-content>
       </v-list-item>
@@ -25,9 +25,11 @@
     </v-navigation-drawer>
 
     <v-app-bar color="#202428" dark app>
-      <v-toolbar-title style="width: 400px" class="ml-0 pl-4">
+      <v-toolbar-title style="width: 1500px" class="ml-0 pl-4">
         <v-app-bar-nav-icon @click.stop="drawer = !drawer"></v-app-bar-nav-icon>
-        <span class="hidden-sm-and-down" id="pageName">PDFP</span>
+        <span class="hidden-sm-and-down" id="pageName"
+          >Programa de Formación y Desarrollo Profesional
+        </span>
       </v-toolbar-title>
       <div class="flex-grow-1"></div>
 

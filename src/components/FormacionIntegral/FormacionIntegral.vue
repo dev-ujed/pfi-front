@@ -1,12 +1,9 @@
 <template>
   <div>
-    <drawer/>
+    <drawer />
     <v-container>
       <v-row>
-        <v-bottom-navigation
-          color="#50ab87"
-          grow
-        >
+        <v-bottom-navigation color="#50ab87" grow>
           <v-btn @click="retrieveEventos()">
             <span>Todos</span>
             <v-icon active>mdi-home</v-icon>
@@ -38,7 +35,7 @@
           </v-btn>
 
           <v-btn @click="FiltroCategorias('6')">
-            <span>Emprendimiento</span>
+            <span>Cultura emprendedora</span>
             <v-icon>mdi-account-tie</v-icon>
           </v-btn>
         </v-bottom-navigation>
@@ -61,18 +58,16 @@
               <v-toolbar flat>
                 <v-toolbar-title>Eventos</v-toolbar-title>
                 <v-spacer></v-spacer>
-                  <v-text-field
-                    v-model="search"
-                    append-icon="mdi-magnify"
-                    label="Buscar"
-                    single-line
-                    hide-details
-                  ></v-text-field>
+                <v-text-field
+                  v-model="search"
+                  append-icon="mdi-magnify"
+                  label="Buscar"
+                  single-line
+                  hide-details
+                ></v-text-field>
               </v-toolbar>
             </template>
-            <template v-slot:no-data>
-              Espere un momento!
-            </template>
+            <template v-slot:no-data> Espere un momento! </template>
           </v-data-table>
           <!-- <v-row>
             <v-btn
@@ -83,11 +78,9 @@
           </v-row> -->
         </v-col>
         <v-col>
-          <info-Evento :evento = "selected[0]"></info-Evento>
+          <info-Evento :evento="selected[0]"></info-Evento>
         </v-col>
       </v-row>
-      
-      
     </v-container>
   </div>
 </template>
@@ -95,79 +88,76 @@
 <script>
 import EventosDataService from "../../services/EventosDataService";
 import infoEvento from "../Eventos/InfoEvento";
-import drawer from "../Drawer/Drawer.vue"; 
+import drawer from "../Drawer/Drawer.vue";
 
 export default {
-    name: "formacionIntegral",
-    data() {
-      return {
-        eventos: [],
-        singleSelect: true,
-        selected: [
-          {
-            tituloEvento: '',
-            unidadResponsable: '',
-            descripcionEvento: '',
-            eventoDedicadoA:'',
-            fechaInicio:'',
-            inicioEvento:'',
-            finEvento:'',
-            sede:'',
-            cupo:'',
-            descripcion:'',
-            creditos:'',
-            categorias:'',
-            responsable:'',
-          }
-        ],
-        singleExpand: true,
-        expanded: [],
-        search: '',
-        headers: [
-          { text: 'Titulo de evento', value: 'tituloEvento' },
-          { text: 'Unidad responsable', value: 'unidadResponsable' },
-          { text: 'Fecha de evento', sortable: true, value: 'fechaInicio' },
-          { text: 'Cupo', value: 'cupo' },
-          { text: 'Creditos', value: 'creditos' },
-          { text: 'Responsable', value: 'responsable' },
-        ],
-      };
+  name: "formacionIntegral",
+  data() {
+    return {
+      eventos: [],
+      singleSelect: true,
+      selected: [
+        {
+          tituloEvento: "",
+          unidadResponsable: "",
+          descripcionEvento: "",
+          eventoDedicadoA: "",
+          fechaInicio: "",
+          inicioEvento: "",
+          finEvento: "",
+          sede: "",
+          cupo: "",
+          descripcion: "",
+          creditos: "",
+          categorias: "",
+          responsable: "",
+        },
+      ],
+      singleExpand: true,
+      expanded: [],
+      search: "",
+      headers: [
+        { text: "Titulo de evento", value: "tituloEvento" },
+        { text: "Unidad responsable", value: "unidadResponsable" },
+        { text: "Fecha de evento", sortable: true, value: "fechaInicio" },
+        { text: "Cupo", value: "cupo" },
+        { text: "Creditos", value: "creditos" },
+        { text: "Responsable", value: "responsable" },
+      ],
+    };
+  },
+  components: {
+    infoEvento,
+    drawer,
+  },
+  methods: {
+    retrieveEventos() {
+      EventosDataService.getAll()
+        .then((response) => {
+          this.eventos = response.data;
+          console.log(this.eventos);
+        })
+        .catch((e) => {
+          console.log(e);
+        });
     },
-    components: {
-      infoEvento, drawer
-    },
-    methods: {
-      retrieveEventos() {
-        EventosDataService.getAll()
-          .then(response => {
-            this.eventos = response.data;
-            console.log(this.eventos);
-          })
-          .catch(e => {
-            console.log(e);
-          });
-      },
 
-      FiltroCategorias(categoria){
-        EventosDataService.filtroCategoria(categoria)
-          .then(response => {
-            this.eventos = response.data;
-          })
-          .catch(e => {
-            console.log(e);
-          })
-      },
+    FiltroCategorias(categoria) {
+      EventosDataService.filtroCategoria(categoria)
+        .then((response) => {
+          this.eventos = response.data;
+        })
+        .catch((e) => {
+          console.log(e);
+        });
     },
-    mounted() {
-      
-    },
-    created(){
-      this.retrieveEventos();
-      console.log(this.ejemplo)
-    }
-}
+  },
+  mounted() {},
+  created() {
+    this.retrieveEventos();
+    console.log(this.ejemplo);
+  },
+};
 </script>
 
-<style>
-
-</style>
+<style></style>

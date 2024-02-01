@@ -4,21 +4,22 @@
       <div class="degradado">
         <div class="container-fluid container-login">
           <div class="row d-flex justify-content-center align-items-center">
-            <h1 class="title">Bienvenido a PDFP</h1>
+            <h1 class="title">
+              Bienvenido al Programa de formacion y desarrollo profesional
+            </h1>
             <img
               src="../../assets/logo-ujed.png"
               alt="img-ujed"
               class="img-ujed"
             />
             <p class="text-google">
-              Ingresa con tu correo electronico y contraseña
+              Ingresa con tu correo electrónico y contraseña
             </p>
 
             <form class="form-signin" @submit.prevent="handleSubmit">
               <v-text-field
-                label="Correo Electronico"
+                label="Correo electrónico"
                 variant="regular"
-                placeholder="Placeholder"
                 v-model="email"
                 background-color="white"
                 class="flex"
@@ -27,7 +28,6 @@
               <v-text-field
                 label="Contraseña"
                 variant="regular"
-                placeholder="Placeholder"
                 v-model="password"
                 background-color="white"
                 type="password"
