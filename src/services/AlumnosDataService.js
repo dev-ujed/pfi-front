@@ -28,6 +28,8 @@ class AlumnosDataService {
   getOaloumno(id) {
     return http.get(`/alumnos/movalumno/${id}`);
   }
+
+  
 }
 
 export default new AlumnosDataService();

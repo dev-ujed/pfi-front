@@ -1,6 +1,6 @@
 <template>
   <div class="submit-form">
-    <drawer/>
+    <drawer />
     <v-card>
       <v-card-title> Registro de evento </v-card-title>
       <div v-if="!submitted">
@@ -56,7 +56,7 @@
                     id="descripcionEvento"
                     name="descripcionEvento"
                     label="Descripción del evento"
-                    :counter="200"
+                    :counter="1000"
                     rows="2"
                     required
                     outlined
@@ -65,25 +65,39 @@
                 </v-col>
 
                 <v-col cols="12" md="6" sm="12" lg="6" xl="6">
-                  <v-text-field
+                  <v-combobox
                     id="eventoDedicadoA"
                     required
                     v-model="eventos.eventoDedicadoA"
                     name="eventoDedicadoA"
                     :rules="[(v) => !!v || 'Campo requerido']"
                     :counter="100"
-                    label="Evento dedicado a"
+                    label="Tipo de evento"
+                    :items="tipoEventos"
                     outlined
+                  ></v-combobox>
+                </v-col>
+
+                <v-col cols="12" md="4" sm="12" lg="4" xl="4">
+                  <v-text-field
+                    id="fechaInicio"
+                    v-model="eventos.fechaInicio"
+                    name="fechaInicio"
+                    :rules="[(v) => !!v || 'Campo requerido']"
+                    label="Fecha de inicio del evento"
+                    required
+                    outlined
+                    type="date"
                   ></v-text-field>
                 </v-col>
 
                 <v-col cols="12" md="4" sm="12" lg="4" xl="4">
                   <v-text-field
-                    id="fechaEvento"
-                    v-model="eventos.fechaEvento"
-                    name="fechaEvento"
+                    id="fechaFin"
+                    v-model="eventos.fechaFin"
+                    name="fechaFin"
                     :rules="[(v) => !!v || 'Campo requerido']"
-                    label="Fecha del evento"
+                    label="Fecha de fin del evento"
                     required
                     outlined
                     type="date"
@@ -163,19 +177,58 @@
 
                 <v-col cols="12" md="6" sm="12" lg="6" xl="6">
                   <v-text-field
-                    id="creditos"
+                    id="creditosOtorgados"
                     required
-                    v-model="eventos.creditos"
+                    v-model="eventos.creditosOtorgados"
                     name="creditos"
                     type="number"
                     maxlength="4"
                     min="0"
                     max="10"
-                    placeholder="maximo 10 creditos"
+                    placeholder="maximo 1 créditos"
                     oninput="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);"
                     :rules="[(v) => !!v || 'Campo requerido']"
                     label="Creditos otorgados en el evento"
+                    filled
+                    readonly
                     outlined
+                  ></v-text-field>
+                </v-col>
+
+                <v-col cols="12" md="6" sm="12" lg="6" xl="6">
+                  <v-text-field
+                    id="contacto"
+                    required
+                    v-model="eventos.contacto"
+                    name="contacto"
+                    type="text"
+                    maxlength="100"
+                    min="0"
+                    max="100"
+                    placeholder="Numero o correo de contacto"
+                    oninput="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);"
+                    :rules="[(v) => !!v || 'Campo requerido']"
+                    label="Numero o correo de contacto"
+                    outlined
+                  ></v-text-field>
+                </v-col>
+
+                <v-col cols="12" md="6" sm="12" lg="6" xl="6">
+                  <v-text-field
+                    id="horas_totales"
+                    required
+                    v-model="eventos.horas_totales"
+                    name="horas_totales"
+                    type="number"
+                    maxlength="2"
+                    min="2"
+                    max="2"
+                    placeholder="maximo 20 horas"
+                    oninput="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);"
+                    :rules="[(v) => !!v || 'Campo requerido']"
+                    label="horas totales del evento"
+                    outlined
+                    @input="calcularCreditos"
                   ></v-text-field>
                 </v-col>
 
@@ -193,7 +246,14 @@
                   ></v-combobox>
                 </v-col>
 
-                <v-col v-if="eventos.categorias != ''" cols="12" md="6" sm="12" lg="6" xl="6">
+                <v-col
+                  v-if="eventos.categorias != ''"
+                  cols="12"
+                  md="6"
+                  sm="12"
+                  lg="6"
+                  xl="6"
+                >
                   <v-combobox
                     v-model="eventos.categorias_1"
                     :rules="[(v) => !!v || 'Campo requerido']"
@@ -206,13 +266,28 @@
                     required
                     @change="getCategorias2($event.id)"
                   ></v-combobox>
-                  
                 </v-col>
 
-                <p v-if="eventos.categorias_1 != '' && eventos.categorias_1.id >= 23"> Objetivo: {{eventos.categorias_1.objetivo}}</p>
+                <p
+                  v-if="
+                    eventos.categorias_1 != '' && eventos.categorias_1.id >= 23
+                  "
+                >
+                  Objetivo: {{ eventos.categorias_1.objetivo }}
+                </p>
 
-                <template  v-if="eventos.categorias_1 != ''">
-                  <v-col v-if="eventos.categorias.id == 18 || eventos.categorias_1.id >= 23" cols="12" md="6" sm="12" lg="6" xl="6">
+                <template v-if="eventos.categorias_1 != ''">
+                  <v-col
+                    v-if="
+                      eventos.categorias.id == 18 ||
+                      eventos.categorias_1.id >= 23
+                    "
+                    cols="12"
+                    md="6"
+                    sm="12"
+                    lg="6"
+                    xl="6"
+                  >
                     <!-- <v-combobox
                       v-model="eventos.categorias_2"
                       :rules="[(v) => !!v || 'Campo requerido']"
@@ -227,7 +302,17 @@
                     ></v-combobox> -->
                   </v-col>
 
-                  <v-col v-else-if="eventos.categorias_1 != '' && eventos.categorias_1.id != '18'" cols="12" md="6" sm="12" lg="6" xl="6">
+                  <v-col
+                    v-else-if="
+                      eventos.categorias_1 != '' &&
+                      eventos.categorias_1.id != '18'
+                    "
+                    cols="12"
+                    md="6"
+                    sm="12"
+                    lg="6"
+                    xl="6"
+                  >
                     <v-combobox
                       v-model="eventos.categorias_2"
                       :rules="[(v) => !!v || 'Campo requerido']"
@@ -242,8 +327,19 @@
                     ></v-combobox>
                   </v-col>
                 </template>
-                
-                <v-col v-if="eventos.categorias_2 != '' && eventos.categorias.id == 1 && eventos.categorias_2.id < 64 " cols="12" md="6" sm="12" lg="6" xl="6">
+
+                <v-col
+                  v-if="
+                    eventos.categorias_2 != '' &&
+                    eventos.categorias.id == 1 &&
+                    eventos.categorias_2.id < 64
+                  "
+                  cols="12"
+                  md="6"
+                  sm="12"
+                  lg="6"
+                  xl="6"
+                >
                   <v-combobox
                     v-model="eventos.categorias_arte"
                     :rules="[(v) => !!v || 'Campo requerido']"
@@ -291,39 +387,44 @@
 <script>
 import swal from "sweetalert";
 import EventosDataService from "../../services/EventosDataService";
-import drawer from "../Drawer/Drawer.vue"; 
-import axios from "axios"; 
+import drawer from "../Drawer/Drawer.vue";
+import axios from "axios";
 
 export default {
   name: "add-evento",
 
   data() {
     return {
-      userEmail: '',
+      userEmail: "",
       eventos: {
         tituloEvento: "",
         unidadResponsable: "",
         descripcionEvento: "",
         eventoDedicadoA: "",
-        fechaEvento: "",
+        fechaInicio: "",
+        fechaFin: "",
         inicioEvento: "",
         finEvento: "",
         sede: "",
         cupo: "",
         descripcion: "",
-        creditos: "",
+        creditosOtorgados: "",
         categorias: "",
         categorias_1: "",
         categorias_2: "",
         categorias_arte: "",
-        responsable:"", 
+        responsable: "",
+        contacto: "",
+        horas_totales: "",
       },
-      UserData: "", 
-
+      UserData: "",
+      tipoEventos: ["Abierto", "Cerrado"],
       unidades: [
-        "CEDU",
+        "CEDDU",
         "IMAC",
         "ICED",
+        "EDITORIAL",
+        "RECTORIA",
         "FACULTAD DE DERECHO Y CIENCIAS POLÍTICAS",
         "FACULTAD DE CIENCIAS EXACTAS",
         "ESCUELA DE LENGUAS",
@@ -344,42 +445,12 @@ export default {
         "FACULTAD DE MEDICINA Y NUTRICIÓN",
         "MUSEO REGIONAL",
         "FACULTAD DE CIENCIAS QUIMICAS DE GOMEZ PALACIO (*)",
-        "FACULTAD DE CIENCIAS QUÍMICAS",
-        "DIRECCIÓN DE DIFUSIÓN CULTURAL",
-        "FACULTAD DE TRABAJO SOCIAL",
-        "FACULTAD DE ECONOMÍA, CONTADURÍA Y ADM",
-        "RADIO UNIVERSIDAD",
-        "DIRECCIÓN DE EXTENSIÓN UNIVERSITARIA",
-        "TV UJED",
-        "DIRECCIÓN DE PLAN Y DESARROLLO ACAD",
-        "COORDINACION INSTITUCIONAL FI",
-        "UNIVERSIDAD JUÁREZ DEL ESTADO DE DURANGO",
-        "COORDINACIÓN DE VINCULACIÓN EMPRES",
-      ],
-      sede: [
-        "CEDU",
-        "IMAC",
-        "ICED",
-        "FACULTAD DE DERECHO Y CIENCIAS POLÍTICAS",
-        "FACULTAD DE CIENCIAS EXACTAS",
-        "ESCUELA DE LENGUAS",
-        "FACULTAD DE ODONTOLOGÍA",
-        "FACULTAD DE CIENCIAS QUÍMICAS DGO.",
-        "FACULTAD DE CIENCIAS, CULTURA FÍSICA",
-        "ESCUELA SUPERIOR DE MÚSICA",
-        "ESCUELA DE PINTURA, ESCULTURA Y ARTE",
-        "FACULTAD DE PSICOLOGÍA Y TERAPIA COM",
-        "FACULTAD DE CIENCIAS FORESTALES",
-        "FACULTAD DE ENFERMERÍA Y OBSTETRICIA",
-        "FACULTAD DE MEDICINA VETERINARIA Y ZOOT",
-        "FACULTAD DE CIENCIAS DE LA SALUD",
-        "FACULTAD DE CIENCIAS BIOLÓGICAS",
-        "FACULTAD DE INGENIERÍA, CIENCIAS Y ARQUI",
-        "FACULTAD DE AGRICULTURA Y ZOOTECNIA",
-        "FACULTAD DE TRABAJO SOCIAL (*)",
-        "FACULTAD DE MEDICINA Y NUTRICIÓN",
-        "MUSEO REGIONAL",
         "FACULTAD DE CIENCIAS QUIMICAS DE GOMEZ PALACIO (*)",
+        "Facultad de Ciencias de la Cultura Fisica y Deporte",
+        "FACULTAD DE AGRICULTURA Y ZOOTECNIA GOMEZ PALACIO",
+        "FACULTAD DE CIENCIAS BIOLÓGICAS GOMEZ PALACIO",
+        "ESCUELA DE LENGUAS GOMEZ PALACIO",
+        "FACULTAD DE CIENCIAS DE LA SALUD GOMEZ PALACIO",
         "FACULTAD DE CIENCIAS QUÍMICAS",
         "DIRECCIÓN DE DIFUSIÓN CULTURAL",
         "FACULTAD DE TRABAJO SOCIAL",
@@ -391,9 +462,16 @@ export default {
         "COORDINACION INSTITUCIONAL FI",
         "UNIVERSIDAD JUÁREZ DEL ESTADO DE DURANGO",
         "COORDINACIÓN DE VINCULACIÓN EMPRES",
+        "FACULTAD DE INGENIERÍA, CIENCIAS Y ARQUI GOMEZ PALACIO",
         " ",
         "Bellas Artes UJED",
         "Bellas Artes UJED Lerdo",
+        "CIENCIAS SOCIALES",
+        "INVESTIGACION CIENTIFICA",
+        "INVESTIGACION HISTORICAS",
+        "INVESTIGACION JURIDICAS",
+        "SILVICULTURA E INDUSTRIA DE LA MADERA",
+
         "Biblioteca Central Universitaria",
         "Bicentenario",
         "BIOPARQUE, DURANGO",
@@ -452,6 +530,138 @@ export default {
         "COLEGIO DE BACHILLERES DEL ESTADO DE DURANGO",
         "Colegio De Ciencias Y Humanidades",
         "Colegio de Ginecología",
+        "Escuela de ciencias y tecnologia",
+        "Escuela preparatoria Diurna",
+        "Escuela preparatoria Nocturna",
+        "MOVILIDAD",
+        "EXTENSION UNIVERSITARIA",
+        "VINCULACION INSTITUCIONAL",
+        "CENTRO DE NEGOCIOS",
+        "DIFUSION CULTURAL",
+        "CENTRO DE DESARROLLO DEL DEPORTE UNIVERSITARIO",
+        "FORMACION INTEGRAL INSTITUCIONAL",
+      ],
+      sede: [
+        "CEDDU",
+        "IMAC",
+        "ICED",
+        "EDITORIAL",
+        "RECTORIA",
+        "FACULTAD DE DERECHO Y CIENCIAS POLÍTICAS",
+        "FACULTAD DE CIENCIAS EXACTAS",
+        "ESCUELA DE LENGUAS",
+        "FACULTAD DE ODONTOLOGÍA",
+        "FACULTAD DE CIENCIAS QUÍMICAS DGO.",
+        "FACULTAD DE CIENCIAS, CULTURA FÍSICA",
+        "ESCUELA SUPERIOR DE MÚSICA",
+        "ESCUELA DE PINTURA, ESCULTURA Y ARTE",
+        "FACULTAD DE PSICOLOGÍA Y TERAPIA COM",
+        "FACULTAD DE CIENCIAS FORESTALES",
+        "FACULTAD DE ENFERMERÍA Y OBSTETRICIA",
+        "FACULTAD DE MEDICINA VETERINARIA Y ZOOT",
+        "FACULTAD DE CIENCIAS DE LA SALUD",
+        "FACULTAD DE CIENCIAS BIOLÓGICAS",
+        "FACULTAD DE INGENIERÍA, CIENCIAS Y ARQUI",
+        "FACULTAD DE AGRICULTURA Y ZOOTECNIA",
+        "FACULTAD DE TRABAJO SOCIAL (*)",
+        "FACULTAD DE MEDICINA Y NUTRICIÓN",
+        "MUSEO REGIONAL",
+        "FACULTAD DE CIENCIAS QUIMICAS DE GOMEZ PALACIO (*)",
+        "FACULTAD DE CIENCIAS QUIMICAS DE GOMEZ PALACIO (*)",
+        "Facultad de Ciencias de la Cultura Fisica y Deporte",
+        "FACULTAD DE AGRICULTURA Y ZOOTECNIA GOMEZ PALACIO",
+        "FACULTAD DE CIENCIAS BIOLÓGICAS GOMEZ PALACIO",
+        "ESCUELA DE LENGUAS GOMEZ PALACIO",
+        "FACULTAD DE CIENCIAS DE LA SALUD GOMEZ PALACIO",
+        "FACULTAD DE CIENCIAS QUÍMICAS",
+        "DIRECCIÓN DE DIFUSIÓN CULTURAL",
+        "FACULTAD DE TRABAJO SOCIAL",
+        "FACULTAD DE ECONOMÍA, CONTADURÍA Y ADM",
+        "RADIO UNIVERSIDAD",
+        "DIRECCIÓN DE EXTENSIÓN UNIVERSITARIA",
+        "TV UJED",
+        "DIRECCIÓN DE PLAN Y DESARROLLO ACAD",
+        "COORDINACION INSTITUCIONAL FI",
+        "UNIVERSIDAD JUÁREZ DEL ESTADO DE DURANGO",
+        "COORDINACIÓN DE VINCULACIÓN EMPRES",
+        "FACULTAD DE INGENIERÍA, CIENCIAS Y ARQUI GOMEZ PALACIO",
+        " ",
+        "Bellas Artes UJED",
+        "Bellas Artes UJED Lerdo",
+        "CIENCIAS SOCIALES",
+        "INVESTIGACION CIENTIFICA",
+        "INVESTIGACION HISTORICAS",
+        "INVESTIGACION JURIDICAS",
+        "SILVICULTURA E INDUSTRIA DE LA MADERA",
+
+        "Biblioteca Central Universitaria",
+        "Bicentenario",
+        "BIOPARQUE, DURANGO",
+        "Bioparque estrella, Mty., NL.",
+        "Bolsón de Mapimí",
+        "Bosque Venustiano Carranza. Torreón, Coah.",
+        "Calle 5 de Febrero Esquina con Bruno Martínez, Zona Centro",
+        "Campus Gómez Palacio",
+        "Cancha de Santa Lucía",
+        "Cancha de usos múltiples, FCF",
+        "Cancha Frente a Facultad de Ciencias Químicas",
+        'Cancha "Robelto Silva", Carretera a Mazatlán km 1.5',
+        "Cancún, Quintana Roo",
+        "Carretera Durango Mazatlan y Calle Opalo",
+        "Casa Cuervo, Guadalajara, Jalisco",
+        "Casa de Cultura CITIBANAMEX",
+        "Casa de la Cultura de Cd. Lerdo,Durango",
+        "Casa de la Cultura de Ciudad Lerdo Durango.  Av. Francisco I. Madero 52 Nte. Col. Centro CP 35150, Lerdo, Durango ",
+        "Casa de la cultura de Gómez Palacio, Campestre GP",
+        "Casa de la Cultura Durango, Calle Negrete 900 poniente",
+        "Casa de las Banquetas Altas,Gómez Palacio Dgo.",
+        "Casa Municipal del Arte y la Cultura, Hacienda de los Laureles112, Fracc. Hacienda de Tapias ",
+        "Casa Nava avenida, Madero esquina con Ocampo., Ciudad Lerdo, Dgo.",
+        "Casino Murano, Hotel las Rosas, Gómez Palacio, Dgo.",
+        "Catedral Basílica Menor, Ave. 20 de Noviembre y Constitución",
+        "CBTA 3",
+        "CBTIS 110",
+        "CBTIS 89",
+        "CCH",
+        "Cd. de Mexico",
+        "Cdu (Promocion Deportiva)",
+        "CENTRAL UJED",
+        "Centro Cultural BANAMEX , 5 de Febrero Esq. con Francisco I. Madero",
+        "Centro Cultural y de Convenciones Bicentenario",
+        "Centro de Convenciones Bicentenario",
+        "Centro de Convenciones, Gómez Palacio ",
+        "Centro de Convenciones, Posada del Río. Gómez Palacio, Dgo.",
+        "Centro de Integración Laboral, Fracc. Huizache",
+        "CENTRO DE INV. Y DE ESTUDIOS AVANZADOS CINVESTAV ",
+        "centro de la ciudad de durango ",
+        "Centro Escolar Revolución, Sección A Gómez Farías entre Luna y Urrea, Barrio de Tierra Blanca",
+        "Centro Especializado de Reintegración y Tratamiento para menores infractores (CERMI)",
+        "Centro Monterrey, Nuevo León",
+        "Centro Recreativo Tapias ",
+        "Centro Regional de Educación para la Conservación (CRECO)",
+        "Cerro de Los Remedios, Durango,Dgo.",
+        "CIAC (Aquiles Serdán y Bruno Martínez)",
+        "CIIDIR IPN,Calle Sigma 119 Fracc. 20 de Noviembre II",
+        "Cine CITICINEMAS, Real del Mezquital 101 ",
+        "Cinemex",
+        "Cineteca Municipal Silvestre Revueltas. Juárez 217 Nte., Zona Centro",
+        "CIUDAD DE MEXICO",
+        "Ciudad del anciano",
+        "CIUDAD UNIVERSITARIA, CDMX",
+        "Club de Leones de Durango ",
+        "COLEGIO DE BACHILLERES DEL ESTADO DE DURANGO",
+        "Colegio De Ciencias Y Humanidades",
+        "Colegio de Ginecología",
+        "Escuela de ciencias y tecnologia",
+        "Escuela preparatoria Diurna",
+        "Escuela preparatoria Nocturna",
+        "MOVILIDAD",
+        "EXTENSION UNIVERSITARIA",
+        "VINCULACION INSTITUCIONAL",
+        "CENTRO DE NEGOCIOS",
+        "DIFUSION CULTURAL",
+        "CENTRO DE DESARROLLO DEL DEPORTE UNIVERSITARIO",
+        "FORMACION INTEGRAL INSTITUCIONAL",
       ],
       clasificacion: [],
       categoria1: [],
@@ -473,28 +683,30 @@ export default {
   created() {
     this.getClasificacion();
   },
-  components:{
-    drawer
+  components: {
+    drawer,
   },
   async mounted() {
-    const token = sessionStorage.getItem('jwtToken'); 
+    const token = sessionStorage.getItem("jwtToken");
 
-    if (token){
-      axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
+    if (token) {
+      axios.defaults.headers.common["Authorization"] = `Bearer ${token}`;
 
-      try{
-        const response = await axios.get('http://localhost:8000/alumnos/user'); 
+      try {
+        const response = await axios.get(
+          'https://fibackend.ujed.mx/alumnos/user' /*"http://127.0.0.1:8000/alumnos/user"*/
+        );
 
-        this.userEmail = response.data.email; 
-        this.eventos.responsable = response.data.email; 
-      }catch(error){
-        console.error('Error ', error); 
+        this.userEmail = response.data.email;
+        this.eventos.responsable = response.data.email;
+      } catch (error) {
+        console.error("Error ", error);
       }
-    }else{
-      console.error('No token')
+    } else {
+      console.error("No token");
     }
   },
- 
+
   methods: {
     getClasificacion() {
       EventosDataService.getClasificacion()
@@ -509,9 +721,9 @@ export default {
     getCategorias1(clasf_id) {
       EventosDataService.getCategorias1(clasf_id)
         .then((response) => {
-          this.eventos.categorias_1 = '';
-          this.eventos.categorias_2 = '';
-          this.eventos.categorias_arte = '';
+          this.eventos.categorias_1 = "";
+          this.eventos.categorias_2 = "";
+          this.eventos.categorias_arte = "";
           this.categoria1 = response.data;
         })
         .catch((e) => {
@@ -549,12 +761,12 @@ export default {
         this.createEvento();
       } else {
         console.log("Evento no Validado " + false);
-        console.log(false); 
+        console.log(false);
       }
     },
 
     newEvento() {
-      location.reload();      
+      location.reload();
     },
     createEvento() {
       var data = {
@@ -562,23 +774,27 @@ export default {
         unidadResponsable: this.eventos.unidadResponsable,
         descripcionEvento: this.eventos.descripcionEvento,
         eventoDedicadoA: this.eventos.eventoDedicadoA,
-        responsable:this.eventos.responsable,
-        fechaEvento: this.eventos.fechaEvento,
+        responsable: this.eventos.responsable,
+        // fechaEvento: this.eventos.fechaEvento,
+        fechaFin: this.eventos.fechaFin,
+        fechaInicio: this.eventos.fechaInicio,
         inicioEvento: this.eventos.inicioEvento,
         finEvento: this.eventos.finEvento,
         sede: this.eventos.sede,
         cupo: this.eventos.cupo,
         descripcion: this.eventos.descripcion,
-        creditos: this.eventos.creditos,
+        creditos: this.eventos.creditosOtorgados,
         categorias: this.eventos.categorias.id,
+        horas_totales: this.eventos.horas_totales,
+        contacto: this.eventos.contacto,
       };
-      if (this.eventos.categorias_1 != ''){
+      if (this.eventos.categorias_1 != "") {
         data.subCategoria1 = this.eventos.categorias_1.id;
       }
-      if (this.eventos.categorias_2 != ''){
+      if (this.eventos.categorias_2 != "") {
         data.subCategoria2 = this.eventos.categorias_2.id;
       }
-      if (this.eventos.categorias_arte != ''){
+      if (this.eventos.categorias_arte != "") {
         data.subCategoriaArte = this.eventos.categorias_arte.id;
       }
 
@@ -602,8 +818,8 @@ export default {
       var campos = {
         name: dataEvento.tituloEvento,
         color: this.colors[this.rnd(0, this.colors.length - 1)],
-        start: dataEvento.fechaEvento + " " + dataEvento.inicioEvento,
-        end: dataEvento.fechaEvento + " " + dataEvento.finEvento,
+        start: dataEvento.fechaInicioEvento + " " + dataEvento.inicioEvento,
+        end: dataEvento.fechaFinEvento + " " + dataEvento.finEvento,
         details: dataEvento.descripcionEvento,
         evento: dataEvento.id,
       };
@@ -621,9 +837,17 @@ export default {
     rnd(a, b) {
       return Math.floor((b - a + 1) * Math.random()) + a;
     },
+
+    calcularCreditos() {
+      const horasTotales = parseFloat(this.eventos.horas_totales) || 0;
+      const creditos = horasTotales / 20;
+
+      this.eventos.creditosOtorgados = creditos;
+
+      console.log(creditos);
+    },
   },
 };
 </script>
 
-<style>
-</style>
+<style></style>

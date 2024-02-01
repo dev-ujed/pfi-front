@@ -30,7 +30,7 @@
           <label><strong>Fecha del evento:</strong></label>
         </v-col>
         <v-col>
-          <label> {{ evento.fechaEvento }}</label>
+          <label> {{ evento.fechaInicio }}</label>
         </v-col>
       </v-row>
       <v-row>

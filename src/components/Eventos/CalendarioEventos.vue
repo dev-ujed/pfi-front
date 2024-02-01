@@ -163,13 +163,13 @@ export default {
         unidadResponsable: "",
         descripcionEvento: "",
         eventoDedicadoA: "",
-        fechaEvento: "",
-        inicioEvento: "",
+        fechaInicio: "",
+        fechaFin: "",
         finEvento: "",
         sede: "",
         cupo: "",
         descripcion: "",
-        creditos: "",
+        creditosOtorgados: "",
         categorias: "",
       },
       colors: [
@@ -262,7 +262,7 @@ export default {
     },
     
     sendEvent(id) {
-      EventosDataService.get(id)
+      EventosDataService.getevento(id)
         .then((response) => {
           this.selected = response.data;
           console.log(this.selected);

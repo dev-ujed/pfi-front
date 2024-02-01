@@ -4,7 +4,7 @@
     <v-container>
       <v-row>
         <v-bottom-navigation
-          color="error"
+          color="#50ab87"
           grow
         >
           <v-btn @click="retrieveEventos()">
@@ -109,7 +109,7 @@ export default {
             unidadResponsable: '',
             descripcionEvento: '',
             eventoDedicadoA:'',
-            fechaEvento:'',
+            fechaInicio:'',
             inicioEvento:'',
             finEvento:'',
             sede:'',
@@ -126,7 +126,7 @@ export default {
         headers: [
           { text: 'Titulo de evento', value: 'tituloEvento' },
           { text: 'Unidad responsable', value: 'unidadResponsable' },
-          { text: 'Fecha de evento', sortable: true, value: 'fechaEvento' },
+          { text: 'Fecha de evento', sortable: true, value: 'fechaInicio' },
           { text: 'Cupo', value: 'cupo' },
           { text: 'Creditos', value: 'creditos' },
           { text: 'Responsable', value: 'responsable' },

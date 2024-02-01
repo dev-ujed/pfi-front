@@ -31,7 +31,7 @@
           <label><strong>Fecha del evento:</strong></label>
         </v-col>
         <v-col>
-          <label> {{ evento.fechaEvento }}</label>
+          <label> {{ evento.fechaInicio }}</label>
         </v-col>
       </v-row>
       <v-row>
@@ -65,7 +65,7 @@
       <v-btn
         block
         depressed
-        color="#a4010b"
+        color="#50ab87"
         class="white--text"
         @click="sendEvent(evento)"
       >
@@ -93,7 +93,7 @@
         block
         depressed
         disabled
-        color="#a4010b"
+        color="#50ab87"
       >
         Registro y Asistencia
       </v-btn>
@@ -124,7 +124,10 @@ export default {
         console.log(evento)
         this.$router.push("/fi-registro/"+evento.id);
       }
-    }
+    },
+    created() {
+      console.log('sadasda')
+    },
 }
 </script>
 
