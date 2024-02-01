@@ -185,7 +185,7 @@
                     maxlength="2"
                     min="2"
                     max="2"
-                    placeholder="MAXIMO 20 HORAS"
+                    placeholder="Máximo 20 horas"
                     oninput="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);"
                     :rules="[(v) => !!v || 'Campo requerido']"
                     label="Horas totales del evento"
@@ -204,7 +204,7 @@
                     maxlength="4"
                     min="0"
                     max="10"
-                    placeholder="Maximo 1 credito"
+                    placeholder="Máximo 1 crédito"
                     oninput="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);"
                     :rules="[(v) => !!v || 'Campo requerido']"
                     label="Créditos"
@@ -224,10 +224,10 @@
                     maxlength="100"
                     min="0"
                     max="100"
-                    placeholder="Nùmero o correo de contacto"
+                    placeholder="Número o correo de contacto"
                     oninput="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);"
                     :rules="[(v) => !!v || 'Campo requerido']"
-                    label="Nùmero o correo de contacto"
+                    label="Número o correo de contacto"
                     outlined
                   ></v-text-field>
                 </v-col>
@@ -238,7 +238,7 @@
                     id="categorias"
                     name="categorias"
                     :items="clasificacion"
-                    label="Categorìa del evento"
+                    label="Categoría del evento"
                     required
                     outlined
                     @change="getCategorias1($event.id)"
@@ -260,7 +260,7 @@
                     :items="categoria1"
                     id="categorias_1"
                     name="categorias_1"
-                    label="CATEGORIA"
+                    label="Categoría"
                     outlined
                     :counter="100"
                     required
@@ -319,7 +319,7 @@
                       :items="categoria2"
                       id="categorias_2"
                       name="categorias_2"
-                      label="Categoria"
+                      label="Categoría"
                       outlined
                       :counter="100"
                       required
@@ -346,7 +346,7 @@
                     :items="categoriaArte"
                     id="categorias_arte"
                     name="categorias_arte"
-                    label="Categoria Arte"
+                    label="Categoría Arte"
                     outlined
                     :counter="100"
                     required

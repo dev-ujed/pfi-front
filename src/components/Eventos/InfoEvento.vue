@@ -88,7 +88,7 @@
     </v-card-text>
     <v-card-actions>
       <v-btn block depressed disabled color="#50ab87">
-        Registro y Asistencia
+        Asistencia y Registro
       </v-btn>
     </v-card-actions>
   </v-card>

@@ -53,7 +53,7 @@ export default {
     items: [
       { title: "Inicio", icon: "mdi-home", route: "/inicio" },
       { title: "Eventos", icon: "mdi-calendar-text", route: "/eventos" },
-      { title: "Capturar Eventos", icon: "mdi-calendar-plus", route: "/add" },
+      { title: "Capturar eventos", icon: "mdi-calendar-plus", route: "/add" },
       {
         title: "Asistencia y registro",
         icon: "mdi-home-city",
@@ -65,7 +65,7 @@ export default {
         route: "/fi-alumnos",
       },
       {
-        title: "Calendario de Eventos",
+        title: "Calendario de eventos",
         icon: "mdi-calendar",
         route: "/calendario",
       },
@@ -77,15 +77,6 @@ export default {
   }),
 
   methods: {
-<<<<<<< HEAD
-    async logout(){
-      try{
-        await axios.post('http://localhost:8000/alumnos/logout/');
-        window.location.href="/"
-        console.log("Sesion Cerrada Correctamente"); 
-      }catch(error){
-        console.error("Error al cerrar sesión", error ); 
-=======
     async logout() {
       try {
         await axios.post(
@@ -94,7 +85,6 @@ export default {
         window.location.href = "/";
       } catch (error) {
         console.error("Error al cerrar sesión", error);
->>>>>>> fb56a95b00940d253bea88b03b09668606e19c15
       }
     },
   },
