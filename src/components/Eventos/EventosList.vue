@@ -175,14 +175,14 @@
               >
                 Editar
               </v-btn>
-              <!-- <v-btn
+              <v-btn
                 depressed
                 color="error"
                 class="white--text"
                 @click="deleteEvent(selected[0].id)"
               >
                 Eliminar
-              </v-btn>  -->
+              </v-btn> 
             </v-card-actions>
           </v-card>
 
@@ -213,6 +213,8 @@ import jsPDF from "jspdf";
 import "jspdf-autotable";
 import drawer from "../Drawer/Drawer.vue";
 import axios from "axios";
+import Swal from 'sweetalert2';
+import 'sweetalert2/dist/sweetalert2.min.css';
 
 export default {
   name: "eventos-list",
@@ -311,16 +313,30 @@ export default {
         });
     },
     deleteEvent(id) {
-      EventosDataService.delete(id)
+      Swal.fire({
+        title: '¿Estás seguro?',
+        text: 'Esta acción no se puede deshacer.',
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'Sí, eliminarlo'
+      }).then((result) => {
+        if (result.isConfirmed) {
+        EventosDataService.delete(id)
         .then((response) => {
-          console.log(response.status);
-          this.retrieveEventos();
-          this.selected = [];
-          window.location.reload();
+        console.log(response.status);
+        this.retrieveEventos();
+        this.selected = [];
+        window.location.reload();
         })
         .catch((e) => {
-          console.log(e);
+        console.log(e);
         });
+        
+        }
+        
+    });
     },
     createData(response) {
       this.alumnos = [];
