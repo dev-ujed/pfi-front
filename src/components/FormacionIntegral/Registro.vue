@@ -166,7 +166,7 @@ export default {
         { text: "Paterno", value: "alumno.paterno" },
         { text: "Materno", value: "alumno.materno" },
         { text: "Carrera", sortable: true, value: "desc_carrera" },
-        { text: "Semestre", value: "semestre" },
+        { text: "Ciclo", value: "semestre" },
       ],
       headersRegistrados: [
         {

@@ -66,7 +66,7 @@ export default {
         { text: "Apellido paterno", value: "alumno.paterno" },
         { text: "Apellido materno", value: "alumno.materno" },
         { text: "Carrera", sortable: true, value: "desc_carrera" },
-        { text: "Semestre", align: "center", value: "semestre" },
+        { text: "Ciclo", align: "center", value: "semestre" },
         { text: "Ver detalles", align: "center", value: "detalles" },
       ],
 
@@ -81,7 +81,7 @@ export default {
       AlumnosDataService.getoalumnos()
         .then((response) => {
           this.alumnos = response.data;
-          console.log(this.alumnos);
+          
         })
         .catch((e) => {
           console.log(e);
@@ -135,7 +135,6 @@ export default {
           /*"http://127.0.0.1:8000/alumnos/get_coordinator"*/
         );
         this.alumnos = response.data;
-        console.log(this.alumnos);
       } catch (error) {
         console.error("Error", error);
       }

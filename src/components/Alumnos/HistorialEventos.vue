@@ -45,7 +45,7 @@
                         <v-spacer></v-spacer>
                         <label></label>
                         <v-spacer></v-spacer>
-                        <label><strong>Semestre: {{ dataAlumno.semestre }}</strong></label>
+                        <label><strong>Ciclo: {{ dataAlumno.semestre }}</strong></label>
                         <v-spacer></v-spacer>
                         <label></label>
                         <v-spacer></v-spacer>
@@ -241,7 +241,7 @@ export default {
                 
                 this.alumnoDataFiles.push(response.data);
                 this.fileName = response.data.cve_alumno  ;
-                this.alumnoExcel = "Alumno: "+ response.data.nombre + "  " + response.data.paterno + " " + response.data.materno + "  " + "Matricula: " + response.data.cve_alumno + "  "  + "Carrera: " + response.data.cve_escuela + "  " + "Semestre: " + "1";
+                this.alumnoExcel = "Alumno: "+ response.data.nombre + "  " + response.data.paterno + " " + response.data.materno + "  " + "Matricula: " + response.data.cve_alumno + "  "  + "Carrera: " + response.data.cve_escuela + "  " + "Ciclo: " + "1";
                 
             })
             .catch(e =>{
