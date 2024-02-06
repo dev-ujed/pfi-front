@@ -5,7 +5,7 @@
         <div class="container-fluid container-login">
           <div class="row d-flex justify-content-center align-items-center">
             <h1 class="title">
-              Bienvenido al Programa de formacion y desarrollo profesional
+              Bienvenido al Programa de formación y desarrollo profesional
             </h1>
             <img
               src="../../assets/logo-ujed.png"

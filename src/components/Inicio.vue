@@ -37,7 +37,7 @@
           </ul>
           
         </v-card-text>
-        <v-card-title>Reglamento</v-card-title>
+        <v-card-title>Programa</v-card-title>
         <v-card-text>
           <div style="text-align: center;">
             <a href="https://publuu.com/flip-book/386097/875945/page/2?cover" target="_blank" style="width: auto; height: 240px; position: relative; display: inline-block;">
