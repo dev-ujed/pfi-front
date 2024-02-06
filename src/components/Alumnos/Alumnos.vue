@@ -10,6 +10,13 @@
           item-key="id"
           class="elevation-1"
         >
+        <template v-slot:no-data>
+          <v-progress-circular
+            indeterminate
+            color="primary"
+          ></v-progress-circular>
+          </template>
+       
           <v-spacer></v-spacer>
           <template v-slot:top>
             <v-toolbar-title class="px-3 py-2">Estudiantes</v-toolbar-title>
@@ -38,6 +45,8 @@
             </v-btn>
           </template>
         </v-data-table>
+
+        
       </v-row>
     </v-container>
   </div>

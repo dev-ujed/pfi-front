@@ -63,8 +63,12 @@
               </v-toolbar>
             </template>
             <template v-slot:no-data>
-              No se encuentran estudiantes registrados actualmente!
-            </template>
+              <v-progress-circular
+                indeterminate
+                color="primary"
+              ></v-progress-circular>
+          </template>
+       
           </v-data-table>
         </v-col>
         <v-col>
