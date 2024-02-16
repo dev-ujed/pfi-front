@@ -8,7 +8,7 @@
           <v-form ref="form" v-model="valid" lazy-validation>
             <v-container>
               <v-row>
-                <v-col cols="12" md="6" sm="12" lg="6" xl="6">
+                <v-col cols="12" md="4" sm="6" lg="4" xl="4">
                   <v-text-field
                     :rules="[(v) => !!v || 'Campo requerido']"
                     :counter="100"
@@ -21,7 +21,7 @@
                   ></v-text-field>
                 </v-col>
 
-                <v-col cols="12" md="6" sm="12" lg="6" xl="6">
+                <v-col cols="12" md="4" sm="6" lg="4" xl="4">
                   <v-combobox
                     :rules="[(v) => !!v || 'Campo requerido']"
                     v-model="eventos.unidadResponsable"
@@ -35,7 +35,7 @@
                   ></v-combobox>
                 </v-col>
 
-                <v-col cols="12" md="6" sm="12" lg="6" xl="6">
+                <v-col cols="12" md="4" sm="6" lg="4" xl="4">
                   <v-text-field
                     :rules="[(v) => !!v || 'Campo requerido']"
                     :counter="100"
@@ -50,7 +50,7 @@
                   ></v-text-field>
                 </v-col>
 
-                <v-col cols="12" md="6" sm="12" lg="6" xl="6">
+                <v-col cols="12" md="4" sm="6" lg="4" xl="4">
                   <v-textarea
                     v-model="eventos.descripcionEvento"
                     id="descripcionEvento"
@@ -64,7 +64,7 @@
                   ></v-textarea>
                 </v-col>
 
-                <v-col cols="12" md="6" sm="12" lg="6" xl="6">
+                <v-col cols="12" md="4" sm="6" lg="4" xl="4">
                   <v-combobox
                     id="eventoDedicadoA"
                     required
@@ -78,7 +78,7 @@
                   ></v-combobox>
                 </v-col>
 
-                <v-col cols="12" md="4" sm="12" lg="4" xl="4">
+                <v-col cols="12" md="4" sm="6" lg="4" xl="4">
                   <v-text-field
                     id="fechaInicio"
                     v-model="eventos.fechaInicio"
@@ -104,7 +104,7 @@
                   ></v-text-field>
                 </v-col>
 
-                <v-col cols="12" md="4" sm="12" lg="4" xl="4">
+                <v-col cols="12" md="4" sm="6" lg="4" xl="4">
                   <v-text-field
                     id="fechaFin"
                     v-model="eventos.fechaFin"
@@ -162,7 +162,7 @@
                   ></v-text-field>
                 </v-col>
 
-                <v-col cols="12" md="4" sm="12" lg="4" xl="4">
+                <v-col cols="12" md="4" sm="6" lg="4" xl="4">
                   <v-text-field
                     id="descripcion"
                     required
@@ -175,7 +175,20 @@
                   ></v-text-field>
                 </v-col>
 
-                <v-col cols="12" md="6" sm="12" lg="6" xl="6">
+
+                <v-col cols="12" md="4" sm="6" lg="4" xl="4">
+                  <v-file-input
+                    variant="outlined"
+                    v-model="eventos.flyer"
+                    accept="image/*"
+                    label="Subir flyer"
+                    @change="onFileChange"
+                  ></v-file-input>
+
+                  <v-img :src="imageUrl" v-if="imageUrl" contain></v-img>
+                </v-col>
+
+                <v-col cols="12" md="4" sm="6" lg="4" xl="4">
                   <v-text-field
                     id="horas_totales"
                     required
@@ -194,7 +207,7 @@
                   ></v-text-field>
                 </v-col>
 
-                <v-col cols="12" md="6" sm="12" lg="6" xl="6">
+                <v-col cols="12" md="4" sm="6" lg="4" xl="4">
                   <v-text-field
                     id="creditosOtorgados"
                     required
@@ -214,7 +227,7 @@
                   ></v-text-field>
                 </v-col>
 
-                <v-col cols="12" md="6" sm="12" lg="6" xl="6">
+                <v-col cols="12" md="4" sm="6" lg="4" xl="4">
                   <v-text-field
                     id="contacto"
                     required
@@ -232,7 +245,7 @@
                   ></v-text-field>
                 </v-col>
 
-                <v-col cols="12" md="6" sm="12" lg="6" xl="6">
+                <v-col cols="12" md="4" sm="6" lg="4" xl="4">
                   <v-combobox
                     v-model="eventos.categorias"
                     id="categorias"
@@ -249,10 +262,10 @@
                 <v-col
                   v-if="eventos.categorias != ''"
                   cols="12"
-                  md="6"
-                  sm="12"
-                  lg="6"
-                  xl="6"
+                  md="4"
+                  sm="6"
+                  lg="4"
+                  xl="4"
                 >
                   <v-combobox
                     v-model="eventos.categorias_1"
@@ -283,10 +296,10 @@
                       eventos.categorias_1.id >= 23
                     "
                     cols="12"
-                    md="6"
-                    sm="12"
-                    lg="6"
-                    xl="6"
+                    md="4"
+                    sm="6"
+                    lg="4"
+                    xl="4"
                   >
                     <!-- <v-combobox
                       v-model="eventos.categorias_2"
@@ -308,10 +321,10 @@
                       eventos.categorias_1.id != '18'
                     "
                     cols="12"
-                    md="6"
-                    sm="12"
-                    lg="6"
-                    xl="6"
+                    md="4"
+                    sm="6"
+                    lg="4"
+                    xl="4"
                   >
                     <v-combobox
                       v-model="eventos.categorias_2"
@@ -416,6 +429,7 @@ export default {
         responsable: "",
         contacto: "",
         horas_totales: "",
+        flyer: "", 
       },
       UserData: "",
       tipoEventos: ["Abierto", "Cerrado"],
@@ -653,6 +667,7 @@ export default {
         categorias: this.eventos.categorias.id,
         horas_totales: this.eventos.horas_totales,
         contacto: this.eventos.contacto,
+        flyer: this.eventos.flyer,
       };
       if (this.eventos.categorias_1 != "") {
         data.subCategoria1 = this.eventos.categorias_1.id;
@@ -710,7 +725,6 @@ export default {
 
       this.eventos.creditosOtorgados = creditos;
 
-      console.log(creditos);
     },
   },
 };
