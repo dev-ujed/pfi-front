@@ -178,14 +178,15 @@
 
                 <v-col cols="12" md="4" sm="6" lg="4" xl="4">
                   <v-file-input
+                    id="flayer"
+                    name="flayer"
                     variant="outlined"
-                    v-model="eventos.flyer"
-                    accept="image/*"
+                    v-model="eventos.flayer"
                     label="Subir flyer"
                     @change="onFileChange"
                   ></v-file-input>
 
-                  <v-img :src="imageUrl" v-if="imageUrl" contain></v-img>
+                  
                 </v-col>
 
                 <v-col cols="12" md="4" sm="6" lg="4" xl="4">
@@ -667,7 +668,7 @@ export default {
         categorias: this.eventos.categorias.id,
         horas_totales: this.eventos.horas_totales,
         contacto: this.eventos.contacto,
-        flyer: this.eventos.flyer,
+        flayer: this.eventos.flayer,
       };
       if (this.eventos.categorias_1 != "") {
         data.subCategoria1 = this.eventos.categorias_1.id;

@@ -12,8 +12,45 @@ class EventosDataService {
   }
 
   create(data) {
-    return axios.post(API + "/eventos/create/", data);
+    const formData = new FormData();
+    formData.append("tituloEvento", data.tituloEvento);
+    formData.append("unidadResponsable", data.unidadResponsable);
+    formData.append("descripcionEvento", data.descripcionEvento);
+    formData.append("eventoDedicadoA", data.eventoDedicadoA);
+    formData.append("responsable", data.responsable);
+    formData.append("fechaFin", data.fechaFin);
+    formData.append("fechaInicio", data.fechaInicio);
+    formData.append("inicioEvento", data.inicioEvento);
+    formData.append("finEvento", data.finEvento);
+    formData.append("sede", data.sede);
+    formData.append("cupo", data.cupo);
+    formData.append("descripcion", data.descripcion);
+    formData.append("creditos", data.creditos);
+    formData.append("categorias", data.categorias);
+    formData.append("horas_totales", data.horas_totales);
+    formData.append("contacto", data.contacto);
+    formData.append("flayer", data.flayer);
+    
+    if(data.subCategoria1){
+      formData.append("subCategoria1", data.subCategoria1);
+    }
+
+    if(data.subCategoria2){
+      formData.append("subCategoria2", data.subCategoria2);
+    }
+
+    if(data.subCategoriaArte){
+      formData.append("subCategoriaArte", data.subCategoriaArte);
+    }
+
+
+    return axios.post(API + "/eventos/create/", formData, {
+      headers: {
+        "Content-Type": "multipart/form-data",
+      },
+    });
   }
+
 
   update(id, data) {
     return http.put(`/eventos/update/${id}/`, data);
