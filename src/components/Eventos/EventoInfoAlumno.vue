@@ -9,7 +9,7 @@
 
     <v-card-text>
       <v-row>
-        <label><strong>Descripcion del evento:</strong></label>
+        <label><strong>Descripcion del eventO:</strong></label>
         <v-spacer></v-spacer>
         <label>{{ evento.descripcionEvento }}</label>
       </v-row>

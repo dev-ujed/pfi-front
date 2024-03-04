@@ -88,6 +88,13 @@ const routes = [
   component: () => import("../components/Login/Register")
   },
 
+  /* Nuevo componente */
+  {
+    path: "/nuevo",
+    name: "Nuevo campo",
+    component: () => import("../components/NuevoC/nuevoC.vue")
+  },
+
 ]
 
 

@@ -69,6 +69,11 @@ export default {
         icon: "mdi-calendar",
         route: "/calendario",
       },
+      {
+        title: "Nuevo Campo",
+        icon: "mdi-home-city",
+        route: "/nuevo",
+      },
     ],
 
     callback: (response) => {
@@ -80,7 +85,7 @@ export default {
     async logout() {
       try {
         await axios.post(
-          "https://fibackend.ujed.mx/alumnos/logout/" /*"http://127.0.0.1:8000/alumnos/logout/"*/
+          /*"https://fibackend.ujed.mx/alumnos/logout/"*/ "http://127.0.0.1:8000/alumnos/logout/"
         );
         window.location.href = "/";
       } catch (error) {
