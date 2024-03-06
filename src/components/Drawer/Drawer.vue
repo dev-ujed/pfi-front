@@ -69,11 +69,6 @@ export default {
         icon: "mdi-calendar",
         route: "/calendario",
       },
-      {
-        title: "Nuevo Campo",
-        icon: "mdi-home-city",
-        route: "/nuevo",
-      },
     ],
 
     callback: (response) => {
