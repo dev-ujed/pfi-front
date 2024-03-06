@@ -87,19 +87,7 @@ const routes = [
   name: "register",
   component: () => import("../components/Login/Register")
   },
-
-  /* Nuevo componente */
-  {
-    path: "/nuevo",
-    name: "Nuevo campo",
-    component: () => import("../components/NuevoC/nuevoC.vue")
-  },
-
 ]
-
-
-
-
 
 const router = new VueRouter({
   mode: 'history',
