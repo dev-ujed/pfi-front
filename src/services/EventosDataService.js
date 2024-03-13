@@ -15,6 +15,7 @@ class EventosDataService {
     const formData = new FormData();
     formData.append("tituloEvento", data.tituloEvento);
     formData.append("unidadResponsable", data.unidadResponsable);
+    formData.append("cveUnidadResponsable", data.cveUnidadResponsable);
     formData.append("descripcionEvento", data.descripcionEvento);
     formData.append("eventoDedicadoA", data.eventoDedicadoA);
     formData.append("responsable", data.responsable);
@@ -30,6 +31,8 @@ class EventosDataService {
     formData.append("horas_totales", data.horas_totales);
     formData.append("contacto", data.contacto);
     formData.append("flayer", data.flayer);
+
+    
     
     if(data.subCategoria1){
       formData.append("subCategoria1", data.subCategoria1);
@@ -53,6 +56,7 @@ class EventosDataService {
 
 
   update(id, data) {
+    console.log(data.cveUnidadResponsable);
     return http.put(`/eventos/update/${id}/`, data);
   }
 

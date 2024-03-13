@@ -25,9 +25,9 @@
                   <v-combobox
                     :rules="[(v) => !!v || 'Campo requerido']"
                     v-model="eventos.unidadResponsable"
-                    :items="unidades"
-                    id="unidadResponsable"
-                    name="unidadResponsable"
+                    :items="escuelas"
+                    item-value="key"
+                    item-text="value"
                     label="Unidad Responsable"
                     outlined
                     :counter="100"
@@ -413,6 +413,7 @@ export default {
       eventos: {
         tituloEvento: "",
         unidadResponsable: "",
+        cveUnidadResponsable: "",
         descripcionEvento: "",
         eventoDedicadoA: "",
         fechaInicio: "",
@@ -482,6 +483,56 @@ export default {
         "Centro de Desarrollo del Deporte Universitario",
         "Comunicación Social",
         "TV UJED",
+      ],
+
+      escuelas:[
+        { key: '1250', value: 'Facultad de Ingeniería, Ciencias y Arquitectura (Gómez Palacio).' },
+        { key: '1300', value: 'Facultad de Ciencias de la Salud (Gómez Palacio).' },
+        { key: '1350', value: 'Facultad de Agricultura y Zootecnia (Gómez Palacio).' },
+        { key: '1400', value: 'Facultad de Ciencias Químicas (Gómez Palacio).' },
+        { key: '1780', value: 'Facultad de Ciencias Biológicas (Gómez Palacio).' },
+        { key: '3550', value: 'Escuela de Lenguas (Gómez Palacio).' },
+        { key: '1050', value: 'Facultad de Medicina y Nutrición (Durango).' },
+        { key: '1100', value: 'Facultad de Derecho y Ciencias Políticas (Durango).' },
+        { key: '1150', value: 'Facultad de Economía, Contaduría y Administración (Durango).' },
+        { key: '1200', value: 'Facultad de Medicina Veterinaria y Zootecnia (Durango).' },
+        { key: '1450', value: 'Facultad de Enfermería y Obstetricia (Durango).' },
+        { key: '1500', value: 'Facultad de Trabajo Social (Durango).' },
+        { key: '1520', value: 'Facultad de Psicología y Terapia de Comunicación Humana (Durango).' },
+        { key: '1540', value: 'Facultad de Ciencias Cultura Física y Deporte (Durango).' },
+        { key: '1550', value: 'Facultad de Odontología (Durango).' },
+        { key: '1600', value: 'Escuela superior de Música (Durango).' },
+        { key: '1650', value: 'Facultad de Ciencias Forestales y Ambientales (Durango).' },
+        { key: '1700', value: 'Facultad de Ciencias Químicas (Durango).' },
+        { key: '1740', value: 'Facultad de Ciencias Exactas (Durango).' },
+        { key: '1860', value: 'Escuela Preparatoria Diurna (Durango).' },
+        { key: '3450', value: 'Facultad de Lenguas (Durango).' },
+        { key: '305009', value: 'Instituto de Bellas Artes' },
+        { key: '2200', value: 'Instituto de Ciencias Sociales' },
+        { key: '2100', value: 'Instituto de Investigación Científica' },
+        { key: '2400', value: 'Instituto de Investigaciones Históricas' },
+        { key: '2300', value: 'Instituto de Investigaciones Jurídicas' },
+        { key: '2500', value: 'Instituto de Silvicultura e Industria de la Madera' },
+        { key: '1', value: 'Dirección de Servicios Escolares' },
+        { key: '2', value: 'Dirección de Internacionalización' },
+        { key: '51300', value: 'Dirección de Vinculación y Extensión Institucional' },
+        { key: '3050', value: 'Dirección de Difusión Cultural' },
+        { key: '4400', value: 'Dirección de Comunicación Social' },
+        { key: '51600', value: 'Editorial UJED' },
+        { key: '405005', value: 'Librería UJED' },
+        { key: '5700', value: 'Subsecretaría General Académica' },
+        { key: '3', value: 'Servicios Escolares' },
+        { key: '3100', value: 'Extensión Universitaria' },
+        { key: '4', value: 'Dirección General de Bibliotecas' },
+        { key: '5', value: 'Dirección de Desarrollo y Gestión de Recursos Humanos' },
+        { key: '6', value: 'Coordinación de Capacitación Institucional' },
+        { key: '0', value: 'Dirección de Vinculación Institucional' },
+        { key: '7', value: 'Centro de Negocios' },
+        { key: '8', value: 'Servicios ofrecidos por cada unidad' },
+        { key: '9', value: 'Difusión Cultural' },
+        { key: '10', value: 'Centro de Desarrollo del Deporte Universitario' },
+        { key: '51400', value: 'Comunicación Social' },
+        { key: '405001', value: 'TV UJED' },
       ],
       sede: [
         "Facultad de Ingeniería, Ciencias y Arquitectura (Gómez Palacio).",
@@ -650,9 +701,11 @@ export default {
       location.reload();
     },
     createEvento() {
+      //console.log(this.eventos.unidadResponsable.key);
       var data = {
         tituloEvento: this.eventos.tituloEvento,
-        unidadResponsable: this.eventos.unidadResponsable,
+        unidadResponsable: this.eventos.unidadResponsable.value,
+        cveUnidadResponsable: this.eventos.unidadResponsable.key,
         descripcionEvento: this.eventos.descripcionEvento,
         eventoDedicadoA: this.eventos.eventoDedicadoA,
         responsable: this.eventos.responsable,
