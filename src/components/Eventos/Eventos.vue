@@ -20,10 +20,7 @@
                     outlined
                   ></v-text-field>
                 </v-col>
-                <v-col v-model="currentEvento.unidadResponsable">
-
-                </v-col>
-                {{ currentEvento.unidadResponsable }}
+                
                 <v-col cols="12" md="4" sm="6" lg="4" xl="4">
                   <v-combobox
                     :rules="[(v) => !!v || 'Campo requerido']"
