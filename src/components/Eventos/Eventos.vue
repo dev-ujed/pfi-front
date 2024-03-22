@@ -32,8 +32,17 @@
                     outlined
                     :counter="100"
                     required
-
                   ></v-combobox>
+                </v-col>
+
+                <v-col cols="12" md="4" sm="6" lg="4" xl="4">
+                  <v-file-input
+                    id="flayer"
+                    name="flayer"
+                    variant="outlined"
+                    v-model="currentEvento.flayer"
+                    label="Subir flyer"
+                  ></v-file-input>
                 </v-col>
 
                 <v-col cols="12" md="6" sm="12" lg="6" xl="6">
@@ -162,7 +171,7 @@
                     outlined
                   ></v-text-field>
                 </v-col>
-
+              
                 <v-col cols="12" md="4" sm="12" lg="4" xl="4">
                   <v-text-field
                     id="descripcion"
@@ -778,61 +787,69 @@ export default {
 
     updateEvento() {
       console.log(this.currentEvento.unidadResponsable.key);
-      var data = {
-        tituloEvento: this.currentEvento.tituloEvento,
-        unidadResponsable: this.currentEvento.unidadResponsable.value,
-        cveUnidadResponsable: this.currentEvento.unidadResponsable.key,
-        descripcionEvento: this.currentEvento.descripcionEvento,
-        eventoDedicadoA: this.currentEvento.eventoDedicadoA,
-        fechaInicio: this.currentEvento.fechaInicio,
-        fechaFin: this.currentEvento.fechaFin,
-        inicioEvento: this.currentEvento.inicioEvento,
-        finEvento: this.currentEvento.finEvento,
-        sede: this.currentEvento.sede,
-        cupo: this.currentEvento.cupo,
-        descripcion: this.currentEvento.descripcion,
-        creditos: this.currentEvento.creditos,
-        categorias: this.currentEvento.categorias.id,
-        responsable: this.currentEvento.responsable,
-        horas_totales: this.currentEvento.horas_totales,
-        contacto: this.currentEvento.contacto,
-      };
-
-      console.log(data)
-
-      if (this.currentEvento.subCategoria1 != "") {
-        data.subCategoria1 = this.currentEvento.subCategoria1.id;
-      } else {
-        data.subCategoria1 = "";
+      console.log(this.currentEvento.unidadResponsable.value);
+      console.log(this.currentEvento.flayer);
+      
+      const formData = new FormData();
+      formData.append('tituloEvento', this.currentEvento.tituloEvento);
+      
+      // Verificar si los valores de unidadResponsable están definidos antes de agregarlos al FormData
+      if (this.currentEvento.unidadResponsable && this.currentEvento.unidadResponsable.key) {
+        formData.append('unidadResponsable', this.currentEvento.unidadResponsable.value);
+        formData.append('cveUnidadResponsable', this.currentEvento.unidadResponsable.key);
       }
-      if (this.currentEvento.subCategoria2 != "") {
-        data.subCategoria2 = this.currentEvento.subCategoria2.id;
-      } else {
-        data.subCategoria2 = "";
+      
+      formData.append('descripcionEvento', this.currentEvento.descripcionEvento);
+      formData.append('eventoDedicadoA', this.currentEvento.eventoDedicadoA);
+      formData.append('fechaInicio', this.currentEvento.fechaInicio);
+      formData.append('fechaFin', this.currentEvento.fechaFin);
+      formData.append('inicioEvento', this.currentEvento.inicioEvento);
+      formData.append('finEvento', this.currentEvento.finEvento);
+      formData.append('sede', this.currentEvento.sede);
+      formData.append('cupo', this.currentEvento.cupo);
+      formData.append('descripcion', this.currentEvento.descripcion);
+      formData.append('creditos', this.currentEvento.creditos);
+      formData.append('categorias', this.currentEvento.categorias.id);
+      formData.append('responsable', this.currentEvento.responsable);
+      formData.append('horas_totales', this.currentEvento.horas_totales);
+      formData.append('contacto', this.currentEvento.contacto);
+      
+      if (this.currentEvento.flayer instanceof File) {
+        formData.append('flayer', this.currentEvento.flayer);
       }
-      if (this.currentEvento.subCategoriaArte != "") {
-        data.subCategoriaArte = this.currentEvento.subCategoriaArte.id;
+      if (this.currentEvento.subCategoria1 !== "") {
+        formData.append('subCategoria1', this.currentEvento.subCategoria1.id);
       } else {
-        data.subCategoriaArte = "";
+        formData.append('subCategoria1', "");
       }
-
-      if (this.valid == true) {
-        EventosDataService.update(this.currentEvento.id, data)
+      if (this.currentEvento.subCategoria2 !== "") {
+        formData.append('subCategoria2', this.currentEvento.subCategoria2.id);
+      } else {
+        formData.append('subCategoria2', "");
+      }
+      if (this.currentEvento.subCategoriaArte !== "") {
+        formData.append('subCategoriaArte', this.currentEvento.subCategoriaArte.id);
+      } else {
+        formData.append('subCategoriaArte', "");
+      }
+      
+      if (this.valid) {
+        EventosDataService.update(this.currentEvento.id, formData)
           .then((response) => {
             console.log(response.data);
-            swal("El evento se actualizo correctamente!", "", "success");
-            //window.location.href = "/eventos";
+            swal("El evento se actualizó correctamente!", "", "success");
+            window.location.href = "/eventos";
           })
           .catch((e) => {
             console.log(e);
             swal(
-              "No se pudo actualizar el evento correctamente (asegurese de llenar los campos correctamente)",
+              "No se pudo actualizar el evento correctamente (asegúrese de llenar los campos correctamente)",
               "",
               "error"
             );
           });
       } else {
-        console.log("Evento no Validado " + false);
+        console.log("Evento no validado");
       }
     },
     calcularCreditos() {
@@ -868,7 +885,7 @@ export default {
 
       try {
         const response = await axios.get(
-          "https://fibackend.ujed.mx/alumnos/user" /*"http://127.0.0.1:8000/alumnos/user"*/
+          /*"https://fibackend.ujed.mx/alumnos/user"*/"http://127.0.0.1:8000/alumnos/user"
         );
 
         this.userEmail = response.data.email;
