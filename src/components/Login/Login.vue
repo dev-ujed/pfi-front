@@ -94,8 +94,8 @@ export default {
       } else {
         try {
           const response = await axios.post(
-            /*"https://fibackend.ujed.mx/alumnos/login/",*/
-            "http://127.0.0.1:8000/alumnos/login/",
+            "https://fibackend.ujed.mx/alumnos/login/",
+            /*"http://127.0.0.1:8000/alumnos/login/",*/
             {
               email: this.email,
               password: this.password,
