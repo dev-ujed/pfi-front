@@ -8,7 +8,7 @@
           <v-form ref="form" v-model="valid" lazy-validation>
             <v-container>
               <v-row>
-                <v-col cols="12" md="6" sm="12" lg="6" xl="6">
+                <v-col cols="12" md="4" sm="6" lg="4" xl="4">
                   <v-text-field
                     :rules="[(v) => !!v || 'Campo requerido']"
                     :counter="100"
@@ -41,11 +41,11 @@
                     name="flayer"
                     variant="outlined"
                     v-model="currentEvento.flayer"
-                    label="Subir flyer"
+                    label="Subir Nuevo Flyer"
                   ></v-file-input>
                 </v-col>
 
-                <v-col cols="12" md="6" sm="12" lg="6" xl="6">
+                <v-col cols="12" md="4" sm="6" lg="4" xl="4">
                   <v-text-field
                     :rules="[(v) => !!v || 'Campo requerido']"
                     :counter="100"
@@ -60,7 +60,7 @@
                   ></v-text-field>
                 </v-col>
 
-                <v-col cols="12" md="6" sm="12" lg="6" xl="6">
+                <v-col cols="12" md="8" sm="12" lg="8" xl="6">
                   <v-textarea
                     v-model="currentEvento.descripcionEvento"
                     id="descripcionEvento"
@@ -74,7 +74,7 @@
                   ></v-textarea>
                 </v-col>
 
-                <v-col cols="12" md="6" sm="12" lg="6" xl="6">
+                <v-col cols="12" md="4" sm="6" lg="4" xl="4">
                   <v-combobox
                     id="eventoDedicadoA"
                     required
@@ -172,7 +172,7 @@
                   ></v-text-field>
                 </v-col>
               
-                <v-col cols="12" md="4" sm="12" lg="4" xl="4">
+                <v-col cols="12" md="8" sm="12" lg="8" xl="6">
                   <v-text-field
                     id="descripcion"
                     required
@@ -185,7 +185,7 @@
                   ></v-text-field>
                 </v-col>
 
-                <v-col cols="12" md="6" sm="12" lg="6" xl="6">
+                <v-col cols="12" md="4" sm="6" lg="4" xl="4">
                   <v-text-field
                     id="creditosOtorgados"
                     required
@@ -205,7 +205,7 @@
                   ></v-text-field>
                 </v-col>
 
-                <v-col cols="12" md="6" sm="12" lg="6" xl="6">
+                <v-col cols="12" md="4" sm="6" lg="4" xl="4">
                   <v-text-field
                     id="contacto"
                     required
@@ -223,7 +223,7 @@
                   ></v-text-field>
                 </v-col>
 
-                <v-col cols="12" md="6" sm="12" lg="6" xl="6">
+                <v-col cols="12" md="4" sm="6" lg="4" xl="4">
                   <v-text-field
                     id="horas_totales"
                     required
@@ -242,7 +242,7 @@
                   ></v-text-field>
                 </v-col>
 
-                <v-col cols="12" md="6" sm="12" lg="6" xl="6">
+                <v-col cols="12" md="4" sm="6" lg="4" xl="4">
                   <v-combobox
                     v-model="currentEvento.categorias"
                     id="categorias"
@@ -259,10 +259,10 @@
                 <v-col
                   v-if="currentEvento.categorias != ''"
                   cols="12"
-                  md="6"
-                  sm="12"
-                  lg="6"
-                  xl="6"
+                  md="4"
+                  sm="6"
+                  lg="4"
+                  xl="4"
                 >
                   <v-combobox
                     v-model="currentEvento.subCategoria1"
@@ -319,10 +319,10 @@
                       currentEvento.subCategoria1.id != '18'
                     "
                     cols="12"
-                    md="6"
-                    sm="12"
-                    lg="6"
-                    xl="6"
+                    md="4"
+                    sm="6"
+                    lg="4"
+                    xl="4"
                   >
                     <v-combobox
                       v-model="currentEvento.subCategoria2"
