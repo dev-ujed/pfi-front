@@ -885,7 +885,7 @@ export default {
 
       try {
         const response = await axios.get(
-          /*"https://fibackend.ujed.mx/alumnos/user"*/"http://127.0.0.1:8000/alumnos/user"
+          "https://fibackend.ujed.mx/alumnos/user"/*"http://127.0.0.1:8000/alumnos/user"*/
         );
 
         this.userEmail = response.data.email;
