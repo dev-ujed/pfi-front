@@ -172,6 +172,11 @@
               dark
               @click.stop="dialog = false"
             >Cerrar</v-btn>
+            <v-btn
+              class="ma-2"
+              color="ligthen"
+              @click="descargarEvidencia()"
+            >Descargar</v-btn>
           </v-card-actions>
         </v-card>
       </v-dialog>
@@ -202,13 +207,37 @@ export default {
         evento: [],
         dialog: false,
         evidencia: [],
-        datosValidacion: []
+        datosValidacion: [],
+        rutaImg: '',
       };
     },
     components:{
       drawer
     }, 
     methods: {
+      mostrarRuta(){
+        if(this.evidencia.length > 0){
+          return this.rutaImg = this.evidencia[0].img;
+        }
+        return null;
+      },
+
+      descargarEvidencia(){
+        console.log(this.mostrarRuta());
+        const url = this.mostrarRuta();
+
+        if(url){
+          const link = document.createElement('a');
+          link.href = url;
+          link.setAttribute('download', '');
+          document.body.appendChild(link);
+          link.click();
+          document.body.removeChild(link);
+        }else{
+          console.log('No hay ruta de imagen para descargar');
+        }
+      },
+
       sendEvent() {
         console.log(this.$route.params.id)
         this.$router.push("/fi-registro/"+this.$route.params.id);
