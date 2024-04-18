@@ -246,8 +246,44 @@ export default {
       return matches ? matches[1] : null;
     },
     validarAlumnos() {
-      this.obtenerDisponible();
-      if (this.disponible >= 0) {
+      console.log(this.obtenerDisponible());
+      if(this.disponible >= 0){
+        for(let alumno of this.selected){
+          FormacionInDataService.getUserExist(this.$route.params.id, alumno.cve_alumno)
+          .then((response) => {
+            if (response.data.length == 1){
+              swal("Estudiante ya esta Registrado", "", "warning");
+              console.log(
+                  "alumno existente: " +
+                    alumno.alumno.nombre +
+                    " " +
+                    alumno.alumno.paterno +
+                    " " +
+                    alumno.alumno.materno
+                );
+            }else{
+              swal("Estudiante Registrado", "", "success");
+              console.log(
+                  "alumno registrado: " +
+                    alumno.alumno.nombre +
+                    " " +
+                    alumno.alumno.paterno +
+                    " " +
+                    alumno.alumno.materno
+                );
+              this.registrarAlumnos(alumno);
+            }
+            //console.log(response);
+          }).catch((e) => {
+            console.log(e);
+          });
+        }
+      }else{
+        swal("Excedio el limite de lugares disponibles", "", "warning");
+      }
+      setTimeout(this.sendEvent, 1000);
+      
+      /*if (this.disponible >= 0) {
         for (let alumno of this.selected) {
           FormacionInDataService.getUserExist(
             this.$route.params.id,
@@ -282,7 +318,7 @@ export default {
       } else {
         swal("Excedio el limite de lugares disponibles", "", "warning");
       }
-      setTimeout(this.sendEvent, 1000);
+      setTimeout(this.sendEvent, 1000);*/
     },
 
     registrarAlumnos(alumno) {
