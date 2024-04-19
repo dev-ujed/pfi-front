@@ -107,8 +107,8 @@ export default {
       if (cicloValue) {
         axios
           .get(
-            /*"https://fibackend.ujed.mx/alumnos/get_coordinator?cve_ciclo=" + */
-              "http://127.0.0.1:8000/alumnos/get_coordinator?cve_ciclo=" + cicloValue
+            "https://fibackend.ujed.mx/alumnos/get_coordinator?cve_ciclo=" + cicloValue
+            /*"http://127.0.0.1:8000/alumnos/get_coordinator?cve_ciclo=" + */
           )
           .then((response) => {
             console.log(response.data);
