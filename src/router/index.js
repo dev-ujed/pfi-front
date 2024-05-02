@@ -87,12 +87,7 @@ const routes = [
   name: "register",
   component: () => import("../components/Login/Register")
   },
-
 ]
-
-
-
-
 
 const router = new VueRouter({
   mode: 'history',

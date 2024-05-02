@@ -26,6 +26,7 @@
     "popper.js": "^1.16.1",
     "portal-vue": "^2.1.7",
     "sweetalert": "^2.1.2",
+    "sweetalert2": "^11.10.4",
     "vue": "^2.6.11",
     "vue-auth": "^1.0.0-alpha.1",
     "vue-google-login": "^2.0.5",

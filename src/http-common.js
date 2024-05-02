@@ -1,8 +1,8 @@
 import axios from "axios";
 
 export default axios.create({
-  baseURL: "https://fibackend.ujed.mx/",
+  baseURL: /*"http://127.0.0.1:8000/"*/ "https://fibackend.ujed.mx/",
   headers: {
-    "Content-type": "application/json"
-  }
-})
+    "Content-type": "application/json",
+  },
+});
