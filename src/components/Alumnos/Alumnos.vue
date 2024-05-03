@@ -87,10 +87,18 @@ export default {
   },
   methods: {
     retrieveAlumnos() {
+      /*axios
+        .get("http://127.0.0.1:8000/alumnos/movalumno/")
+        .then((response) => {
+          console.log(response.data);
+          this.alumnos = response.data;
+        })
+        .catch((error) => {
+          console.log(error);
+        });*/
       AlumnosDataService.getoalumnos()
         .then((response) => {
           this.alumnos = response.data;
-          
         })
         .catch((e) => {
           console.log(e);
@@ -108,7 +116,7 @@ export default {
         axios
           .get(
             "https://fibackend.ujed.mx/alumnos/get_coordinator?cve_ciclo=" + cicloValue
-            /*"http://127.0.0.1:8000/alumnos/get_coordinator?cve_ciclo=" + */
+            /*"http://127.0.0.1:8000/alumnos/get_coordinator?cve_ciclo=" + cicloValue*/
           )
           .then((response) => {
             console.log(response.data);

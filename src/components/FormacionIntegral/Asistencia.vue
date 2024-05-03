@@ -45,7 +45,7 @@
           item-key="id"
           class="elevation-8"
           show-select
-          @change="retrieveAlumnos"
+          @change="retrieveAlumnos($route.params.id)"
         >
           <template v-slot:top>
             <v-toolbar flat>
@@ -215,6 +215,18 @@ export default {
       drawer
     }, 
     methods: {
+
+      retrieveAlumnos(retrive_id) {
+        FormacionInDataService.getAll(retrive_id)
+          .then(response => {
+            this.alumnos = response.data;
+            console.log(this.alumnos);
+          }) 
+          .catch(e => {
+            console.log(e);
+          });
+      },
+
       mostrarRuta(){
         if(this.evidencia.length > 0){
           return this.rutaImg = this.evidencia[0].img;
@@ -241,17 +253,6 @@ export default {
       sendEvent() {
         console.log(this.$route.params.id)
         this.$router.push("/fi-registro/"+this.$route.params.id);
-      },
-
-      retrieveAlumnos(retrive_id) {
-        FormacionInDataService.getAll(retrive_id)
-          .then(response => {
-            this.alumnos = response.data;
-            console.log(this.alumnos);
-          }) 
-          .catch(e => {
-            console.log(e);
-          });
       },
 
       aplicarAsistencia(item, asistencia){
