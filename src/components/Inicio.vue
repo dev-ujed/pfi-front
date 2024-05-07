@@ -40,7 +40,7 @@
         <v-card-title>Programa</v-card-title>
         <v-card-text>
           <div style="text-align: center;">
-            <a href="https://publuu.com/flip-book/386097/875945/page/2?cover" target="_blank" style="width: auto; height: 240px; position: relative; display: inline-block;">
+            <a href="https://drive.google.com/file/d/1g1Ns2rgnGAWJplIBUvSuU1yQI6l7px7u/view?usp=sharing" target="_blank" style="width: auto; height: 240px; position: relative; display: inline-block;">
               <img src="https://p6aqvvqp5i.execute-api.us-east-2.amazonaws.com/images/cover/386097/875945" style="height: 100%;">
             </a>
           </div>
