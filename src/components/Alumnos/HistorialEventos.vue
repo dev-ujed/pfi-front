@@ -272,6 +272,8 @@ export default {
             }
             this.createData(eventos_Alumno);
         }
+
+        this.totalCreditos = this.totalCreditos.toFixed(2);
     },
     
     createData(response){

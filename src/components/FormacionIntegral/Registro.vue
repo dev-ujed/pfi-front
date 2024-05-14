@@ -56,10 +56,13 @@
                 <v-text-field
                   v-model="search"
                   append-icon="mdi-magnify"
-                  label="Buscar Estudiantes"
+                  label="Buscar por Matrícula"
                   single-line
                   hide-details
                 ></v-text-field>
+                <v-btn class="btn-buscar" @click="buscarAlumno">
+                Buscar
+              </v-btn>
               </v-toolbar>
             </template>
             <template v-slot:no-data>
@@ -221,6 +224,31 @@ export default {
       } else {
         this.$router.push("/fi-validacion/" + this.$route.params.id);
       }
+    },
+    buscarAlumno(){
+      console.log("Busqueda: ", this.search);
+      if(this.search){
+        axios
+        .get(
+          "https://fibackend.ujed.mx/alumnos/movalumno/" + this.search
+          /*http://http://127.0.0.1:8000/alumnos/movalumno/" + this.search*/
+        )
+        .then((response) => {
+          console.log(response.data);
+          console.log(response.data[0]);
+          //this.alumnos = response.data;
+          this.alumnos = [response.data];
+        })
+        .catch((error) => {
+          console.log(error);
+          if(error.response && error.response.status === 404){
+            swal("Estudiante no encontrado", "No se encontró ningun estudiante con esa matrícula", "warning");
+          }
+        })
+      }else{
+        swal("Ingresa una matrícula", "", "warning");
+      }
+      
     },
     getCiclo() {
       const cicloValue = this.getCicloValue(this.selectedCiclo);

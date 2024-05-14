@@ -24,10 +24,13 @@
               <v-text-field
                 v-model="search"
                 append-icon="mdi-magnify"
-                label="Buscar alumnos"
+                label="Buscar por Matrícula"
                 single-line
                 hide-details
               ></v-text-field>
+              <v-btn class="btn-buscar" @click="buscarAlumno">
+                Buscar
+              </v-btn>
               <v-spacer></v-spacer>
               <v-select
                 v-model="selectedCiclo"
@@ -56,6 +59,7 @@
 import axios from "axios";
 import AlumnosDataService from "../../services/AlumnosDataService";
 import drawer from "../Drawer/Drawer.vue";
+import swal from "sweetalert";
 
 export default {
   name: "alumnos",
@@ -63,6 +67,7 @@ export default {
     return {
       alumnos: [],
       selectedCiclo: null,
+      alumnosCicloSeleccionado: [],
       search: "",
       headers: [
         {
@@ -110,6 +115,32 @@ export default {
       this.$router.push("/fi-alumnos/" + id);
     },
 
+    buscarAlumno(){
+      console.log("Busqueda: ", this.search);
+      if(this.search){
+        axios
+        .get(
+          "https://fibackend.ujed.mx/alumnos/movalumno/" + this.search
+          /*http://http://127.0.0.1:8000/alumnos/movalumno/" + this.search*/
+        )
+        .then((response) => {
+          console.log(response.data);
+          console.log(response.data[0]);
+          //this.alumnos = response.data;
+          this.alumnos = [response.data];
+        })
+        .catch((error) => {
+          console.log(error);
+          if(error.response && error.response.status === 404){
+            swal("Estudiante no encontrado", "No se encontró ningun estudiante con esa matrícula", "warning");
+          }
+        })
+      }else{
+        swal("Ingresa una matrícula", "", "warning");
+      }
+      
+    },
+
     getCiclo() {
       const cicloValue = this.getCicloValue(this.selectedCiclo);
       if (cicloValue) {
@@ -121,7 +152,9 @@ export default {
           .then((response) => {
             console.log(response.data);
             console.log(cicloValue);
+            this.alumnosCicloSeleccionado = response.data;
             this.alumnos = response.data;
+            this.retrieveAlumnos();
           })
           .catch((error) => {
             console.log(error);
@@ -147,19 +180,24 @@ export default {
         "GET, POST, PUT, DELETE, OPTIONS";
 
       try {
-        const response = await axios.request(
-          "https://fibackend.ujed.mx/alumnos/get_coordinator"
-          /*"http://127.0.0.1:8000/alumnos/get_coordinator"*/
-        );
-        this.alumnos = response.data;
-      } catch (error) {
+        const response = await axios.request("https://fibackend.ujed.mx/alumnos/get_coordinator");
+        if (Array.isArray(response.data)) { // Verificar si los datos son un array
+          this.alumnos = response.data;
+        }else {
+          this.alumnos = [response.data]; // Envolver el objeto en un array
+        }
+      }catch (error) {
         console.error("Error", error);
       }
-    } else {
+    }else {
       console.error("No token");
     }
   },
 };
 </script>
 
-<style></style>
+<style>
+  .custom-spacer{
+    
+  }
+</style>
