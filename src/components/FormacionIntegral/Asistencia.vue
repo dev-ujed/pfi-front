@@ -142,26 +142,34 @@
       >
         <v-card>
           <v-toolbar
-            color="#a4010b"
+            color="#A4010B"
             dark
           >Evidencia del estudiante: {{datosValidacion.nombre}}</v-toolbar>
           <v-card-text>
             <v-container fluid>
               <v-row justify="space-around" style="padding-top: 10px">
-                <v-img
-                    v-if="evidencia.length == 0"
+                <template v-if="evidencia.length == 0">
+                  <v-img
                     lazy-src="https://st3.depositphotos.com/2927609/32461/v/600/depositphotos_324611032-stock-illustration-no-image-vector-icon-no.jpg"
                     max-height="300"
                     max-width="300"
                     src="https://st3.depositphotos.com/2927609/32461/v/600/depositphotos_324611032-stock-illustration-no-image-vector-icon-no.jpg"
-                ></v-img>
-                <v-img
-                    v-else
-                    :lazy-src="evidencia[0].img"
-                    max-height="600"
-                    max-width="600"
-                    :src="evidencia[0].img"
-                ></v-img>
+                  ></v-img>
+                </template>
+                <template v-else>
+                  <template v-if="isImage(evidencia[0].img)">
+                    <v-img
+                      :lazy-src="evidencia[0].img"
+                      max-height="600"
+                      max-width="600"
+                      :src="evidencia[0].img"
+                    ></v-img>
+                  </template>
+                  <template v-else>
+                    <img class="img-pdf" src="https://cdn1.iconfinder.com/data/icons/bootstrap-vol-3/16/filetype-pdf-512.png" alt="PDF Icon" style="width: 200px; height: 200;">
+                    <a class="text-center pdf-link" :href="evidencia[0].img" target="_blank" rel="noopener noreferrer">Ver PDF</a>
+                  </template>
+                </template>
               </v-row>
             </v-container>
           </v-card-text>
@@ -227,6 +235,10 @@ export default {
           });
       },
 
+      isImage(file) {
+        return /\.(jpg|jpeg|png|gif|bmp)$/i.test(file);
+      },
+
       mostrarRuta(){
         if(this.evidencia.length > 0){
           return this.rutaImg = this.evidencia[0].img;
@@ -242,6 +254,7 @@ export default {
           const link = document.createElement('a');
           link.href = url;
           link.setAttribute('download', '');
+          link.setAttribute('target', '_blanck');
           document.body.appendChild(link);
           link.click();
           document.body.removeChild(link);
@@ -326,5 +339,11 @@ export default {
 </script>
 
 <style>
+.pdf-link{
+  padding: 10px 16px;
+}
 
+.img-pdf{
+  justify-content: center;
+}
 </style>
