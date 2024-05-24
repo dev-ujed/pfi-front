@@ -54,7 +54,7 @@
                   <v-text-field
                     v-model="search"
                     append-icon="mdi-magnify"
-                    label="Buscar Alumnos"
+                    label="Buscar Estudiantes"
                     single-line
                     hide-details
                   ></v-text-field>

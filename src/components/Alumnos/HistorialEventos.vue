@@ -4,7 +4,7 @@
         <v-container id="createFile">
       <v-row id="datosAlumno">
         <v-card class="elevation-8">
-            <v-card-title>Datos del Alumno</v-card-title>
+            <v-card-title>Datos del Estudiante</v-card-title>
             <v-row>
                 <!-- <v-col
                 align-self: center
@@ -25,11 +25,11 @@
                 sm="6"
                 md="4">
                     <v-card-text>
-                        <label><strong>Alumno: </strong></label>
+                        <label><strong>Estudiante: </strong></label>
                         <v-spacer></v-spacer>
                         <label>{{ dataAlumno.alumno.nombre }}  {{dataAlumno.alumno.paterno}} {{dataAlumno.alumno.materno}}</label>
                         <v-spacer></v-spacer>
-                        <label><strong>Matricula: </strong></label>
+                        <label><strong>Matrícula: </strong></label>
                         <v-spacer></v-spacer>
                         <label>{{ dataAlumno.cve_alumno }} </label>
                     </v-card-text>
@@ -62,7 +62,7 @@
             <v-card-title>Historial de eventos</v-card-title>
         </v-col>
         <v-col>
-            <v-card-title>Total de creditos: {{totalCreditos}}</v-card-title>
+            <v-card-title>Total de créditos: {{totalCreditos}}</v-card-title>
         </v-col>
       </v-row>
         
@@ -91,7 +91,7 @@
                             Sede: {{item.sede}}
                             </v-list-item-subtitle>
                             <v-list-item-subtitle>
-                            Creditos: {{item.creditos}}
+                            Créditos: {{item.creditos}}
                             </v-list-item-subtitle>
                         </v-list-item-content>
                         <v-list-item-action>
@@ -322,13 +322,17 @@ export default {
         doc.setLineWidth(0.01).line(0.5, 1.1, 8.0, 1.1);
         doc.autoTable({
             headStyles: { fillColor: [199, 0, 57] },
-            body: this.alumnoDataFiles,
+            body: [{
+                'Nombre': this.alumnoDataFiles[0].alumno.nombre,
+                'Apellido': this.alumnoDataFiles[0].alumno.paterno,
+                'Materno': this.alumnoDataFiles[0].alumno.materno,
+                'Matricula': this.alumnoDataFiles[0].cve_alumno,
+            }],
             columns: [
-                { header: 'Nombre', dataKey: 'dataAlumno.alumno.nombre' },
-                { header: 'Apellido', dataKey: 'paterno' },
-                { header: 'Materno', dataKey: 'materno' },
-                { header: 'Matricula', dataKey: 'cve_alumno' },
-               
+                { header: 'Nombre', dataKey: 'Nombre' },
+                { header: 'Apellido', dataKey: 'Apellido' },
+                { header: 'Materno', dataKey: 'Materno' },
+                { header: 'Matrícula', dataKey: 'Matricula' },
             ],
             margin: { left: 0.5, top: 1.3 }
         });
@@ -339,7 +343,7 @@ export default {
             body: this.eventsDataFiles,
             columns: [
                 { header: 'Eventos', dataKey: 'tituloEvento' },
-                { header: 'Creditos', dataKey: 'creditos' },
+                { header: 'Créditos', dataKey: 'creditos' },
                 { header: 'Asistencia', dataKey: 'asistencia'}
             ],
             margin: { left: 0.5, top: 40.5 }
