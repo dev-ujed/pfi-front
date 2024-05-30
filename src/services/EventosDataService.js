@@ -106,7 +106,7 @@ class EventosDataService {
   }
 
   getEvidencias(evento, alumno) {
-    return http.get(`/eventos/evidencia?evento=${evento}&alumno=${alumno}`);
+    return http.get(`/eventos/evidencia?evento=${evento}&cve_alumno=${alumno}`);
   }
 
   getClasificacion() {

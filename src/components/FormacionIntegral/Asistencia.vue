@@ -130,7 +130,7 @@
             </v-btn>
           </template>
           <template v-slot:no-data>
-            No se encuentran alumnos registrados actualmente!
+            No se encuentran estudiantes registrados actualmente!
           </template>
           
         </v-data-table>
@@ -306,27 +306,28 @@ export default {
         FormacionInDataService.delete(id)
         .then(response => {
           console.log(response.data);
-          swal("El alumno se elimino correctamente!","","success")
+          swal("El estudiante se elimino correctamente!","","success")
           this.retrieveAlumnos(this.$route.params.id);
         })
         .catch(e => {
           console.log(e);
-          swal("Ocurrio un error al eliminar al Alumno","","error")
+          swal("Ocurrio un error al eliminar al Estudiante","","error")
         });
       },
 
       retrievEvidencia(data){
-            EventosDataService.getEvidencias(this.$route.params.id, data.alumno)
-                .then(response => {
-                    console.log(response.data);
-                    this.evidencia = response.data;
-                    this.datosValidacion = data;
-                })
-                .catch(e => {
-                    console.log(e);
-                })
-        },
+        EventosDataService.getEvidencias(this.$route.params.id, data.matricula)
+          .then(response => {
+            console.log(response.data);
+            this.evidencia = response.data;
+            this.datosValidacion = data;
+          })
+          .catch(e => {
+            console.log(e);
+          })
+      },
     },
+
     mounted() {
       this.retrieveAlumnos(this.$route.params.id);
     },
