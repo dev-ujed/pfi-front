@@ -2,7 +2,7 @@
   <div>
     <drawer />
     <v-container>
-      <v-row>
+      <v-row class="hidden-xs-only">
         <v-bottom-navigation color="#50ab87" grow>
           <v-btn @click="retrieveEventos()">
             <span>Todos</span>
