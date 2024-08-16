@@ -431,8 +431,10 @@ export default {
         responsable: "",
         contacto: "",
         horas_totales: "",
-        flyer: "", 
+        flyer: "",
+        cve_ciclo: "", 
       },
+      
       UserData: "",
       tipoEventos: ["Abierto", "Cerrado"],
       unidades: [
@@ -506,6 +508,7 @@ export default {
         { key: '1740', value: 'Facultad de Ciencias Exactas (Durango).' },
         { key: '1860', value: 'Escuela Preparatoria Diurna (Durango).' },
         { key: '3450', value: 'Facultad de Lenguas (Durango).' },
+        { key: '1940', value: 'Escuela de Pintura Escultura y Artesanías (EPEA)'},
         { key: '305009', value: 'Instituto de Bellas Artes' },
         { key: '2200', value: 'Instituto de Ciencias Sociales' },
         { key: '2100', value: 'Instituto de Investigación Científica' },
@@ -581,6 +584,7 @@ export default {
         "Centro de Desarrollo del Deporte Universitario",
         "Comunicación Social",
         "TV UJED",
+        "Escuela de Pintura Escultura y Artesanías (EPEA)",
       ],
       clasificacion: [],
       categoria1: [],
@@ -699,28 +703,43 @@ export default {
     newEvento() {
       location.reload();
     },
+
+    getCicloActual() {
+      return axios.get(`https://fibackend.ujed.mx/eventos/cicloActual`)
+      .then((response) => {
+        this.eventos.cve_ciclo = response.data[0].valor; 
+        console.log('Ciclo Actual:', this.eventos.cve_ciclo);
+      })
+      .catch((error) => {
+        console.error("error", error);
+      });
+    },
+
     createEvento() {
-      var data = {
-        tituloEvento: this.eventos.tituloEvento,
-        unidadResponsable: this.eventos.unidadResponsable.value,
-        cveUnidadResponsable: this.eventos.unidadResponsable.key,
-        descripcionEvento: this.eventos.descripcionEvento,
-        eventoDedicadoA: this.eventos.eventoDedicadoA,
-        responsable: this.eventos.responsable,
-        // fechaEvento: this.eventos.fechaEvento,
-        fechaFin: this.eventos.fechaFin,
-        fechaInicio: this.eventos.fechaInicio,
-        inicioEvento: this.eventos.inicioEvento,
-        finEvento: this.eventos.finEvento,
-        sede: this.eventos.sede,
-        cupo: this.eventos.cupo,
-        descripcion: this.eventos.descripcion,
-        creditos: this.eventos.creditosOtorgados,
-        categorias: this.eventos.categorias.id,
-        horas_totales: this.eventos.horas_totales,
-        contacto: this.eventos.contacto,
-        flayer: this.eventos.flayer,
+      this.getCicloActual().then(() => {
+        var data = {
+          tituloEvento: this.eventos.tituloEvento,
+          unidadResponsable: this.eventos.unidadResponsable.value,
+          cveUnidadResponsable: this.eventos.unidadResponsable.key,
+          descripcionEvento: this.eventos.descripcionEvento,
+          eventoDedicadoA: this.eventos.eventoDedicadoA,
+          responsable: this.eventos.responsable,
+          // fechaEvento: this.eventos.fechaEvento,
+          fechaFin: this.eventos.fechaFin,
+          fechaInicio: this.eventos.fechaInicio,
+          inicioEvento: this.eventos.inicioEvento,
+          finEvento: this.eventos.finEvento,
+          sede: this.eventos.sede,
+          cupo: this.eventos.cupo,
+          descripcion: this.eventos.descripcion,
+          creditos: this.eventos.creditosOtorgados,
+          categorias: this.eventos.categorias.id,
+          horas_totales: this.eventos.horas_totales,
+          contacto: this.eventos.contacto,
+          flayer: this.eventos.flayer,
+          cve_ciclo: this.eventos.cve_ciclo,
       };
+
       if (this.eventos.categorias_1 != "") {
         data.subCategoria1 = this.eventos.categorias_1.id;
       }
@@ -731,6 +750,7 @@ export default {
         data.subCategoriaArte = this.eventos.categorias_arte.id;
       }
 
+      console.log(data);
       EventosDataService.create(data)
         .then((response) => {
           this.submitted = true;
@@ -745,6 +765,7 @@ export default {
             "error"
           );
         });
+      });
     },
 
     createCalendario(dataEvento) {

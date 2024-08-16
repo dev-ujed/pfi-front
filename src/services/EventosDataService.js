@@ -11,6 +11,10 @@ class EventosDataService {
     return http.get(`/eventos/${id}/`);
   }
 
+  getCicloActual(){
+    return http.get("eventos/cicloActual");
+  }
+
   create(data) {
     const formData = new FormData();
     formData.append("tituloEvento", data.tituloEvento);
@@ -31,8 +35,7 @@ class EventosDataService {
     formData.append("horas_totales", data.horas_totales);
     formData.append("contacto", data.contacto);
     formData.append("flayer", data.flayer);
-
-    
+    formData.append("cve_ciclo", data.cve_ciclo);
     
     if(data.subCategoria1){
       formData.append("subCategoria1", data.subCategoria1);
