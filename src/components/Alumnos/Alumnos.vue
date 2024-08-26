@@ -84,7 +84,7 @@ export default {
         { text: "Ver detalles", align: "center", value: "detalles" },
       ],
 
-      ciclos: ["2024-ENE/JUL 1/2 (795)"],
+      ciclos: ["2024-ENE/JUL 1/2 (795)", "2024-AGO/DIC-2/2 (800)"],
     };
   },
   components: {

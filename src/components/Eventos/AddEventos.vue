@@ -529,10 +529,9 @@ export default {
         { key: '5', value: 'Dirección de Desarrollo y Gestión de Recursos Humanos' },
         { key: '6', value: 'Coordinación de Capacitación Institucional' },
         { key: '0', value: 'Dirección de Vinculación Institucional' },
-        { key: '7', value: 'Centro de Negocios' },
+        { key: '51520', value: 'Centro de Negocios' },
         { key: '8', value: 'Servicios ofrecidos por cada unidad' },
-        { key: '9', value: 'Difusión Cultural' },
-        { key: '10', value: 'Centro de Desarrollo del Deporte Universitario' },
+        { key: '1540', value: 'Centro de Desarrollo del Deporte Universitario' },
         { key: '51400', value: 'Comunicación Social' },
         { key: '405001', value: 'TV UJED' },
       ],
@@ -705,9 +704,9 @@ export default {
     },
 
     getCicloActual() {
-      return axios.get(`https://fibackend.ujed.mx/eventos/cicloActual`)
+      return axios.get(`https://fibackend.ujed.mx/eventos/cicloActual/id=61`)
       .then((response) => {
-        this.eventos.cve_ciclo = response.data[0].valor; 
+        this.eventos.cve_ciclo = response.data.valor; 
         console.log('Ciclo Actual:', this.eventos.cve_ciclo);
       })
       .catch((error) => {
