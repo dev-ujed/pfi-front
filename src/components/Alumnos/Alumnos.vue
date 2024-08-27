@@ -84,7 +84,9 @@ export default {
         { text: "Ver detalles", align: "center", value: "detalles" },
       ],
 
-      ciclos: ["2024-ENE/JUL 1/2 (795)", "2024-AGO/DIC-2/2 (800)"],
+      //ciclos: ["2024-ENE/JUL 1/2 (795)", "2024-AGO/DIC-2/2 (800)"],
+      ciclos: [],
+      cve_ciclo: [],
     };
   },
   components: {
@@ -121,7 +123,7 @@ export default {
         axios
         .get(
           "https://fibackend.ujed.mx/alumnos/movalumno/" + this.search
-          /*http://http://127.0.0.1:8000/alumnos/movalumno/" + this.search*/
+          /*"http://127.0.0.1:8000/alumnos/movalumno/" + this.search*/
         )
         .then((response) => {
           console.log(response.data);
@@ -141,34 +143,70 @@ export default {
       
     },
 
-    getCiclo() {
-      const cicloValue = this.getCicloValue(this.selectedCiclo);
-      if (cicloValue) {
-        axios
-          .get(
-            "https://fibackend.ujed.mx/alumnos/get_coordinator?cve_ciclo=" + cicloValue
-            /*"http://127.0.0.1:8000/alumnos/get_coordinator?cve_ciclo=" + cicloValue*/
-          )
-          .then((response) => {
-            console.log(response.data);
-            console.log(cicloValue);
-            this.alumnosCicloSeleccionado = response.data;
-            this.alumnos = response.data;
-            this.retrieveAlumnos();
-          })
-          .catch((error) => {
-            console.log(error);
-          });
+    async getCiclo() {
+      const token = sessionStorage.getItem("jwtToken");
+
+      try {
+        const cicloValue = await this.getCicloValue(this.ciclos);
+        console.log(cicloValue);
+
+        if (cicloValue) {
+          if (token) {
+            axios.defaults.headers.common["Authorization"] = `Bearer ${token}`;
+            
+            try {
+              const response = await axios.get("https://fibackend.ujed.mx/alumnos/get_coordinator?cve_ciclo=" + cicloValue);
+              console.log(response.data);
+              console.log(cicloValue);
+              this.alumnosCicloSeleccionado = response.data;
+              this.alumnos = response.data;  
+              //this.retrieveAlumnos();
+            } catch (error) {
+              console.log("Error en la solicitud de alumnos: ", error);
+            }
+          } else {
+            console.error("No token disponible");
+          }
+        }
+      } catch (error) {
+        console.error('Error al obtener el ciclo:', error);
       }
+
     },
 
-    getCicloValue(selection) {
+    getCiclosFromAPI() {
+      axios
+        .get("http://127.0.0.1:8000/eventos/cicloActual/id=101")
+        .then((response) => {
+          console.log([response.data.id]);
+          console.log([response.data.valor]);
+          this.ciclos = [response.data.valor + " (" + response.data.id + ")"];
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    },
+
+    getCicloValue(){
+      return axios.get(`http://127.0.0.1:8000/eventos/cicloActual/id=61`)
+      .then((response) => {
+        console.log("cve_ciclo: " + [response.data.valor]);
+        this.cve_ciclo = [response.data.valor];
+        return response.data.valor;
+      })
+      .catch((error) => {
+        console.error("error", error);
+      });
+    },
+
+    /*getCicloValue(selection) {
       const matches = selection.match(/\((\d+)\)$/);
       return matches ? matches[1] : null;
-    },
+    },*/
   },
   async mounted() {
     //this.retrieveAlumnos();
+    this.getCiclosFromAPI();
 
     const token = sessionStorage.getItem("jwtToken");
 
