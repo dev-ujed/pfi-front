@@ -299,7 +299,7 @@ export default {
 
     getCiclosFromAPI() {
       axios
-        .get("http://127.0.0.1:8000/eventos/cicloActual/id=101")
+        .get("https://fibackend.ujed.mx/eventos/cicloActual/id=101")
         .then((response) => {
           console.log([response.data.id]);
           console.log([response.data.valor]);
@@ -311,7 +311,7 @@ export default {
     },
 
     getCicloValue(){
-      return axios.get(`http://127.0.0.1:8000/eventos/cicloActual/id=61`)
+      return axios.get(`https://fibackend.ujed.mx/eventos/cicloActual/id=61`)
       .then((response) => {
         console.log("cve_ciclo: " + [response.data.valor]);
         this.cve_ciclo = [response.data.valor];
