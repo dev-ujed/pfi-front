@@ -133,9 +133,9 @@ export default {
         {
           src: "https://i.ibb.co/HKZWbNn/DSC-0015.jpg",
         },
-        {
+        /*{
           src: "https://i.ibb.co/zGtBvyg/IMG-8930.jpg",
-        },
+        },*/
       ],
     };
   },
