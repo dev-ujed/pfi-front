@@ -176,7 +176,7 @@ export default {
 
     getCiclosFromAPI() {
       axios
-        .get("https://fibackend.ujed.mx/eventos/cicloActual/id=101")
+        .get("https://fibackend.ujed.mx/eventos/descCiclo/")
         .then((response) => {
           console.log([response.data.id]);
           console.log([response.data.valor]);
@@ -188,10 +188,15 @@ export default {
     },
 
     getCicloValue(){
-      return axios.get(`https://fibackend.ujed.mx/eventos/cicloActual/id=61`)
+      return axios.get(`https://fibackend.ujed.mx/eventos/cicloActual/`)
       .then((response) => {
-        console.log("cve_ciclo: " + [response.data.valor]);
-        this.cve_ciclo = [response.data.valor];
+        const cicloId = response.data.id; //valor del id
+        const cicloValor = response.data.valor;
+        console.log('Id:', cicloId, 'valor: ', cicloValor)
+
+
+        //console.log("cve_ciclo: " + [response.data.valor]);
+        this.cve_ciclo = `${cicloValor} (${cicloId})`;
         return response.data.valor;
       })
       .catch((error) => {

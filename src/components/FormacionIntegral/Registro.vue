@@ -314,7 +314,7 @@ export default {
       return axios.get(`https://fibackend.ujed.mx/eventos/cicloActual/`)
       .then((response) => {
         const cicloId = response.data.id; //valor del id
-        const cicloValor = response.data.valor;
+        const cicloValor = response.data.valor; //valor del ciclo
         console.log('Id:', cicloId, 'valor: ', cicloValor)
 
 
