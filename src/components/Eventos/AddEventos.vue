@@ -84,7 +84,7 @@
                     v-model="eventos.fechaInicio"
                     name="fechaInicio"
                     :rules="[(v) => !!v || 'Campo requerido', validarFechas]"
-                    label="Fecha de inicio"
+                    label="Fecha de inicio de REGISTRO"
                     required
                     outlined
                     type="date"
@@ -98,7 +98,7 @@
                     v-model="eventos.inicioEvento"
                     name="inicioEvento"
                     :rules="[(v) => !!v || 'Campo requerido']"
-                    label="Hora de inicio"
+                    label="Hora de inicio de REGISTRO"
                     outlined
                     type="time"
                   ></v-text-field>
@@ -110,7 +110,7 @@
                     v-model="eventos.fechaFin"
                     name="fechaFin"
                     :rules="[(v) => !!v || 'Campo requerido', validarFechas]"
-                    label="Fecha fin del evento"
+                    label="Fecha fin de REGISTRO del evento"
                     required
                     outlined
                     type="date"
@@ -124,7 +124,7 @@
                     v-model="eventos.finEvento"
                     name="finEvento"
                     :rules="[(v) => !!v || 'Campo requerido']"
-                    label="Hora final del evento"
+                    label="Hora final de REGISTRO del evento"
                     outlined
                     type="time"
                   ></v-text-field>
