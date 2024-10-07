@@ -704,7 +704,7 @@ export default {
     },
 
     getCicloActual() {
-      return axios.get(`https://fibackend.ujed.mx/eventos/cicloActual/id=61`)
+      return axios.get(`https://fibackend.ujed.mx/eventos/cicloActual/`)
       .then((response) => {
         this.eventos.cve_ciclo = response.data.valor; 
         console.log('Ciclo Actual:', this.eventos.cve_ciclo);
