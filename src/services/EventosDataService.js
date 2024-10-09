@@ -36,6 +36,8 @@ class EventosDataService {
     formData.append("contacto", data.contacto);
     formData.append("flayer", data.flayer);
     formData.append("cve_ciclo", data.cve_ciclo);
+    formData.append("fecha",data.fecha);
+    formData.append("hora", data.hora);
     
     if(data.subCategoria1){
       formData.append("subCategoria1", data.subCategoria1);

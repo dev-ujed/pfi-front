@@ -84,7 +84,7 @@
                     v-model="eventos.fechaInicio"
                     name="fechaInicio"
                     :rules="[(v) => !!v || 'Campo requerido', validarFechas]"
-                    label="Fecha de inicio de REGISTRO"
+                    label="Fecha de inicio de REGISTRO del evento"
                     required
                     outlined
                     type="date"
@@ -98,7 +98,7 @@
                     v-model="eventos.inicioEvento"
                     name="inicioEvento"
                     :rules="[(v) => !!v || 'Campo requerido']"
-                    label="Hora de inicio de REGISTRO"
+                    label="Hora de inicio de REGISTRO del evento"
                     outlined
                     type="time"
                   ></v-text-field>
@@ -125,6 +125,32 @@
                     name="finEvento"
                     :rules="[(v) => !!v || 'Campo requerido']"
                     label="Hora final de REGISTRO del evento"
+                    outlined
+                    type="time"
+                  ></v-text-field>
+                </v-col>
+
+                <v-col cols="12" md="4" sm="6" lg="4" xl="4">
+                  <v-text-field
+                    id="fecha"
+                    required
+                    v-model="eventos.fecha"
+                    name="fecha"
+                    :rules="[(v) => !!v || 'Campo requerido']"
+                    label="Fecha del Evento"
+                    outlined
+                    type="date"
+                  ></v-text-field>
+                </v-col>
+
+                <v-col cols="12" md="4" sm="6" lg="4" xl="4">
+                  <v-text-field
+                    id="hora"
+                    required
+                    v-model="eventos.hora"
+                    name="hora"
+                    :rules="[(v) => !!v || 'Campo requerido']"
+                    label="Hora del Evento"
                     outlined
                     type="time"
                   ></v-text-field>
@@ -432,7 +458,9 @@ export default {
         contacto: "",
         horas_totales: "",
         flyer: "",
-        cve_ciclo: "", 
+        cve_ciclo: "",
+        fecha:"",
+        hora: "", 
       },
       
       UserData: "",
@@ -737,6 +765,8 @@ export default {
           contacto: this.eventos.contacto,
           flayer: this.eventos.flayer,
           cve_ciclo: this.eventos.cve_ciclo,
+          fecha: this.eventos.fecha,
+          hora: this.eventos.hora,
       };
 
       if (this.eventos.categorias_1 != "") {

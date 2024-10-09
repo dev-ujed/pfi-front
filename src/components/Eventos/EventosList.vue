@@ -92,17 +92,29 @@
                   <v-spacer></v-spacer>
                   <label>{{ selected[0].eventoDedicadoA }}</label>
                   <v-spacer></v-spacer>
-                  <label><strong>Fecha del evento:</strong></label>
+                  <label><strong>Fecha inicio de Registro:</strong></label>
                   <v-spacer></v-spacer>
                   <label> {{ selected[0].fechaInicio }}</label>
                   <v-spacer></v-spacer>
-                  <label><strong>Hora de inicio del evento: </strong></label>
+                  <label><strong>Hora de inicio de Registro: </strong></label>
                   <v-spacer></v-spacer>
                   <label>{{ selected[0].inicioEvento }}</label>
                   <v-spacer></v-spacer>
-                  <label><strong>Hora final del evento: </strong></label>
+                  <label><strong>Fecha final del Registro:</strong></label>
+                  <v-spacer></v-spacer>
+                  <label> {{ selected[0].fechaFin }}</label>
+                  <v-spacer></v-spacer>
+                  <label><strong>Hora final del Registro: </strong></label>
                   <v-spacer></v-spacer>
                   <label>{{ selected[0].finEvento }}</label>
+                  <v-spacer></v-spacer>
+                  <label><strong>Fecha del Evento: </strong></label>
+                  <v-spacer></v-spacer>
+                  <label>{{ selected[0].fecha }}</label>
+                  <v-spacer></v-spacer>
+                  <label><strong>Hora del Evento: </strong></label>
+                  <v-spacer></v-spacer>
+                  <label>{{ selected[0].hora }}</label>
                   <v-spacer></v-spacer>
                   <label><strong>Responsable: </strong></label>
                   <v-spacer></v-spacer>
@@ -123,7 +135,7 @@
                 <v-col cols="4">
                   <v-img
                     max-height="450px"
-                    max-with="400px"
+                    max-width="400px"
                     contain
                     :src="selected[0].flayer"
                   ></v-img>
@@ -225,6 +237,8 @@ export default {
           categorias: "",
           responsable: "",
           flayer: "",
+          fecha:"",
+          hora:"",
         },
       ],
       singleExpand: true,
@@ -246,6 +260,17 @@ export default {
       EventosDataService.getAll()
         .then((response) => {
           this.eventos = response.data;
+          console.log(response.data);
+        })
+        .catch((e) => {
+          console.log(e);
+        });
+    },
+    mostrarEvento(id) {
+      EventosDataService.getevento(id)
+        .then((response) => {
+          this.evento = response.data;  // Si estás manejando un solo evento, puedes usar 'this.evento'
+          console.log(response.data);
         })
         .catch((e) => {
           console.log(e);
