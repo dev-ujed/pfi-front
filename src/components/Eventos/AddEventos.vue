@@ -208,7 +208,7 @@
                     name="flayer"
                     variant="outlined"
                     v-model="eventos.flayer"
-                    label="Subir flyer"
+                    label="Subir flyer (.jpg, .png, .jpeg, .img)"
                     @change="onFileChange"
                   ></v-file-input>
 

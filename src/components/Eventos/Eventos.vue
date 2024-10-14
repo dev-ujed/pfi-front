@@ -36,16 +36,6 @@
                 </v-col>
 
                 <v-col cols="12" md="4" sm="6" lg="4" xl="4">
-                  <v-file-input
-                    id="flayer"
-                    name="flayer"
-                    variant="outlined"
-                    v-model="currentEvento.flayer"
-                    label="Subir Nuevo Flyer"
-                  ></v-file-input>
-                </v-col>
-
-                <v-col cols="12" md="4" sm="6" lg="4" xl="4">
                   <v-text-field
                     :rules="[(v) => !!v || 'Campo requerido']"
                     :counter="100"
@@ -60,7 +50,7 @@
                   ></v-text-field>
                 </v-col>
 
-                <v-col cols="12" md="8" sm="12" lg="8" xl="6">
+                <v-col cols="12" md="4" sm="6" lg="4" xl="4">
                   <v-textarea
                     v-model="currentEvento.descripcionEvento"
                     id="descripcionEvento"
@@ -94,7 +84,7 @@
                     v-model="currentEvento.fechaInicio"
                     name="fechaEvento"
                     :rules="[(v) => !!v || 'Campo requerido']"
-                    label="Fecha de inicio del evento"
+                    label="Fecha de inicio de REGISTRO del evento"
                     required
                     outlined
                     type="date"
@@ -107,7 +97,7 @@
                     v-model="currentEvento.fechaFin"
                     name="fechaEvento"
                     :rules="[(v) => !!v || 'Campo requerido']"
-                    label="Fecha de fin del evento"
+                    label="Fecha fin de REGISTRO del evento"
                     required
                     outlined
                     type="date"
@@ -121,7 +111,7 @@
                     v-model="currentEvento.inicioEvento"
                     name="inicioEvento"
                     :rules="[(v) => !!v || 'Campo requerido']"
-                    label="Hora de inicio del evento"
+                    label="Hora de inicio de REGISTRO del evento"
                     outlined
                     type="time"
                   ></v-text-field>
@@ -134,7 +124,33 @@
                     v-model="currentEvento.finEvento"
                     name="finEvento"
                     :rules="[(v) => !!v || 'Campo requerido']"
-                    label="Hora final del evento"
+                    label="Hora final de REGISTRO del evento"
+                    outlined
+                    type="time"
+                  ></v-text-field>
+                </v-col>
+
+                <v-col cols="12" md="4" sm="6" lg="4" xl="4">
+                  <v-text-field
+                    id="fecha"
+                    required
+                    v-model="currentEvento.fecha"
+                    name="fecha"
+                    :rules="[(v) => !!v || 'Campo requerido']"
+                    label="Fecha del Evento"
+                    outlined
+                    type="date"
+                  ></v-text-field>
+                </v-col>
+
+                <v-col cols="12" md="4" sm="6" lg="4" xl="4">
+                  <v-text-field
+                    id="hora"
+                    required
+                    v-model="currentEvento.hora"
+                    name="fecha"
+                    :rules="[(v) => !!v || 'Campo requerido']"
+                    label="Hora del Evento"
                     outlined
                     type="time"
                   ></v-text-field>
@@ -172,7 +188,7 @@
                   ></v-text-field>
                 </v-col>
               
-                <v-col cols="12" md="8" sm="12" lg="8" xl="6">
+                <v-col cols="12" md="4" sm="6" lg="4" xl="4">
                   <v-text-field
                     id="descripcion"
                     required
@@ -221,6 +237,16 @@
                     label="Numero o correo de contacto"
                     outlined
                   ></v-text-field>
+                </v-col>
+
+                <v-col cols="12" md="4" sm="6" lg="4" xl="4">
+                  <v-file-input
+                    id="flayer"
+                    name="flayer"
+                    variant="outlined"
+                    v-model="currentEvento.flayer"
+                    label="Subir Nuevo Flyer (.jpg, .png, .jpeg, .img)"
+                  ></v-file-input>
                 </v-col>
 
                 <v-col cols="12" md="4" sm="6" lg="4" xl="4">
@@ -346,10 +372,10 @@
                     currentEvento.subCategoria2.id < 64
                   "
                   cols="12"
-                  md="6"
-                  sm="12"
-                  lg="6"
-                  xl="6"
+                  md="4"
+                  sm="6"
+                  lg="4"
+                  xl="4"
                 >
                   <v-combobox
                     v-model="currentEvento.subCategoriaArte"
@@ -813,6 +839,8 @@ export default {
       formData.append('responsable', this.currentEvento.responsable);
       formData.append('horas_totales', this.currentEvento.horas_totales);
       formData.append('contacto', this.currentEvento.contacto);
+      formData.append('fecha', this.currentEvento.fecha);
+      formData.append('hora', this.currentEvento.hora);
       
       if (this.currentEvento.flayer instanceof File) {
         formData.append('flayer', this.currentEvento.flayer);

@@ -26,7 +26,7 @@
       </v-row>
       <v-row>
         <v-col>
-          <label><strong>Fecha del evento:</strong></label>
+          <label><strong>Fecha de inicio de Registro del evento:</strong></label>
         </v-col>
         <v-col>
           <label> {{ evento.fechaInicio }}</label>
@@ -35,13 +35,13 @@
       <v-row>
         <v-col>
           <label
-            ><strong>Hora de inicio del evento: </strong
+            ><strong>Hora de Registro de inicio del evento: </strong
             >{{ evento.inicioEvento }}</label
           >
         </v-col>
         <v-col>
           <label
-            ><strong>Hora final del evento: </strong> {{ evento.finEvento }}
+            ><strong>Hora final de Registro del evento: </strong> {{ evento.finEvento }}
           </label>
         </v-col>
       </v-row>
@@ -49,6 +49,16 @@
         <label><strong>Sede del evento:</strong></label>
         <v-spacer></v-spacer>
         <label>{{ evento.sede }}</label>
+      </v-row>
+      <v-row>
+        <label><strong>Fecha del evento:</strong></label>
+        <v-spacer></v-spacer>
+        <label>{{ evento.fecha }}</label>
+      </v-row>
+      <v-row>
+        <label><strong>Hora del evento:</strong></label>
+        <v-spacer></v-spacer>
+        <label>{{ evento.hora }}</label>
       </v-row>
       <v-row>
         <v-col>
