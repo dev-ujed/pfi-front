@@ -235,8 +235,7 @@ export default {
           /*"http://127.0.0.1:8000/alumnos/movalumno/" + this.search*/
         )
         .then((response) => {
-          console.log(response.data);
-          console.log(response.data[0]);
+          //console.log(response.data);
           //this.alumnos = response.data;
           this.alumnos = [response.data];
         })
